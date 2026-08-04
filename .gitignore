@@ -1,0 +1,25 @@
+node_modules
+.DS_Store
+.yarn/install-state.gz
+npm-debug.log
+/dist/
+/public/config.json
+.cache
+src/credentials.js
+*.css.json
+*.scss.json
+/src/public/config.json
+/src/public/viewer_config/
+google-services.json
+GoogleService-Info.plist
+src/public/config.json
+src/public/viewer_config
+src/public/viewer/global.json
+*.pem
+/ssl-certs/*
+.dccache
+.clinerules
+# Deployment/credential environment files (buckets, distribution ids, tokens)
+.env
+.env.*
+!.env.example

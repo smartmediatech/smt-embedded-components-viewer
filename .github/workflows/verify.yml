@@ -1,0 +1,38 @@
+name: verify
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  # Lets a run be triggered without pushing.
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: corepack enable && yarn install --immutable
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Build
+        run: yarn build
+
+      # index.html loads the bridge from the site root, so a build that does
+      # not copy public/ produces a viewer where no component can connect.
+      - name: Assert build output is complete
+        run: |
+          test -f dist/smt-base-bridge.min.js \
+            || { echo "dist/smt-base-bridge.min.js missing — build did not copy public/"; exit 1; }
+          test -f dist/index.html
+
+      - name: Lint (advisory)
+        run: yarn lint || true

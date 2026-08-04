@@ -1,0 +1,40 @@
+{
+  "defaultTenant": "example",
+  "tenants": {
+    "example": {
+      "label": "Example Tenant",
+      "fqdn": "<your-fqdn>",
+      "appId": "<your-app-id>",
+      "smartComponentsHost": "https://<your-components-host>/components",
+      "legacyComponentsHost": "https://<your-components-host>/components"
+    }
+  },
+  "auth": {
+    "apiBaseUrl": "https://b.smartmedialabs.io",
+    "appId": "<your-app-id>"
+  },
+  "mapTheme": {
+    "light": {
+      "theme": {
+        "mode": "light",
+        "colors": {
+          "accent": "#0057ff",
+          "locationButtonBackground": "#0057ff",
+          "locationButtonForeground": "#ffffff",
+          "pickupRadiusFill": "#a8ddff"
+        }
+      }
+    },
+    "dark": {
+      "theme": {
+        "mode": "dark",
+        "colors": {
+          "accent": "#111827",
+          "locationButtonBackground": "#111827",
+          "locationButtonForeground": "#ffffff",
+          "pickupRadiusFill": "#4b5563"
+        }
+      }
+    }
+  }
+}
