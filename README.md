@@ -58,13 +58,29 @@ directly once. Otherwise the iframes fail to load with no visible error.
 
 Worth being explicit, because it determines who you ask for a change:
 
-**SMT configures the components.** Branding, colours, typography, layout, which
-tabs and reward tiers exist, the currency name, your allowed embedding origins —
-all of it lives in a per-publisher config that SMT authors and publishes to the
-CDN. The component fetches it at runtime using the `fqdn` you pass. **There is no
-file in this repo, and no query parameter, that changes any of it.** To change
-your branding or behaviour, ask SMT; it takes effect without you redeploying
-anything and without a new component release.
+**SMT configures the components.** Branding, colours, typography and fonts,
+corner radii, icons, layout, which tabs and reward tiers exist, the currency
+name, your allowed embedding origins — and the *content mapping*: which
+categories, tags and fields of your content the components read, which tag
+marks a featured item, what the challenge sub-nav filters on, and how the
+"completed", "coming soon" and "time left" states are derived. All of it lives
+in a per-publisher config that SMT authors and publishes to the CDN. The
+component fetches it at runtime using the `fqdn` you pass. **There is no file in
+this repo, and no query parameter, that changes any of it.** To change your
+branding, content mapping or behaviour, ask SMT; it takes effect without you
+redeploying anything and without a new component release.
+
+What SMT needs from you for that configuration:
+
+| You provide | SMT turns it into |
+| --- | --- |
+| Design: colours, corner radii, the two font faces as `.woff2` (or `.otf`) files with licence confirmation, optional custom icons | the theme; fonts are hosted by SMT next to your config, so nothing is needed on your side |
+| Your content model: category names, the tag that marks featured items, the tags you use to classify challenges (they become the sub-nav chips), where points, XP, CTA label and badge live on an offer | the content mapping |
+| Reward tiers: the tier names in ascending order, and which tag on a reward offer marks its tier | the tier chips and the tier label on reward cards |
+| Which components you embed, and whether challenges show your users' *owned* challenges or the full *catalogue* | the per-component behaviour |
+
+See [Content the components read](#content-the-components-read) for what must be
+on your offers for each element to appear.
 
 **You configure the container.** This app — authentication, navigation, modals,
 loaders, consent, and the values below that tell it which components to load.
@@ -197,9 +213,19 @@ The primary landing experience within the embedded component suite, showing chal
 
 ### Rewards Component
 
-Displays the user's rewards, including rewards they have acquired and can claim. Supports navigation to individual reward details and engaged cards via modals.
+Displays the rewards a user can redeem and the ones they already own. A
+featured carousel at the top shows the reward offers carrying your *featured*
+tag; a row of chips filters by tier or shows the user's own rewards; the grid
+lists the rest. Supports navigation to individual reward details and engaged
+cards via modals.
 
 **URL**: `{componentsHost}/rewards/`
+
+**Configured by SMT** (ask SMT to change any of these): the card style, the tabs
+and their labels, the tier names and the tag that marks a reward's tier, and
+what the cost row shows. Two card styles exist — the original card, and the
+*catalogue* card shared with the challenge catalogue (image with label, tier
+name above the title, cost row, square call to action).
 
 **Component-specific notes**:
 
@@ -209,14 +235,37 @@ Displays the user's rewards, including rewards they have acquired and can claim.
 
 ### Challenges Component
 
-Displays challenges that the user has started and their progress. Supports navigation to engaged cards via modal.
+Has two modes, chosen by SMT in your configuration:
+
+- **Owned challenges** — lists the challenges the user has started, with their
+  progress. A challenge appears once the user has it.
+- **Catalogue** — lists *every available* challenge, with the user's own state
+  overlaid on each card: available, in progress (with a progress bar), or
+  completed (faded, with a "View" action). A featured carousel at the top shows
+  the challenges carrying your *featured* tag; chips derived from the tags on
+  your challenges filter the grid; an item count sits below the chips. Each
+  card shows the challenge's kind (its tag) above the title, what it earns
+  (points, XP, a badge), and a call to action whose label comes from the offer.
+  A single label on the image says "Featured" (carousel), or the state
+  (grid): "Completed", "Coming soon" for a challenge whose start date is in the
+  future, or the time left when the end date is within a week — in hours during
+  the last day.
+
+Visitors who are not logged in see the catalogue without any personal state.
 
 **URL**: `{componentsHost}/challenges/`
+
+**Configured by SMT**: the mode, which labels appear, the sub-nav chips and
+their per-language labels, what the reward row shows, and which fields on your
+content carry each value (see [Content the components read](#content-the-components-read)).
 
 **Component-specific notes**:
 
 - Optionally handle `navigation.go` if you want to open engaged card details in a host-controlled modal
 - Consider `sizeToContent` when embedding inline in a scrolling page
+- The catalogue reads the whole feed once and filters chips client-side, so
+  chip labels are exactly your tag names unless SMT has configured a
+  translation for them. A typo in a tag shows up verbatim.
 
 ### Giveaways Component
 
@@ -288,6 +337,37 @@ type MapComponentConfig = {
   };
 };
 ```
+
+## Content the components read
+
+The components render **your** content from the SMT platform. Which field plays
+which role is part of the configuration SMT maintains for you, with sensible
+defaults; the table shows the defaults, so you know what to fill in. If your
+content uses different names, tell SMT and the mapping is changed — the
+components themselves never change.
+
+| Shown on the card | Read from your offer (default) | Notes |
+| --- | --- | --- |
+| Title | `title` | |
+| Description | `short_description`, else `description` | |
+| Image | `image`; the featured carousel prefers `image_featured` | Featured artwork should not contain a "Featured" label — the component draws it |
+| Kind (small line above the title) | the offer's tags | also the sub-nav chips; the featured tag is excluded |
+| Featured | the tag SMT configured as *featured* (Palermo: `featured`) | case matters |
+| Points | custom field `points` | |
+| XP | custom field `xp` | display only |
+| Badge ("+1 badge") | custom field `badge` = `yes` | |
+| Call-to-action label | custom field `cta_label` (per language), else `action_text`, else "Start" / "Redeem" | |
+| Time left | the offer's end date, when set | the platform's default open-ended end date shows nothing |
+| Coming soon | the offer's start date in the future | |
+| Progress bar | custom field `challenge_type` = `progressive` on the offer; the value from the user's own challenge item (`progress_status` / `progress_max`) | per-user progress never lives on the offer |
+| Completed | the user's own challenge item has reached `progress_max`, or the platform reports the offer as no longer acquirable for them | |
+| Reward tier | a tag on the reward offer matching one of the configured tier names | the tier name shows above the reward title |
+
+Rule of thumb, agreed with SMT: **anything shown before a user starts a
+challenge lives on the offer; per-user progress lives on the user's item.**
+
+Fonts, icons, colours and radii are not content: they are part of the theme
+SMT configures, and fonts are hosted by SMT alongside your configuration.
 
 ## Configuration
 
