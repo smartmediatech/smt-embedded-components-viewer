@@ -94,6 +94,8 @@ export const BridgedIframe = forwardRef<
     setMapQueryParams,
     mapIframeHandle,
     setPendingMapCommand,
+    senderAddress,
+    senderAccountIndex,
   } = useApp();
   const { lang, labels } = useA11yLabels();
   const componentKey = componentKeyOf(src);
@@ -111,6 +113,8 @@ export const BridgedIframe = forwardRef<
   const onInteractionRef = useRef(onInteraction);
   const useRefreshTokenRef = useRef(useRefreshToken);
   const componentConfigRef = useRef(componentConfig);
+  const senderAddressRef = useRef(senderAddress);
+  const senderAccountIndexRef = useRef(senderAccountIndex);
   // Keep the latest props available to bridge handlers without tearing down the bridge.
   useEffect(() => {
     onNavigationRef.current = onNavigation;
@@ -124,6 +128,12 @@ export const BridgedIframe = forwardRef<
   useEffect(() => {
     componentConfigRef.current = componentConfig;
   }, [componentConfig]);
+  useEffect(() => {
+    senderAddressRef.current = senderAddress;
+  }, [senderAddress]);
+  useEffect(() => {
+    senderAccountIndexRef.current = senderAccountIndex;
+  }, [senderAccountIndex]);
 
  const getCookie = (name: string): string | null => {
   const match = document.cookie.match(
@@ -310,6 +320,18 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       await authService.logout();
       navigate("/login");
       return {};
+    });
+
+    // Resale/marketplace components need a chain address to sign listing,
+    // cancel and purchase requests with. This example container has no real
+    // wallet, so it answers with the dev-configurable value from the Dev menu.
+    bridge.addRequestHandler("wallet.address.get", async () => {
+      const address = senderAddressRef.current;
+      console.log(
+        "[ComponentBridge] 'wallet.address.get' called, returning:",
+        address ? "present" : "empty",
+      );
+      return { address: address || null, index: senderAccountIndexRef.current };
     });
 
     bridge.addRequestHandler("navigation.go", async ({ payload }) => {
@@ -562,6 +584,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         bridge.removeRequestHandler("component.config.get");
         bridge.removeRequestHandler("session.get");
         bridge.removeRequestHandler("session.clear");
+        bridge.removeRequestHandler("wallet.address.get");
         bridge.removeRequestHandler("navigation.go");
         bridge.removeRequestHandler("navigation.open");
         bridge.removeRequestHandler("interaction");
