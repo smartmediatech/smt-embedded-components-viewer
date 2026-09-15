@@ -1,3 +1,37 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Eagles Ticket Club design tokens — matches the fixture/mock styling used in
+ * fifa-embedded's Marketplace component (same source: the "Eagles Ticket Club
+ * Prototype v3" Claude Design canvas). Gold accent, serif display type over
+ * DM Sans body/UI type.
+ */
+@theme {
+  --color-brand: #e8a33d;
+  --color-brand-hover: #f5c47a;
+  --color-brand-pressed: #b8763a;
+  /* Matches the design's actual left-rail background (#0e0d11), not the
+     #100f13 used for its mobile page gradient — a different surface. */
+  --color-ink: #0e0d11;
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(26, 26, 26, 0.1), 0 1px 2px rgba(26, 26, 26, 0.06);
+  --shadow-md: 0 4px 12px rgba(26, 26, 26, 0.1);
+  --shadow-lg: 0 12px 32px rgba(26, 26, 26, 0.14);
+  --shadow-xl: 0 24px 60px rgba(26, 26, 26, 0.18);
+  --shadow-2xl: 0 24px 60px rgba(26, 26, 26, 0.18);
+}
+
+body {
+  font-family: var(--font-body);
+}

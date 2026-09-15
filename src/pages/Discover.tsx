@@ -71,6 +71,10 @@ export const Discover = () => {
       navigate("/challenges");
     } else if (feature === "rewards") {
       navigate("/rewards");
+    } else if (feature === "marketplace") {
+      navigate(focus ? `/marketplace?focusItem=${encodeURIComponent(focus)}` : "/marketplace");
+    } else if (feature === "collection") {
+      navigate("/collection");
     } else if (feature === "engaged" && focus) {
       setModalFocus({ id: focus, type: "card" });
       setShowModal(true);
@@ -89,7 +93,7 @@ export const Discover = () => {
       <BridgedIframe
         ref={iframeRef}
         src={src}
-        className="w-full h-full rounded-lg shadow-lg border-0 grow"
+        className="w-full h-full border-0 grow"
         onNavigation={onNavigation}
         sizeToContent
         useRefreshToken={bootMode === "refresh-token"}

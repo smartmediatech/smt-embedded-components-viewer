@@ -7,9 +7,9 @@ import { useAuth } from '../context/AuthContext';
 import { TenantSelect } from "../components/TenantSelect";
 
 const inputCls =
-  'w-full rounded-lg border border-black/12 dark:border-white/12 bg-transparent dark:bg-neutral-800/50 ' +
+  'w-full rounded-sm border border-black/12 dark:border-white/12 bg-transparent dark:bg-neutral-800/50 ' +
   'px-3.5 py-2.5 text-sm text-black dark:text-white outline-none transition-[border-color,box-shadow] ' +
-  'data-[focused]:border-purple-500 data-[focused]:ring-4 data-[focused]:ring-purple-500/15 ' +
+  'data-[focused]:border-brand data-[focused]:ring-4 data-[focused]:ring-brand/15 ' +
   'data-[disabled]:opacity-50 placeholder:text-black/30 dark:placeholder:text-white/30';
 
 export const Login = () => {
@@ -20,8 +20,8 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 p-5">
-      <div className="w-full max-w-sm bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/8 rounded-2xl shadow-sm p-8">
-        <h1 className="text-2xl font-semibold text-black dark:text-white text-center">Component Demo</h1>
+      <div className="w-full max-w-sm bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/8 rounded-lg shadow-md p-8">
+        <h1 className="font-display text-2xl font-bold text-black dark:text-white text-center">Component Demo</h1>
         <p className="text-sm text-black/50 dark:text-white/50 text-center mt-1 mb-6">Sign into your account</p>
 
         {/*
@@ -32,7 +32,7 @@ export const Login = () => {
           the default tenant and then silently mismatching.
         */}
         <div className="flex flex-col gap-1.5 mb-6">
-          <span className="text-sm font-medium text-black/70 dark:text-white/70">
+          <span className="font-display text-sm font-medium text-black/70 dark:text-white/70">
             Environment / publisher
           </span>
           <TenantSelect />
@@ -59,7 +59,7 @@ export const Login = () => {
           }}
         >
           <Field.Root name="email" className="flex flex-col gap-1.5" disabled={loading}>
-            <Field.Label className="text-sm font-medium text-black/70 dark:text-white/70">
+            <Field.Label className="font-display text-sm font-medium text-black/70 dark:text-white/70">
               Email
             </Field.Label>
             <Field.Control
@@ -79,7 +79,7 @@ export const Login = () => {
           </Field.Root>
 
           <Field.Root name="password" className="flex flex-col gap-1.5" disabled={loading}>
-            <Field.Label className="text-sm font-medium text-black/70 dark:text-white/70">
+            <Field.Label className="font-display text-sm font-medium text-black/70 dark:text-white/70">
               Password
             </Field.Label>
             <Field.Control
@@ -102,10 +102,10 @@ export const Login = () => {
             type="submit"
             disabled={loading}
             focusableWhenDisabled
-            className="mt-1 w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white
-              transition-[background-color,opacity] hover:bg-purple-700
+            className="mt-1 w-full rounded-sm bg-brand px-4 py-2.5 font-display text-sm font-bold uppercase tracking-wide text-white
+              transition-[background-color,opacity] hover:bg-brand-hover
               data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed
-              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
+              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             {loading ? 'Signing in…' : 'Sign in'}
           </Button>

@@ -230,6 +230,44 @@ Displays promotions such as sweepstakes, contests, and games that are not direct
 - No additional bridge handlers are required beyond the standard set
 - Consider `sizeToContent` when embedding inline in a scrolling page
 
+### Marketplace Component
+
+Lets a ticket holder put a ticket up for resale and track the listings they have
+created, against the real Tickets service contract
+([public-api.md](https://github.com/smartmediatech/tickets/blob/main/docs/public-api.md)).
+Includes two tabs: **Available to list** for the caller's resale-eligible
+tickets and **My listings** for listings started from this browser.
+
+**URL**: `{componentsHost}/marketplace/`
+
+**Component-specific notes**:
+
+- `session.get` is required, and it must return a usable platform token. Unlike
+  the other components, this one calls the tickets gateway directly, sending
+  that token as `Authorization: Bearer` alongside `App-Id`. Both boot modes
+  work: an access token is used as-is, a refresh token is exchanged first
+- `wallet.address.get` is also required — listing, cancelling, and (later)
+  purchasing all sign requests as a chain address ("sender") that nothing in
+  the platform SDK exposes today. This viewer answers it with the dev-only
+  value set under the sidebar's Dev menu ("Sender (wallet.address.get)"); a
+  real host needs to resolve an actual managed-account address here
+- The eligible-tickets and listing-execution contracts carry chain identity
+  only (`token_id`, `collection`, `smt_id`, `subject`) — no image, event name,
+  or price bounds — so the card and modal show only what the API actually
+  returns
+- No `navigation.go` handling is needed — listing and cancellation both resolve
+  inside the component, so there is no deep link for the host to intercept
+- Listing and cancellation are asynchronous workflows. The component creates an
+  execution and then polls it, so a card only reports **Listed** once the
+  service reports the `submitted` status — a successful HTTP response on its
+  own does not mean the listing is live, and navigating away mid-workflow means
+  the poll resumes on return rather than continuing in the background
+- **My listings** is per-browser. The service contract exposes no endpoint that
+  lists a seller's listings, only a per-execution read, so the component tracks
+  the executions it started in local storage. Clearing site data hides listings
+  that still exist on the platform
+- Consider `sizeToContent` when embedding inline in a scrolling page
+
 ### Card Component
 
 Displays detailed card information. Requires card ID as query parameter.
