@@ -16,10 +16,10 @@ export default abstract class BaseBridge {
     inPages: Record<string, Page[]>;
     requestHandlers: Record<string, (request: RequestMessage) => Promise<Record<string, any>>>;
     constructor(config: BridgeConfig);
-    onReceiveMessage: (event: MessageEvent) => void;
+    onReceiveMessage: (data: Record<string, any> | undefined) => void;
     sendResponse(originalRequest: RequestMessage, payload: Record<string, any>): void;
     sendRequest(name: string, payload: Record<string, any>): Promise<Record<string, any>>;
-    processMessage(data: Record<string, any>): Promise<void>;
+    processMessage(data: Record<string, any>): void;
     abstract sendJsonMessage(message: Record<string, any>): void;
     private sendPages;
     addRequestHandler: (name: string, callback: (request: RequestMessage) => Promise<Record<string, any>>) => void;
