@@ -1,13 +1,16 @@
 import { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { BridgedIframe } from "../components/BridgedIframe";
 import { useApp } from "../context/AppContext";
 
 export const Collection = () => {
   const { smartComponentsHost, setCurrentIframeUrl, appendUrlParams, bootMode } = useApp();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const src = appendUrlParams(`${smartComponentsHost}/collection/`);
+  // Deep link to one ticket: the component opens it instead of the grid.
+  const focusTicket = searchParams.get("focusTicket") ?? undefined;
+  const src = appendUrlParams(`${smartComponentsHost}/collection/`, { focusTicket });
   useEffect(() => {
     setCurrentIframeUrl(src);
     return () => setCurrentIframeUrl(null);
