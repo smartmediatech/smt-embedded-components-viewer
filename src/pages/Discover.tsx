@@ -74,7 +74,9 @@ export const Discover = () => {
     } else if (feature === "marketplace") {
       navigate(focus ? `/marketplace?focusItem=${encodeURIComponent(focus)}` : "/marketplace");
     } else if (feature === "collection") {
-      navigate("/collection");
+      // Carry the focus through: "Open ticket" names a specific ticket, and
+      // dropping it lands the shopper on the grid they started from.
+      navigate(focus ? `/collection?focusTicket=${encodeURIComponent(focus)}` : "/collection");
     } else if (feature === "engaged" && focus) {
       setModalFocus({ id: focus, type: "card" });
       setShowModal(true);

@@ -55,7 +55,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="flex h-screen w-[248px] shrink-0 flex-col bg-ink text-white border-r border-white/[0.07]">
+    <aside className="hidden md:flex h-screen w-[248px] shrink-0 flex-col bg-ink text-white border-r border-white/[0.07]">
       {/* Brand */}
       <div className="px-5 py-5">
         <span className="font-display text-2xl leading-none">The Eagles</span>

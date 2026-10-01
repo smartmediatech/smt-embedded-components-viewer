@@ -1,0 +1,3295 @@
+{
+  "label": "request#1",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#1",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:26 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599769",
+    "ratelimit-reset": "934",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167515",
+    "x-ratelimit-remaining-hour": "3599769",
+    "x-ratelimit-remaining-month": "647806459"
+  },
+  "body": {
+    "request_id": "fbbf5c6b-644a-4bf5-bef0-7d0154fd0e51",
+    "payload": {
+      "user": {
+        "id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+        "meta": {
+          "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_created": "2026-09-08T11:04:15Z",
+          "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_modified": "2026-09-08T11:44:27Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "3a308b92-0a08-4849-b4b5-99c4eb159817",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:44:27Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4.1788865455380255272",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21791,
+              "meta": {
+                "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_created": "2026-09-08T11:04:15Z",
+                "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_modified": "2026-09-08T11:04:15Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4",
+              "platform_id": "smt-dev",
+              "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#2",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#2",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "310",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:27 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599768",
+    "ratelimit-reset": "933",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167514",
+    "x-ratelimit-remaining-hour": "3599768",
+    "x-ratelimit-remaining-month": "647806458",
+    "x-request-id": "137b915c-5b90-4e81-82b5-74fef1831fff"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "25000000000000000000",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "25000000000000000000",
+    "available": "0",
+    "confirmed_block": 2833837,
+    "projection_revision": 1
+  }
+}
+{
+  "label": "request#3",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#3",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:27 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599767",
+    "ratelimit-reset": "933",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167513",
+    "x-ratelimit-remaining-hour": "3599767",
+    "x-ratelimit-remaining-month": "647806457"
+  },
+  "body": {
+    "request_id": "651d7ad3-1c4f-4fb7-bc75-2bda5158d296",
+    "payload": {
+      "user": {
+        "id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+        "meta": {
+          "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_created": "2026-09-08T11:04:17Z",
+          "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_modified": "2026-09-08T11:44:27Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "054ade6c-a6a5-4d43-b3ec-ef9983457c0d",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:44:27Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/55260507-abe6-4bd3-b2b8-b059220e22c3.1788865457250399940",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21792,
+              "meta": {
+                "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_created": "2026-09-08T11:04:17Z",
+                "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_modified": "2026-09-08T11:04:17Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "55260507-abe6-4bd3-b2b8-b059220e22c3",
+              "platform_id": "smt-dev",
+              "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#4",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#4",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "266",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:27 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599766",
+    "ratelimit-reset": "933",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167512",
+    "x-ratelimit-remaining-hour": "3599766",
+    "x-ratelimit-remaining-month": "647806456",
+    "x-request-id": "d382b9f3-dcfb-4717-8e8e-2b8c08cf6f33"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "0",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "0",
+    "available": "0",
+    "confirmed_block": 0,
+    "projection_revision": 0
+  }
+}
+{
+  "label": "request#5",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#5",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:27 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599765",
+    "ratelimit-reset": "933",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167511",
+    "x-ratelimit-remaining-hour": "3599765",
+    "x-ratelimit-remaining-month": "647806455",
+    "x-request-id": "99e26458-ef06-4a27-bdb1-d7ff0dfc49c9"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 5,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "purchase_submitted",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "purchase_submitted"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "submitted",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:17.329Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z"
+  }
+}
+{
+  "label": "request#6",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#6",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:28 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599764",
+    "ratelimit-reset": "932",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167510",
+    "x-ratelimit-remaining-hour": "3599764",
+    "x-ratelimit-remaining-month": "647806454",
+    "x-request-id": "1741202e-573e-4377-9694-718bac4759d2"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 5,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "purchase_submitted",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "purchase_submitted"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "submitted",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:17.329Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z"
+  }
+}
+{
+  "label": "request#7",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#7",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:31 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599763",
+    "ratelimit-reset": "929",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167509",
+    "x-ratelimit-remaining-hour": "3599763",
+    "x-ratelimit-remaining-month": "647806453",
+    "x-request-id": "74c5554e-dba2-4a79-8003-229af3084af0"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 5,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "purchase_submitted",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "purchase_submitted"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "submitted",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:17.329Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z"
+  }
+}
+{
+  "label": "request#8",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#8",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:34 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599762",
+    "ratelimit-reset": "926",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167508",
+    "x-ratelimit-remaining-hour": "3599762",
+    "x-ratelimit-remaining-month": "647806452",
+    "x-request-id": "87bef1fd-fd54-4a97-af9a-9f0a6b9bf757"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 5,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "purchase_submitted",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "purchase_submitted"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "submitted",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:17.329Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z"
+  }
+}
+{
+  "label": "request#9",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#9",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:37 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599761",
+    "ratelimit-reset": "923",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167507",
+    "x-ratelimit-remaining-hour": "3599761",
+    "x-ratelimit-remaining-month": "647806451",
+    "x-request-id": "cb6c0a83-fdb4-4e8d-bc71-430fa2f078a3"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 6,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "transaction_hash": "0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "settled",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "settled"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "confirmed",
+    "fulfillment_status": "smt_pending",
+    "correlation_status": "matched",
+    "confirmed_tickets": [
+      {
+        "position": 1,
+        "ticket_key": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+        "event_id": "dual:6301:0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f:9:dual.ticket.minted.v1",
+        "token_id": "1",
+        "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+      }
+    ],
+    "completed_tickets": [],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:35.613Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z",
+    "when_mined": "2026-09-08T11:44:35.613Z",
+    "when_settled": "2026-09-08T11:44:35.613Z"
+  }
+}
+{
+  "label": "request#10",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#10",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:40 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599760",
+    "ratelimit-reset": "920",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167506",
+    "x-ratelimit-remaining-hour": "3599760",
+    "x-ratelimit-remaining-month": "647806450",
+    "x-request-id": "e3d998c7-b6b0-42f1-b641-326f73c9d769"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 7,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "quantity": 1,
+    "expected_ticket_ids": [
+      "1"
+    ],
+    "order_digests": [
+      "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+    ],
+    "user_operation_hash": "0x928a17535e2ebb417d2310883d1e6aa76fd56f1c858bad946b2f56c57d865dfb",
+    "transaction_hash": "0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f",
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "settled",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+      "state": "settled"
+    },
+    "chain_action_status": "prepared",
+    "settlement_status": "confirmed",
+    "fulfillment_status": "complete",
+    "correlation_status": "matched",
+    "confirmed_tickets": [
+      {
+        "position": 1,
+        "ticket_key": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+        "event_id": "dual:6301:0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f:9:dual.ticket.minted.v1",
+        "token_id": "1",
+        "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f"
+      }
+    ],
+    "completed_tickets": [
+      {
+        "position": 1,
+        "ticket_key": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+        "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3"
+      }
+    ],
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "target": "0x4f73ef9c8fdf29932434fd81b6ceef55253d1c42",
+    "order_digest": "0x82895eae961ce8651b70def144d83bf2498b85a5cf6abf58bb2e7aecdb1bc79f",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000142f524c911e765380e15035cef5778366f54f23d10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c53010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c420000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000004f73ef9c8fdf29932434fd81b6ceef55253d1c42000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000704ff614e1e0000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000006e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000ea5e940c00b7950efb01e07bf47cfbf7d3c3aa4e0000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000001bc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa600000000000000000000000000000000000000000000000000000000000000010000000000000000000000007743622f22bc42885df12209ccb9d458cc0ec851000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe7300f8913aaa5e3c937d3153a6f7c061595b210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000151eb3209d6015698704187855ce8c2f15eb8d20d3b91d072f506a2062861c8c98355951fd1dfc2c0da74c5c2aaaf2da561a1854d68d1f7ec73a725129494c18c000000000000000000000000000000000000000000000000000000006aa0031f9b590370fc0c4b84329240468314ec43539e9456b2b6475b6ee5f59ae3cfd458000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff63c0000000000000000000000000000000000000000000000000000000000000000f1aa6f2afe7a170f929f07e76834dd04b9647c7df4094f4d35f0e018170424af70fca7d7d105d33be6f618bc0e88a9030f1acf7dce12ef3ac9d045006eadf3351b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:44:37.723Z",
+    "when_submitted": "2026-09-08T11:44:17.314Z",
+    "when_mined": "2026-09-08T11:44:35.613Z",
+    "when_settled": "2026-09-08T11:44:35.613Z",
+    "when_completed": "2026-09-08T11:44:37.723Z"
+  }
+}
+{
+  "label": "request#11",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-eligible-tickets",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#11",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "412",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:41 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599759",
+    "ratelimit-reset": "919",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167505",
+    "x-ratelimit-remaining-hour": "3599759",
+    "x-ratelimit-remaining-month": "647806449",
+    "x-request-id": "8c29ce37-443e-429c-a5ba-4f0acde7dadd"
+  },
+  "body": [
+    {
+      "ticket_sync_id": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+      "chain_id": 6301,
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+      "token_id": "1",
+      "owner_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "ownership_epoch": 1,
+      "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+      "publisher_fqdn": "dev.smt.testrunner"
+    }
+  ]
+}
+{
+  "label": "request#12",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-listing-executions",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "request_id": "anothershowcase-chain-v1:listing",
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "index": 0,
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "token_id": "1",
+    "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "price": "25000000000000000000",
+    "deadline": 1788954281,
+    "nonce": "105908445765554637162756242815107163393",
+    "sponsored": true
+  }
+}
+{
+  "label": "request#12",
+  "status": 202,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:42 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599758",
+    "ratelimit-reset": "919",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167504",
+    "x-ratelimit-remaining-hour": "3599758",
+    "x-ratelimit-remaining-month": "647806448",
+    "x-request-id": "1109ccd1-e243-47d2-b1e9-2794e3fc96b4"
+  },
+  "body": {
+    "execution_id": "92b9b0a5-4802-416f-95df-c0c0bef8eec5",
+    "state_revision": 2,
+    "action": "sell",
+    "request_id": "anothershowcase-chain-v1:listing",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "token_id": "1",
+    "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "price": "25000000000000000000",
+    "deadline": 1788954281,
+    "nonce": "105908445765554637162756242815107163393",
+    "sponsored": true,
+    "gas": {
+      "CallGasLimit": 0,
+      "VerificationGasLimit": 0,
+      "PreVerificationGas": 0,
+      "MaxFeePerGas": 0,
+      "MaxPriorityFeePerGas": 0
+    },
+    "status": "submitted",
+    "provider_kind": "dual",
+    "provider_status": "not_required",
+    "chain_execution_id": "ebdd510b-e12b-4823-82f2-b76a26657150",
+    "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+    "user_operation_hash": "0xbf8ea9ffd51de26ee06c1f913f71a2effc039caffb708dbd635b62d3d7ea581d",
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "operation": {
+      "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "nonce": "0x1",
+      "callData": "0xe9ae5c530000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001d85a2c1b740159309770b8160a0c4511585d25cee50000000000000000000000000000000000000000000000000000000000000000eed9a23d000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc9000000000000000000000000000000000000000000000000000000000000000100000000000000000000000080d4d00dfecfdc6cfce18a798aaf548607e18eb700000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000006aa146a9000000000000000000000000000000004fad39865aca9844ba331f5939cf6501000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000001200000000000000000000000000000000000000000000000000000000000000056014ad113469aa76af3f79f96429524749555a618d465c6d9f73fea550e26da1d754c368df9ee352203a1254492f79ec81f0bde2828563f27165db0d5c8da370857d74eca23c8363e8448a97823661ac5568d4a3d0e1c000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff65600000000000000000000000000000000000000000000000000000000000000005c9f9dc0368e44be7e2480575f38c6b0d75dd84a27da9da2084178ff4ea3f0dc5e043a54c2d199b724f271f4d0d224b0c10734e9c9c4810115b3799d18b716c71b",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:44:41.411Z",
+    "when_updated": "2026-09-08T11:44:42.541Z",
+    "when_submitted": "2026-09-08T11:44:42.541Z"
+  }
+}
+{
+  "label": "request#13",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#13",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:42 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599757",
+    "ratelimit-reset": "918",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167503",
+    "x-ratelimit-remaining-hour": "3599757",
+    "x-ratelimit-remaining-month": "647806447",
+    "x-request-id": "b5f0461f-71dc-4d15-9a6d-1ce8b3832999"
+  },
+  "body": {
+    "request_id": "b5f0461f-71dc-4d15-9a6d-1ce8b3832999",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#14",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc&next=7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#14",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "88",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:42 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599756",
+    "ratelimit-reset": "918",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167502",
+    "x-ratelimit-remaining-hour": "3599756",
+    "x-ratelimit-remaining-month": "647806446",
+    "x-request-id": "fca78f41-0be7-49f2-bc13-b0c3bff2874c"
+  },
+  "body": {
+    "request_id": "fca78f41-0be7-49f2-bc13-b0c3bff2874c",
+    "payload": {
+      "next": null,
+      "items": []
+    }
+  }
+}
+{
+  "label": "request#15",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#15",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:46 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599755",
+    "ratelimit-reset": "914",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167501",
+    "x-ratelimit-remaining-hour": "3599755",
+    "x-ratelimit-remaining-month": "647806445",
+    "x-request-id": "91ad5b22-22f5-4f3f-9c96-ab001bbba4fd"
+  },
+  "body": {
+    "request_id": "91ad5b22-22f5-4f3f-9c96-ab001bbba4fd",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#16",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc&next=7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#16",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "88",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:46 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599754",
+    "ratelimit-reset": "914",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167500",
+    "x-ratelimit-remaining-hour": "3599754",
+    "x-ratelimit-remaining-month": "647806444",
+    "x-request-id": "0293d90d-1b6e-42c5-8078-16e5a5485692"
+  },
+  "body": {
+    "request_id": "0293d90d-1b6e-42c5-8078-16e5a5485692",
+    "payload": {
+      "next": null,
+      "items": []
+    }
+  }
+}
+{
+  "label": "request#17",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#17",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:49 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599753",
+    "ratelimit-reset": "911",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167499",
+    "x-ratelimit-remaining-hour": "3599753",
+    "x-ratelimit-remaining-month": "647806443",
+    "x-request-id": "18b61371-109e-4b74-8903-60f46bdd6a60"
+  },
+  "body": {
+    "request_id": "18b61371-109e-4b74-8903-60f46bdd6a60",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#18",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc&next=7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#18",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "88",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:49 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599752",
+    "ratelimit-reset": "911",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167498",
+    "x-ratelimit-remaining-hour": "3599752",
+    "x-ratelimit-remaining-month": "647806442",
+    "x-request-id": "b1340b4d-2852-4eac-befe-44eccd4f11e7"
+  },
+  "body": {
+    "request_id": "b1340b4d-2852-4eac-befe-44eccd4f11e7",
+    "payload": {
+      "next": null,
+      "items": []
+    }
+  }
+}
+{
+  "label": "request#19",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#19",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:52 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599751",
+    "ratelimit-reset": "908",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167497",
+    "x-ratelimit-remaining-hour": "3599751",
+    "x-ratelimit-remaining-month": "647806441",
+    "x-request-id": "2f4ce847-b454-4266-b60b-075926c577cd"
+  },
+  "body": {
+    "request_id": "2f4ce847-b454-4266-b60b-075926c577cd",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#20",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc&next=7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#20",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "88",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:52 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599750",
+    "ratelimit-reset": "908",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167496",
+    "x-ratelimit-remaining-hour": "3599750",
+    "x-ratelimit-remaining-month": "647806440",
+    "x-request-id": "fbec767a-0569-4d87-b6a3-3836a7b6b0de"
+  },
+  "body": {
+    "request_id": "fbec767a-0569-4d87-b6a3-3836a7b6b0de",
+    "payload": {
+      "next": null,
+      "items": []
+    }
+  }
+}
+{
+  "label": "request#21",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#21",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "4923",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:55 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599749",
+    "ratelimit-reset": "905",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167495",
+    "x-ratelimit-remaining-hour": "3599749",
+    "x-ratelimit-remaining-month": "647806439",
+    "x-request-id": "3978f792-14f0-4d03-947d-706a4fd1dfe2"
+  },
+  "body": {
+    "request_id": "3978f792-14f0-4d03-947d-706a4fd1dfe2",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "to": "2026-09-09T11:44:41.000Z"
+          },
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "resale",
+            "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+            "token_id": "1",
+            "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+            "price": "25000000000000000000",
+            "deadline": "2026-09-09T11:44:41.000Z",
+            "seller_type": "user",
+            "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+            "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "purchase_strategy": {
+            "id": "dual_resale_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-resale"
+          ],
+          "created_at": "2026-09-08T11:44:55.614Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "external_projection_state": "active",
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9ff53709d95f1b452a3855"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "type": "external",
+              "currency": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+              "value": "25000000000000000000"
+            }
+          ],
+          "quantity": 1,
+          "quantity_mode": "external",
+          "total_quantity": 1,
+          "updated_at": "2026-09-08T11:44:55.614Z",
+          "id": "6a9ff537e96f14df6c5ebd39"
+        },
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#22",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items/direct-buy",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "item_id": "6a9ff537e96f14df6c5ebd39",
+    "quantity": 1,
+    "currency": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "checkout_request_id": "anothershowcase-chain-v1:resale",
+    "sender": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "account_index": 0,
+    "sponsored": true
+  }
+}
+{
+  "label": "request#22",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "5381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:56 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599748",
+    "ratelimit-reset": "904",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167494",
+    "x-ratelimit-remaining-hour": "3599748",
+    "x-ratelimit-remaining-month": "647806438",
+    "x-request-id": "04aa5b3b-d60b-4a55-b673-50a462bef20c"
+  },
+  "body": {
+    "request_id": "04aa5b3b-d60b-4a55-b673-50a462bef20c",
+    "payload": {
+      "order": {
+        "items": [
+          {
+            "item_id": "6a9ff537e96f14df6c5ebd39",
+            "quantity": 1,
+            "fqdn": "dev.smt.testrunner",
+            "price": {
+              "value": "25000000000000000000",
+              "currency": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb"
+            },
+            "image": {
+              "url": {
+                "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+              },
+              "details": {
+                "alt": "AnotherShowCase"
+              },
+              "_id": "6a9ff53709d95f1b452a3855"
+            },
+            "label": {
+              "en": "AnotherShowCase"
+            },
+            "details": {
+              "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+            },
+            "purchase_strategy": {
+              "id": "dual_resale_ticket",
+              "version": 1
+            },
+            "external": {
+              "provider": "dual",
+              "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+              "item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+              "chain_id": 6301,
+              "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+              "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+              "kind": "resale",
+              "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+              "token_id": "1",
+              "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+              "price": "25000000000000000000",
+              "deadline": "2026-09-09T11:44:41.000Z",
+              "seller_type": "user",
+              "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+              "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7"
+            },
+            "quantity_mode": "external"
+          }
+        ],
+        "payment_method": "dual",
+        "payment_result": {
+          "id": "2bc3c2a8-3187-4966-823c-912e46800296",
+          "status": "awaiting_funding",
+          "update_at": "2026-09-08T11:44:56.19Z"
+        },
+        "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+        "platform": "smt-dev",
+        "is_paid": false,
+        "status": "processing",
+        "checkout_request_id": "anothershowcase-chain-v1:resale",
+        "checkout_fingerprint": "cc67624088470f174dce899a2d80d98e5b8e7e0ce4a505fd1f601b47d5ce9995",
+        "purchase_strategy": {
+          "id": "dual_resale_ticket",
+          "version": 1
+        },
+        "external_item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+        "purchase_identity": {
+          "kind": "resale",
+          "request_id": "6a9ff53809d95f1b452a385b",
+          "chain_id": 6301,
+          "sender": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+          "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+          "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+          "quantity": 1,
+          "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+          "token_id": "1",
+          "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+          "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8"
+        },
+        "provider_state": {
+          "provider_kind": "dual",
+          "provider_status": "not_required",
+          "funding_state": "funding_required",
+          "settlement_status": "awaiting_funding",
+          "chain_action_status": "awaiting_funding",
+          "correlation_status": "pending",
+          "smt_transfer_status": "pending",
+          "when_updated": "2026-09-08T11:44:56.19Z"
+        },
+        "purchase_state": "processing",
+        "created_at": "2026-09-08T11:44:56.122Z",
+        "updated_at": "2026-09-08T11:44:56.204Z",
+        "provider_reference": "2bc3c2a8-3187-4966-823c-912e46800296",
+        "funding": {
+          "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+          "purchase_execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+          "hold_id": "dd0ac751-8deb-413a-aed9-76f946825981",
+          "top_up_action_id": "8ce9026e-ff2f-470d-927e-e0b9f7bae2f6",
+          "kind": "resale",
+          "buyer_user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "wallet_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+          "purchase_identity": "6a9ff53809d95f1b452a385b",
+          "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+          "quantity": 1,
+          "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+          "chain_id": 6301,
+          "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+          "purchase_total": "25000000000000000000",
+          "confirmed_balance": "0",
+          "other_active_holds": "0",
+          "available_balance": "0",
+          "existing_balance_used": "0",
+          "required_topup": "25000000000000000000",
+          "actual_token_mint_amount": "25000000000000000000",
+          "confirmed_topup": "0",
+          "fiat_amount_minor": 2500,
+          "fiat_currency": "usd",
+          "minor_per_token": "100",
+          "token_decimals": 18,
+          "rate_version": "dual-usd-fixed-v1",
+          "payment_provider": "stripe",
+          "payment_reference": "pi_3UDNSOLHTWoT7j8f0AgMO4Mr",
+          "state": "token_pending"
+        },
+        "next_action": {
+          "type": "poll_order",
+          "order_id": "6a9ff53809d95f1b452a385b",
+          "url": "/marketplace/orders/6a9ff53809d95f1b452a385b",
+          "retry_after_ms": 1000
+        },
+        "purchase_state_revision": 3,
+        "id": "6a9ff53809d95f1b452a385b"
+      },
+      "next_action": {
+        "type": "confirm_payment",
+        "provider": "stripe",
+        "client_secret": "[REDACTED]",
+        "payment_intent_id": "pi_3UDNSOLHTWoT7j8f0AgMO4Mr",
+        "amount_minor": 2500,
+        "currency": "usd"
+      }
+    }
+  }
+}
+{
+  "label": "request#23",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-purchase-executions/2bc3c2a8-3187-4966-823c-912e46800296",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#23",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "1950",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:44:56 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599747",
+    "ratelimit-reset": "904",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167493",
+    "x-ratelimit-remaining-hour": "3599747",
+    "x-ratelimit-remaining-month": "647806437",
+    "x-request-id": "fc72479b-4c1f-4b08-8b34-924336c0be91"
+  },
+  "body": {
+    "execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+    "state_revision": 3,
+    "marketplace_order_id": "6a9ff53809d95f1b452a385b",
+    "chain_id": 6301,
+    "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "token_id": "1",
+    "seller": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "payer": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "recipient": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+    "funding_state": "funding_required",
+    "funding": {
+      "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+      "purchase_execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+      "hold_id": "dd0ac751-8deb-413a-aed9-76f946825981",
+      "top_up_action_id": "8ce9026e-ff2f-470d-927e-e0b9f7bae2f6",
+      "kind": "resale",
+      "buyer_user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+      "wallet_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+      "purchase_identity": "6a9ff53809d95f1b452a385b",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "0",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "state": "funding_required"
+    },
+    "provider_kind": "dual",
+    "provider_status": "not_required",
+    "chain_action_status": "awaiting_funding",
+    "settlement_status": "awaiting_funding",
+    "correlation_status": "pending",
+    "smt_transfer_status": "pending",
+    "pre_ownership_epoch": 1,
+    "when_created": "2026-09-08T11:44:56.139Z",
+    "when_updated": "2026-09-08T11:44:56.19Z"
+  }
+}
+{
+  "label": "request#24",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-purchase-executions/2bc3c2a8-3187-4966-823c-912e46800296",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#24",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:12 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599746",
+    "ratelimit-reset": "708",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167492",
+    "x-ratelimit-remaining-hour": "3599746",
+    "x-ratelimit-remaining-month": "647806436",
+    "x-request-id": "45084127-a00e-4847-b354-38079e6ae91e"
+  },
+  "body": {
+    "execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+    "state_revision": 10,
+    "marketplace_order_id": "6a9ff53809d95f1b452a385b",
+    "chain_id": 6301,
+    "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+    "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+    "token_id": "1",
+    "seller": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "payer": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "recipient": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "user_operation_hash": "0x9fb65fbcdbe0bbc4757268c6e2ef2a41e9cacff6dd8a149ea57f50d1e73bdc88",
+    "transaction_hash": "0xb85e9dc1457f26a896db8982f18fa59e91802f2e9c0e13865f47ccccbd65b560",
+    "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+    "funding_state": "settled",
+    "funding": {
+      "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+      "purchase_execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+      "hold_id": "dd0ac751-8deb-413a-aed9-76f946825981",
+      "top_up_action_id": "8ce9026e-ff2f-470d-927e-e0b9f7bae2f6",
+      "kind": "resale",
+      "buyer_user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+      "wallet_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+      "purchase_identity": "6a9ff53809d95f1b452a385b",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "25000000000000000000",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "payment_provider": "stripe",
+      "payment_reference": "pi_3UDNSOLHTWoT7j8f0AgMO4Mr",
+      "state": "settled"
+    },
+    "provider_kind": "dual",
+    "provider_status": "not_required",
+    "chain_action_status": "prepared",
+    "settlement_status": "confirmed",
+    "correlation_status": "matched",
+    "smt_transfer_status": "complete",
+    "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+    "pre_ownership_epoch": 1,
+    "new_ownership_epoch": 2,
+    "completed_fact_event_id": "dual:6301:0xb85e9dc1457f26a896db8982f18fa59e91802f2e9c0e13865f47ccccbd65b560:11:dual.ticket.resale.completed.v1",
+    "entry_point": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+    "operation": {
+      "sender": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+      "nonce": "0x0",
+      "factory": "0x1a81a4e03fd24963251344fd41017a51447546a5",
+      "factoryData": "0xea6d13ac0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001243c3b752b014ad113469aa76af3f79f96429524749555a618d40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000149bb59851e4bc8131148cec1bff8baac2acd1a68b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callData": "0xe9ae5c530100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000003c0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000012000000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b30000000000000000000000005a2c1b740159309770b8160a0c4511585d25cee50000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000000000000000000000000000005a2c1b740159309770b8160a0c4511585d25cee50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001c447814d7e000000000000000000000000ab99e6a9ab915434f53ef63cbc8686c4f981dbc9000000000000000000000000000000000000000000000000000000000000000100000000000000000000000080d4d00dfecfdc6cfce18a798aaf548607e18eb700000000000000000000000057701ea3865f8ac6c3ef4c831c5b13da577b6bdb0000000000000000000000000000000000000000000000015af1d78b58c40000000000000000000000000000000000000000000000000000000000006aa146a9000000000000000000000000000000004fad39865aca9844ba331f5939cf65010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056014ad113469aa76af3f79f96429524749555a618d465c6d9f73fea550e26da1d754c368df9ee352203a1254492f79ec81f0bde2828563f27165db0d5c8da370857d74eca23c8363e8448a97823661ac5568d4a3d0e1c0000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "callGasLimit": "0x16e360",
+      "verificationGasLimit": "0x7a120",
+      "preVerificationGas": "0x186a0",
+      "maxFeePerGas": "0x77359400",
+      "maxPriorityFeePerGas": "0x3b9aca00",
+      "paymaster": "0x1f82f39519e04a029121136db397c551b325c912",
+      "paymasterVerificationGasLimit": "0x124f8",
+      "paymasterPostOpGasLimit": "0x4e20",
+      "paymasterData": "0x000000000000000000000000000000000000000000000000000000006a9ff68b00000000000000000000000000000000000000000000000000000000000000006453b15d7d12bbe0f63ff2496eb6b27e841d7aa1268ef60cc4ba2ecdfaa1491d41f714d0e829aecb2bc5340d6ad06a5fafa95ae11d965c874d5cd46644f2b7701c",
+      "signature": "[REDACTED]"
+    },
+    "when_created": "2026-09-08T11:44:56.139Z",
+    "when_updated": "2026-09-08T11:45:55.782Z",
+    "when_submitted": "2026-09-08T11:45:36.425Z",
+    "when_settled": "2026-09-08T11:45:55.633Z",
+    "when_transfer_started": "2026-09-08T11:45:55.754Z",
+    "when_completed": "2026-09-08T11:45:55.782Z"
+  }
+}
+{
+  "label": "request#25",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-eligible-tickets",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#25",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "412",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:12 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599745",
+    "ratelimit-reset": "708",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167491",
+    "x-ratelimit-remaining-hour": "3599745",
+    "x-ratelimit-remaining-month": "647806435",
+    "x-request-id": "98082cf3-cc16-4c32-9820-ce3392189e34"
+  },
+  "body": [
+    {
+      "ticket_sync_id": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+      "chain_id": 6301,
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+      "token_id": "1",
+      "owner_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+      "ownership_epoch": 2,
+      "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+      "publisher_fqdn": "dev.smt.testrunner"
+    }
+  ]
+}
+{
+  "label": "request#26",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/resale-eligible-tickets",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#26",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:13 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599744",
+    "ratelimit-reset": "707",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167490",
+    "x-ratelimit-remaining-hour": "3599744",
+    "x-ratelimit-remaining-month": "647806434",
+    "x-request-id": "00411752-f902-467d-a7e1-f8491f63c66b"
+  },
+  "body": []
+}
+{
+  "label": "request#27",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/vatom/get",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "ids": [
+      "bc76bdef-054c-4ab1-88e4-dc3eda3972c3"
+    ]
+  }
+}
+{
+  "label": "request#27",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-length": "1126",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:13 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599743",
+    "ratelimit-reset": "707",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "vary": "Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167489",
+    "x-ratelimit-remaining-hour": "3599743",
+    "x-ratelimit-remaining-month": "647806433"
+  },
+  "body": {
+    "request_id": "a5b81bd9-04c2-4c69-adc7-0de4bca6f3e5",
+    "payload": {
+      "vatoms": [
+        {
+          "id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+          "when_created": "2026-09-08T11:44:37Z",
+          "when_modified": "2026-09-08T11:45:55Z",
+          "when_added": "2026-09-08T11:45:55Z",
+          "vAtom::vAtomType": {
+            "parent_id": ".",
+            "publisher_fqdn": "dev.smt.testrunner",
+            "root_type": "vAtom::vAtomType",
+            "owner": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+            "author": "f098457b-1aad-4594-aa42-fc2cbb8ac83c",
+            "template": "dev.smt.testrunner::AnotherShowCase",
+            "template_variation": "dev.smt.testrunner::AnotherShowCase::v1",
+            "title": "AnotherShowCase ticket",
+            "description": "A ticket created from a confirmed on-chain purchase.",
+            "disabled": false,
+            "category": "ticket",
+            "tags": null,
+            "transferable": true,
+            "acquirable": false,
+            "tradeable": false,
+            "transferred_by": "",
+            "cloned_from": "",
+            "cloning_score": 0,
+            "redeemable": false,
+            "resources": null,
+            "visibility": {
+              "type": "public",
+              "value": "*"
+            },
+            "num_direct_clones": 0,
+            "geo_pos": {
+              "type": "Point",
+              "coordinates": [
+                0,
+                0
+              ],
+              "geo_hash": "s00000000000"
+            },
+            "dropped": false,
+            "child_policy": null,
+            "child_return_policy": null
+          },
+          "chain": {
+            "contract": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "network": "dual",
+            "token_id": "1",
+            "minted": true
+          },
+          "eth": null,
+          "private": {
+            "ticket": {
+              "qr_ref": null,
+              "schema_version": 1,
+              "integrity": {
+                "payload_hash": "e367d37bc8e74970b84953e636100fbc4ee2676fa8e42c2b3602cbc30814aeba",
+                "policy_hash": "0x90dee65a4712e42bb8e026a9e8c85277d37d16a442b9f0b12520b31ea2ccd0a5",
+                "policy_version": 1
+              },
+              "on_chain": {
+                "log_index": 9,
+                "owner_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+                "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "token_id": "1",
+                "transaction_hash": "0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f",
+                "block_hash": "0xb5d8215262beb5b7df7851ef7d72102990beeee0b355aea3c187b5fee8fd2db9",
+                "block_number": 2833841,
+                "chain_id": 6301,
+                "collection": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9"
+              },
+              "provider_refs": {},
+              "purchase": {
+                "seat_key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "ticket_sync_id": "dual:6301:0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9:1",
+                "event_id": "dual:6301:0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f:9:dual.ticket.minted.v1",
+                "ownership_epoch": 1
+              }
+            }
+          },
+          "version": "",
+          "sync": 1
+        }
+      ],
+      "faces": [],
+      "actions": []
+    }
+  }
+}
+{
+  "label": "request#28",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/orders/6a9feca78ddd4763446a1b5e",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#28",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "9106",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:13 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599742",
+    "ratelimit-reset": "707",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167488",
+    "x-ratelimit-remaining-hour": "3599742",
+    "x-ratelimit-remaining-month": "647806432",
+    "x-request-id": "6d3b9964-096f-41c4-82ed-ff5070b063ee"
+  },
+  "body": {
+    "request_id": "6d3b9964-096f-41c4-82ed-ff5070b063ee",
+    "payload": {
+      "payment_result": {
+        "id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+        "status": "confirmed",
+        "update_at": "2026-09-08T11:44:37.723Z"
+      },
+      "items": [
+        {
+          "item_id": "6a9fe226e96f14df6c5ebd36",
+          "quantity": 1,
+          "fqdn": "dev.smt.testrunner",
+          "price": {
+            "value": 25,
+            "currency": "usd"
+          },
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            }
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "revert": false,
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "quantity_mode": "external"
+        }
+      ],
+      "payment_method": "dual",
+      "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "platform": "smt-dev",
+      "is_paid": true,
+      "cart_id": "6a9feca7e96f14df6c5ebd38",
+      "status": "done",
+      "checkout_request_id": "anothershowcase-chain-v1:primary",
+      "checkout_fingerprint": "35e86f28fb431cbd235d5435204296e37dde4cb8999b01512e829e55508ec8f0",
+      "purchase_strategy": {
+        "id": "dual_primary_ticket",
+        "version": 1
+      },
+      "external_item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "purchase_state": "done",
+      "purchase_identity": {
+        "request_id": "6a9feca78ddd4763446a1b5e",
+        "chain_id": 6301,
+        "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+        "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+        "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+        "quantity": 1
+      },
+      "provider_state": {
+        "settlement_status": "confirmed",
+        "chain_action_status": null,
+        "fulfillment_status": "complete",
+        "correlation_status": "matched",
+        "transaction_hash": "0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f",
+        "last_error_code": null,
+        "when_updated": "2026-09-08T11:44:37.723Z",
+        "when_settled": "2026-09-08T11:44:35.613Z",
+        "when_completed": "2026-09-08T11:44:37.723Z"
+      },
+      "created_at": "2026-09-08T11:08:23.773Z",
+      "updated_at": "2026-09-08T11:44:38.573Z",
+      "checkout_response": {
+        "order": {
+          "payment_result": {
+            "id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+            "status": "confirmed",
+            "update_at": "2026-09-08T11:44:37.723Z"
+          },
+          "items": [
+            {
+              "item_id": "6a9fe226e96f14df6c5ebd36",
+              "quantity": 1,
+              "fqdn": "dev.smt.testrunner",
+              "price": {
+                "value": 25,
+                "currency": "usd"
+              },
+              "image": {
+                "url": {
+                  "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+                },
+                "details": {
+                  "alt": "AnotherShowCase"
+                }
+              },
+              "label": {
+                "en": "AnotherShowCase"
+              },
+              "details": {
+                "sale_type": "dual_primary_ticket",
+                "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+              },
+              "revert": false,
+              "purchase_strategy": {
+                "id": "dual_primary_ticket",
+                "version": 1
+              },
+              "external": {
+                "provider": "dual",
+                "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "chain_id": 6301,
+                "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+                "kind": "primary"
+              },
+              "quantity_mode": "external"
+            }
+          ],
+          "payment_method": "dual",
+          "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "platform": "smt-dev",
+          "is_paid": true,
+          "cart_id": "6a9feca7e96f14df6c5ebd38",
+          "status": "done",
+          "checkout_request_id": "anothershowcase-chain-v1:primary",
+          "checkout_fingerprint": "35e86f28fb431cbd235d5435204296e37dde4cb8999b01512e829e55508ec8f0",
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "external_item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+          "purchase_state": "done",
+          "purchase_identity": {
+            "request_id": "6a9feca78ddd4763446a1b5e",
+            "chain_id": 6301,
+            "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+            "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "quantity": 1
+          },
+          "provider_state": {
+            "settlement_status": "confirmed",
+            "chain_action_status": null,
+            "fulfillment_status": "complete",
+            "correlation_status": "matched",
+            "transaction_hash": "0x0957f20677f5241c0c35d08183cb65080bce46d73d1a2f1835023efe2147075f",
+            "last_error_code": null,
+            "when_updated": "2026-09-08T11:44:37.723Z",
+            "when_settled": "2026-09-08T11:44:35.613Z",
+            "when_completed": "2026-09-08T11:44:37.723Z"
+          },
+          "created_at": "2026-09-08T11:08:23.773Z",
+          "updated_at": "2026-09-08T11:44:36.572Z",
+          "funding": {
+            "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+            "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+            "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+            "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+            "kind": "primary",
+            "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+            "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+            "purchase_identity": "6a9feca78ddd4763446a1b5e",
+            "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "quantity": 1,
+            "chain_id": 6301,
+            "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+            "purchase_total": "25000000000000000000",
+            "confirmed_balance": "0",
+            "other_active_holds": "0",
+            "available_balance": "0",
+            "existing_balance_used": "0",
+            "required_topup": "25000000000000000000",
+            "actual_token_mint_amount": "25000000000000000000",
+            "confirmed_topup": "0",
+            "fiat_amount_minor": 2500,
+            "fiat_currency": "usd",
+            "minor_per_token": "100",
+            "token_decimals": 18,
+            "rate_version": "dual-usd-fixed-v1",
+            "payment_provider": "stripe",
+            "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+            "state": "token_pending"
+          },
+          "provider_reference": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+          "purchase_state_revision": 7,
+          "purchase_event_id": "dual-ticket-purchase:8412bcaa-d904-4c14-90f5-c45d46b5e1b8:7",
+          "paid_at": "2026-09-08T11:44:35.613Z",
+          "next_action": null,
+          "last_error_code": null,
+          "fulfilled_at": "2026-09-08T11:44:37.723Z",
+          "id": "6a9feca78ddd4763446a1b5e"
+        },
+        "next_action": null
+      },
+      "funding": {
+        "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+        "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+        "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+        "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+        "kind": "primary",
+        "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+        "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+        "purchase_identity": "6a9feca78ddd4763446a1b5e",
+        "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+        "quantity": 1,
+        "chain_id": 6301,
+        "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+        "purchase_total": "25000000000000000000",
+        "confirmed_balance": "0",
+        "other_active_holds": "0",
+        "available_balance": "0",
+        "existing_balance_used": "0",
+        "required_topup": "25000000000000000000",
+        "actual_token_mint_amount": "25000000000000000000",
+        "confirmed_topup": "0",
+        "fiat_amount_minor": 2500,
+        "fiat_currency": "usd",
+        "minor_per_token": "100",
+        "token_decimals": 18,
+        "rate_version": "dual-usd-fixed-v1",
+        "payment_provider": "stripe",
+        "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+        "state": "token_pending"
+      },
+      "provider_reference": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "purchase_state_revision": 7,
+      "purchase_event_id": "dual-ticket-purchase:8412bcaa-d904-4c14-90f5-c45d46b5e1b8:7",
+      "paid_at": "2026-09-08T11:44:35.613Z",
+      "fulfilled_at": "2026-09-08T11:44:37.723Z",
+      "id": "6a9feca78ddd4763446a1b5e"
+    }
+  }
+}
+{
+  "label": "request#29",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/orders/6a9ff53809d95f1b452a385b",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#29",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "9538",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:48:13 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599741",
+    "ratelimit-reset": "707",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167487",
+    "x-ratelimit-remaining-hour": "3599741",
+    "x-ratelimit-remaining-month": "647806431",
+    "x-request-id": "bddf8d48-7726-4ece-8d6e-49f074768b88"
+  },
+  "body": {
+    "request_id": "bddf8d48-7726-4ece-8d6e-49f074768b88",
+    "payload": {
+      "payment_result": {
+        "id": "2bc3c2a8-3187-4966-823c-912e46800296",
+        "status": "confirmed",
+        "update_at": "2026-09-08T11:45:55.782Z"
+      },
+      "items": [
+        {
+          "item_id": "6a9ff537e96f14df6c5ebd39",
+          "quantity": 1,
+          "fqdn": "dev.smt.testrunner",
+          "price": {
+            "value": "25000000000000000000",
+            "currency": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb"
+          },
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9ff53709d95f1b452a3855"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "details": {
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "purchase_strategy": {
+            "id": "dual_resale_ticket",
+            "version": 1
+          },
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "resale",
+            "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+            "token_id": "1",
+            "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+            "price": "25000000000000000000",
+            "deadline": "2026-09-09T11:44:41.000Z",
+            "seller_type": "user",
+            "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+            "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7"
+          },
+          "quantity_mode": "external"
+        }
+      ],
+      "payment_method": "dual",
+      "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+      "platform": "smt-dev",
+      "is_paid": true,
+      "status": "done",
+      "checkout_request_id": "anothershowcase-chain-v1:resale",
+      "checkout_fingerprint": "cc67624088470f174dce899a2d80d98e5b8e7e0ce4a505fd1f601b47d5ce9995",
+      "purchase_strategy": {
+        "id": "dual_resale_ticket",
+        "version": 1
+      },
+      "external_item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+      "purchase_identity": {
+        "kind": "resale",
+        "request_id": "6a9ff53809d95f1b452a385b",
+        "chain_id": 6301,
+        "sender": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+        "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+        "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+        "quantity": 1,
+        "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+        "token_id": "1",
+        "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+        "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8"
+      },
+      "provider_state": {
+        "provider_kind": "dual",
+        "provider_status": "not_required",
+        "provider_error_code": null,
+        "funding_state": "settled",
+        "settlement_status": "confirmed",
+        "chain_action_status": null,
+        "correlation_status": "matched",
+        "smt_transfer_status": "complete",
+        "transaction_hash": "0xb85e9dc1457f26a896db8982f18fa59e91802f2e9c0e13865f47ccccbd65b560",
+        "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+        "last_error_code": null,
+        "when_updated": "2026-09-08T11:45:55.782Z",
+        "when_settled": "2026-09-08T11:45:55.633Z",
+        "when_transfer_started": "2026-09-08T11:45:55.754Z",
+        "when_completed": "2026-09-08T11:45:55.782Z"
+      },
+      "purchase_state": "done",
+      "created_at": "2026-09-08T11:44:56.122Z",
+      "updated_at": "2026-09-08T11:45:56.619Z",
+      "checkout_response": {
+        "order": {
+          "payment_result": {
+            "id": "2bc3c2a8-3187-4966-823c-912e46800296",
+            "status": "confirmed",
+            "update_at": "2026-09-08T11:45:55.782Z"
+          },
+          "items": [
+            {
+              "item_id": "6a9ff537e96f14df6c5ebd39",
+              "quantity": 1,
+              "fqdn": "dev.smt.testrunner",
+              "price": {
+                "value": "25000000000000000000",
+                "currency": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb"
+              },
+              "image": {
+                "url": {
+                  "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+                },
+                "details": {
+                  "alt": "AnotherShowCase"
+                },
+                "_id": "6a9ff53709d95f1b452a3855"
+              },
+              "label": {
+                "en": "AnotherShowCase"
+              },
+              "details": {
+                "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+              },
+              "purchase_strategy": {
+                "id": "dual_resale_ticket",
+                "version": 1
+              },
+              "external": {
+                "provider": "dual",
+                "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+                "chain_id": 6301,
+                "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+                "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+                "kind": "resale",
+                "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+                "token_id": "1",
+                "payment_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+                "price": "25000000000000000000",
+                "deadline": "2026-09-09T11:44:41.000Z",
+                "seller_type": "user",
+                "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7"
+              },
+              "quantity_mode": "external"
+            }
+          ],
+          "payment_method": "dual",
+          "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "platform": "smt-dev",
+          "is_paid": true,
+          "status": "done",
+          "checkout_request_id": "anothershowcase-chain-v1:resale",
+          "checkout_fingerprint": "cc67624088470f174dce899a2d80d98e5b8e7e0ce4a505fd1f601b47d5ce9995",
+          "purchase_strategy": {
+            "id": "dual_resale_ticket",
+            "version": 1
+          },
+          "external_item_ref": "dual:6301:resale:0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+          "purchase_identity": {
+            "kind": "resale",
+            "request_id": "6a9ff53809d95f1b452a385b",
+            "chain_id": 6301,
+            "sender": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+            "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "quantity": 1,
+            "order_digest": "0x74c5790856aff1fd9036fbbdcb727d754929253a3f177e54f9b5bdaf347c6c73",
+            "token_id": "1",
+            "seller_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+            "seller_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8"
+          },
+          "provider_state": {
+            "provider_kind": "dual",
+            "provider_status": "not_required",
+            "provider_error_code": null,
+            "funding_state": "settled",
+            "settlement_status": "confirmed",
+            "chain_action_status": null,
+            "correlation_status": "matched",
+            "smt_transfer_status": "complete",
+            "transaction_hash": "0xb85e9dc1457f26a896db8982f18fa59e91802f2e9c0e13865f47ccccbd65b560",
+            "smt_id": "bc76bdef-054c-4ab1-88e4-dc3eda3972c3",
+            "last_error_code": null,
+            "when_updated": "2026-09-08T11:45:55.782Z",
+            "when_settled": "2026-09-08T11:45:55.633Z",
+            "when_transfer_started": "2026-09-08T11:45:55.754Z",
+            "when_completed": "2026-09-08T11:45:55.782Z"
+          },
+          "purchase_state": "done",
+          "created_at": "2026-09-08T11:44:56.122Z",
+          "updated_at": "2026-09-08T11:45:56.606Z",
+          "funding": {
+            "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+            "purchase_execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+            "top_up_action_id": "8ce9026e-ff2f-470d-927e-e0b9f7bae2f6",
+            "wallet_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+            "required_topup": "25000000000000000000",
+            "fiat_amount_minor": 2500,
+            "fiat_currency": "usd",
+            "rate_version": "dual-usd-fixed-v1",
+            "payment_provider": "stripe",
+            "payment_reference": "pi_3UDNSOLHTWoT7j8f0AgMO4Mr",
+            "state": "settled"
+          },
+          "next_action": null,
+          "provider_reference": "2bc3c2a8-3187-4966-823c-912e46800296",
+          "purchase_state_revision": 10,
+          "purchase_event_id": "dual-ticket-resale-purchase:2bc3c2a8-3187-4966-823c-912e46800296:10",
+          "last_error_code": null,
+          "paid_at": "2026-09-08T11:45:55.782Z",
+          "fulfilled_at": "2026-09-08T11:45:55.782Z",
+          "id": "6a9ff53809d95f1b452a385b"
+        },
+        "next_action": null
+      },
+      "funding": {
+        "funding_execution_id": "12dd4491-c586-4401-b990-32a0e5441450",
+        "purchase_execution_id": "2bc3c2a8-3187-4966-823c-912e46800296",
+        "top_up_action_id": "8ce9026e-ff2f-470d-927e-e0b9f7bae2f6",
+        "wallet_address": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+        "required_topup": "25000000000000000000",
+        "fiat_amount_minor": 2500,
+        "fiat_currency": "usd",
+        "rate_version": "dual-usd-fixed-v1",
+        "payment_provider": "stripe",
+        "payment_reference": "pi_3UDNSOLHTWoT7j8f0AgMO4Mr",
+        "state": "settled"
+      },
+      "provider_reference": "2bc3c2a8-3187-4966-823c-912e46800296",
+      "purchase_state_revision": 10,
+      "purchase_event_id": "dual-ticket-resale-purchase:2bc3c2a8-3187-4966-823c-912e46800296:10",
+      "fulfilled_at": "2026-09-08T11:45:55.782Z",
+      "paid_at": "2026-09-08T11:45:55.782Z",
+      "id": "6a9ff53809d95f1b452a385b"
+    }
+  }
+}
