@@ -15,6 +15,7 @@ import { COMPONENT_TABS, useActiveComponentTab } from "./componentTabs";
 
 export const MobileTopBar = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const avatarUrl = user?.avatarUri;
 
   return (
@@ -23,16 +24,18 @@ export const MobileTopBar = () => {
       style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 12px)", paddingBottom: "12px" }}
     >
       <span className="font-display text-[19px] leading-none">The Eagles</span>
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt=""
-          aria-hidden="true"
-          className="h-[30px] w-[30px] shrink-0 rounded-full border border-white/[0.18] bg-[#1a1820] object-cover"
-        />
-      ) : (
-        <UserCircleIcon size={30} weight="fill" className="shrink-0 text-white/70" aria-hidden="true" />
-      )}
+      <button type="button" onClick={() => navigate("/profile")} aria-label="Your profile" className="shrink-0 rounded-full">
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt=""
+            aria-hidden="true"
+            className="h-[30px] w-[30px] shrink-0 rounded-full border border-white/[0.18] bg-[#1a1820] object-cover"
+          />
+        ) : (
+          <UserCircleIcon size={30} weight="fill" className="shrink-0 text-white/70" aria-hidden="true" />
+        )}
+      </button>
     </header>
   );
 };
