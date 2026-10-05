@@ -11,11 +11,9 @@ import { TenantSelect } from "./TenantSelect";
 import { COMPONENT_TABS, useActiveComponentTab } from "./componentTabs";
 
 export const Sidebar = () => {
-  const [loading, setLoading] = useState(false);
   const [avatarFailed, setAvatarFailed] = useState(false);
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const {
-    language,
     theme,
     setTheme,
     explicitTheme,
@@ -41,18 +39,6 @@ export const Sidebar = () => {
     [],
   );
   const activeComponentTab = useActiveComponentTab();
-
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      await logout();
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <aside className="hidden md:flex h-screen w-[248px] shrink-0 flex-col bg-ink text-white border-r border-white/[0.07]">
@@ -254,58 +240,32 @@ export const Sidebar = () => {
           )}
         </div>
 
-        {/* Account */}
-        <Popover.Root>
-          <Popover.Trigger
-            className="flex w-full items-center gap-[11px] rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-white/5 cursor-pointer data-[popup-open]:bg-white/10"
-            aria-label="Account menu"
-          >
-            {user?.avatarUri && !avatarFailed ? (
-              <img
-                src={user.avatarUri}
-                alt=""
-                aria-hidden="true"
-                onError={() => setAvatarFailed(true)}
-                className="h-[34px] w-[34px] shrink-0 rounded-full border border-white/[0.18] bg-[#1a1820] object-cover"
-              />
-            ) : (
-              <UserCircleIcon size={34} weight="fill" className="shrink-0 text-white/70" aria-hidden="true" />
-            )}
-            <span className="min-w-0 flex-1">
-              <span className="block truncate font-display text-[12.5px] font-bold text-white">
-                {user?.name}
-              </span>
-              <span className="block truncate text-[10.5px] text-white/50 mt-0.5">{user?.email}</span>
+        {/* Account — opens the fan's profile (logout lives there) */}
+        <button
+          type="button"
+          onClick={() => navigate("/profile")}
+          aria-label="Your profile"
+          aria-current={location.pathname === "/profile" ? "page" : undefined}
+          className="flex w-full items-center gap-[11px] rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-white/5 cursor-pointer aria-[current=page]:bg-white/10"
+        >
+          {user?.avatarUri && !avatarFailed ? (
+            <img
+              src={user.avatarUri}
+              alt=""
+              aria-hidden="true"
+              onError={() => setAvatarFailed(true)}
+              className="h-[34px] w-[34px] shrink-0 rounded-full border border-white/[0.18] bg-[#1a1820] object-cover"
+            />
+          ) : (
+            <UserCircleIcon size={34} weight="fill" className="shrink-0 text-white/70" aria-hidden="true" />
+          )}
+          <span className="min-w-0 flex-1">
+            <span className="block truncate font-display text-[12.5px] font-bold text-white">
+              {user?.name}
             </span>
-          </Popover.Trigger>
-
-          <Popover.Portal>
-            <Popover.Positioner side="top" align="start" sideOffset={12} className="z-50">
-              <Popover.Popup className="w-64 rounded-lg border border-black/10 bg-white p-5 shadow-lg dark:border-white/10 dark:bg-ink origin-[var(--transform-origin)] transition-[transform,scale,opacity] data-[starting-style]:scale-95 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[ending-style]:opacity-0">
-                <Popover.Title className="font-display text-base font-semibold text-black dark:text-white">
-                  {user?.name}
-                </Popover.Title>
-                {user?.email && (
-                  <p className="text-sm text-black/50 dark:text-white/50 mt-1">{user.email}</p>
-                )}
-                <p className="text-sm text-black/40 dark:text-white/40 mt-1">{language}</p>
-                {user?.id && (
-                  <p className="font-mono text-xs text-black/30 dark:text-white/30 mt-2">{user.id}</p>
-                )}
-
-                <div className="mt-4 pt-4 border-t border-black/10 dark:border-white/10 flex justify-end">
-                  <button
-                    onClick={handleLogout}
-                    disabled={loading}
-                    className="text-sm text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {loading ? "Logging out…" : "Logout"}
-                  </button>
-                </div>
-              </Popover.Popup>
-            </Popover.Positioner>
-          </Popover.Portal>
-        </Popover.Root>
+            <span className="block truncate text-[10.5px] text-white/50 mt-0.5">{user?.email}</span>
+          </span>
+        </button>
       </div>
     </aside>
   );
