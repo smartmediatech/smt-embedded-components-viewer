@@ -4,6 +4,7 @@ import {
   CompassIcon,
   TicketIcon,
   StackIcon,
+  UserCircleIcon,
   type Icon as PhosphorIcon,
 } from "@phosphor-icons/react";
 import { ComponentSettings } from "./ComponentSettings";
@@ -16,15 +17,16 @@ export interface ComponentTab {
 }
 
 /**
- * Only the three pages the Eagles Ticket Club design actually has (its own
- * nav is exactly Discover/Collection/Marketplace) are shown here. Rewards,
- * Challenges, Giveaways and Map still exist as routes/components — they're
- * just not part of this design, so they're not surfaced in the nav.
+ * The pages the Eagles Ticket Club design has: Discover, Collection,
+ * Marketplace, and the fan's profile ("You"). Rewards, Challenges, Giveaways
+ * and Map still exist as routes/components — they're just not part of this
+ * design, so they're not surfaced in the nav.
  */
 export const COMPONENT_TABS: ComponentTab[] = [
   { path: "/discover", label: "Discover", Icon: CompassIcon, Settings: ComponentSettings },
   { path: "/collection", label: "Collection", Icon: StackIcon, Settings: ComponentSettings },
   { path: "/marketplace", label: "Marketplace", Icon: TicketIcon, Settings: ComponentSettings },
+  { path: "/profile", label: "You", Icon: UserCircleIcon, Settings: ComponentSettings },
 ];
 
 /** Matches the current route to a nav tab, including its `/settings/:tab` alias. */

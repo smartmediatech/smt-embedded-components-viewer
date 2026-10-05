@@ -10,6 +10,7 @@ import { Rewards } from "./pages/Rewards";
 import { Giveaways } from "./pages/Giveaways";
 import { Marketplace } from "./pages/Marketplace";
 import { Collection } from "./pages/Collection";
+import { Profile } from "./pages/Profile";
 import { Map } from "./pages/Map";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route path="/challenges" element={<Challenges />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/collection" element={<Collection />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/map" element={<Map />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
