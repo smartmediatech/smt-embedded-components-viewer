@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useState,
   useEffect,
@@ -13,6 +14,8 @@ interface AuthContextType {
   loading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
+  /** Re-reads the user, e.g. after an embedded profile changed the name or avatar. */
+  refreshUser: () => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -66,11 +69,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
   };
 
+  const refreshUser = useCallback(async () => {
+    if (!authService.isAuthenticated()) return;
+    try {
+      setUser(await authService.fetchCurrentUser());
+    } catch (error) {
+      // Keep showing what we had; a failed refresh isn't a reason to log out.
+      console.error("Failed to refresh current user:", error);
+    }
+  }, []);
+
   const value: AuthContextType = {
     user,
     loading,
     login,
     logout,
+    refreshUser,
     isAuthenticated: !!user,
   };
 
