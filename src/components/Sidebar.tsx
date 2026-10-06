@@ -11,7 +11,8 @@ import { TenantSelect } from "./TenantSelect";
 import { COMPONENT_TABS, useActiveComponentTab } from "./componentTabs";
 
 export const Sidebar = () => {
-  const [avatarFailed, setAvatarFailed] = useState(false);
+  // Remember which avatar failed, so a new one (after a profile change) gets a fresh try.
+  const [failedAvatarUri, setFailedAvatarUri] = useState<string>();
   const { user } = useAuth();
   const {
     theme,
@@ -248,12 +249,12 @@ export const Sidebar = () => {
           aria-current={location.pathname === "/profile" ? "page" : undefined}
           className="flex w-full items-center gap-[11px] rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-white/5 cursor-pointer aria-[current=page]:bg-white/10"
         >
-          {user?.avatarUri && !avatarFailed ? (
+          {user?.avatarUri && user.avatarUri !== failedAvatarUri ? (
             <img
               src={user.avatarUri}
               alt=""
               aria-hidden="true"
-              onError={() => setAvatarFailed(true)}
+              onError={() => setFailedAvatarUri(user.avatarUri)}
               className="h-[34px] w-[34px] shrink-0 rounded-full border border-white/[0.18] bg-[#1a1820] object-cover"
             />
           ) : (

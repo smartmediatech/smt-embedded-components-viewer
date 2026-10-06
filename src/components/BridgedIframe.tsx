@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { getViewerConfig } from "../config/viewerConfig";
 import { authService } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 import ParentBridge from "@/types/smt-base-bridge/parent-bridge";
 import Swal from "sweetalert2";
 
@@ -88,6 +89,8 @@ export const BridgedIframe = forwardRef<
   const componentConfigRef = useRef(componentConfig);
   const senderAddressRef = useRef(senderAddress);
   const senderAccountIndexRef = useRef(senderAccountIndex);
+  const { refreshUser } = useAuth();
+  const refreshUserRef = useRef(refreshUser);
   // Keep the latest props available to bridge handlers without tearing down the bridge.
   useEffect(() => {
     onNavigationRef.current = onNavigation;
@@ -104,6 +107,9 @@ export const BridgedIframe = forwardRef<
   useEffect(() => {
     senderAccountIndexRef.current = senderAccountIndex;
   }, [senderAccountIndex]);
+  useEffect(() => {
+    refreshUserRef.current = refreshUser;
+  }, [refreshUser]);
 
  const getCookie = (name: string): string | null => {
   const match = document.cookie.match(
@@ -287,6 +293,14 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       console.log("[ComponentBridge] 'session.clear' called");
       await authService.logout();
       navigate("/login");
+      return {};
+    });
+
+    // A component changed the user (e.g. the profile's name or avatar), so the
+    // host's copy — shown in the sidebar and top bar — is re-read.
+    bridge.addRequestHandler("user.changed", async () => {
+      console.log("[ComponentBridge] 'user.changed' called");
+      await refreshUserRef.current();
       return {};
     });
 
@@ -518,6 +532,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         bridge.removeRequestHandler("component.config.get");
         bridge.removeRequestHandler("session.get");
         bridge.removeRequestHandler("session.clear");
+        bridge.removeRequestHandler("user.changed");
         bridge.removeRequestHandler("wallet.address.get");
         bridge.removeRequestHandler("navigation.go");
         bridge.removeRequestHandler("navigation.open");
