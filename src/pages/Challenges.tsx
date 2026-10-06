@@ -81,6 +81,7 @@ export const Challenges = () => {
         src={src}
         className="w-full h-full rounded-lg shadow-lg border-0 flex-1"
         onNavigation={onNavigation}
+        sizeToContent
         useRefreshToken={bootMode === "refresh-token"}
       />
 

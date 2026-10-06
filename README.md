@@ -191,6 +191,7 @@ All embedded components should be rendered in a `BridgedIframe` and share the sa
 - Handle `session.get` so the component can authenticate
 - Handle `session.clear` so embedded logout clears the host session
 - Support `loader.show` and `loader.hide` for embedded loading states
+- Handle `navigation.open` so a component can open an external link in a new tab — a card face's "go to store" button, or an offer whose CTA is an https URL. Components never open URLs themselves; a host that does not answer this request makes those buttons do nothing. See [Opening External Links](#opening-external-links)
 - Optionally support `tracking.consent.request` and `tracking.consent.update` if your integration uses OneTrust
 
 Additional bridge features depend on the component:
@@ -209,6 +210,7 @@ The primary landing experience within the embedded component suite, showing chal
 **Component-specific notes**:
 
 - Optionally handle `navigation.go` if you want to open card or reward details in host-controlled modals
+- An offer whose CTA is an https URL opens through `navigation.open`
 - Consider `sizeToContent` when embedding inline in a scrolling page
 
 ### Rewards Component
@@ -275,7 +277,7 @@ Displays promotions such as sweepstakes, contests, and games that are not direct
 
 **Component-specific notes**:
 
-- Each giveaway card has an optional `cta` property — when set to an HTTPS URL it opens externally, when set to a deep link it navigates internally, and when empty the card is rendered without a clickable action
+- Each giveaway card has an optional `cta` property — when set to an HTTPS URL it opens externally through `navigation.open`, when set to a deep link it navigates internally, and when empty the card is rendered without a clickable action
 - No additional bridge handlers are required beyond the standard set
 - Consider `sizeToContent` when embedding inline in a scrolling page
 
@@ -289,6 +291,7 @@ Displays detailed card information. Requires card ID as query parameter.
 
 - Include the required `id` query parameter
 - Do not use `sizeToContent` if rendering inside a fixed-size modal
+- Handle `navigation.open` on this iframe as well: a card's face links out through it (for example a "go to store" button), and the card is usually loaded in a second, modal `BridgedIframe` that needs the same handlers as the first
 
 ### Reward Component
 
@@ -534,7 +537,7 @@ useEffect(() => {
 
 1. **Container loads** the embedded component in an iframe
 2. **Bridge initialization**: `ParentBridge` is created with the iframe reference and origin
-3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `loader.show`, `loader.hide`, etc.
+3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `navigation.open`, `loader.show`, `loader.hide`, etc.
 4. **Embedded component requests auth**: Calls `session.get` through the bridge
 5. **Container responds**: Returns the access token (or refresh token for legacy viewer)
 6. **Embedded component authenticates**: Uses the token for API requests
@@ -618,6 +621,49 @@ onNavigation?: (
 />
 ```
 
+### Opening External Links
+
+Embedded components never open a URL themselves: a component runs in an
+iframe and leaves the decision of how to open a link — new tab, in-app
+browser, native handler — to the host. Whenever a component needs an external
+page opened it sends a `navigation.open` request with the URL in the payload.
+This happens when:
+
+- a card's face asks for a website to be opened (a "go to store" or "buy
+  tickets" button inside the card);
+- a Discover or Giveaways offer has an https URL as its CTA.
+
+The host must register a handler for `navigation.open` on **every**
+`BridgedIframe`, including the one that loads the Card component in a modal.
+If the handler is missing, the bridge answers `NOT_SUPPORTED` and the button
+silently does nothing — there is no fallback inside the component.
+
+The handler in `src/components/BridgedIframe.tsx`:
+
+```typescript
+bridge.addRequestHandler("navigation.open", async ({ payload }) => {
+  const url = (payload as { url?: unknown } | undefined)?.url;
+
+  // The URL crosses the bridge from the iframe, so treat it as untrusted:
+  //  - restrict to http(s), or a `javascript:` URL would execute in this
+  //    (host) document rather than the iframe's;
+  //  - noopener, or the opened tab can reach back through window.opener and
+  //    navigate this page (reverse tabnabbing).
+  if (typeof url !== "string" || !/^https?:\/\//i.test(url)) {
+    return new BridgeError(
+      "INVALID_PARAMETER",
+      "navigation.open requires an http(s) url",
+    ).toJson();
+  }
+
+  window.open(url, "_blank", "noopener,noreferrer");
+  return {};
+});
+```
+
+Return `{}` once the link has been opened, or a `BridgeError` (as JSON) to
+refuse a URL.
+
 ### Loader and Alert Handlers
 
 The `BridgedIframe` component handles loader and alert requests from embedded components:
@@ -676,13 +722,26 @@ Use the `sizeToContent` prop when:
 
 #### How It Works
 
-When `sizeToContent` is set on the `BridgedIframe` component:
+**Which components send it.** The main views — Challenges, Rewards, Discover and
+Giveaways — report their content height. The Card, Reward and Wearable views do
+not: they are meant for fixed-size modals.
 
-1. The embedded component measures its content height
-2. It sends a `frame.resize` request through the bridge with the desired height
-3. The parent container updates the iframe's height to match
-4. The iframe grows/shrinks dynamically as content changes
-5. The page scrollbar handles scrolling instead of the iframe
+1. On load, the component measures its content and sends one `frame.resize`
+   request with `{ height }` in pixels.
+2. If your page answers it, the component keeps sending whenever its content
+   height changes (filtering the list, loading more, opening a section), and drops
+   anything that would pin it to the frame height, so the frame can also shrink.
+3. If your page has no handler, or answers with an error such as
+   `NOT_SUPPORTED`, the component stops after that first request and keeps its
+   own internal scrolling. Nothing else changes.
+4. Your page sets the iframe's height to the value it receives; your page's
+   scrollbar then scrolls the content, with no scrollbar inside the iframe.
+
+**Nothing to enable on the component side**: no query parameter and no config.
+Register the `frame.resize` handler before you set the iframe's `src` (as
+`BridgedIframe` does), so the first request is not lost. Remove any fixed height
+or `overflow` setting on that iframe, other than a sensible initial height to
+avoid a jump while it loads.
 
 #### Implementation
 
@@ -739,7 +798,7 @@ bridge.addRequestHandler("frame.resize", async ({ payload }) => {
 
 1. **Use for variable content**: Enable `sizeToContent` for components with dynamic, variable-height content
 2. **Disable for fixed layouts**: Don't use `sizeToContent` for modals, fixed-height containers, or components with internal scrolling
-3. **Performance**: The embedded component should debounce resize requests to avoid excessive updates
+3. **Performance**: The components send at most one request per animation frame, and only when the height actually changed
 4. **Initial height**: Set a reasonable initial height via CSS to avoid layout shift before the first resize
 5. **Minimum height**: Consider setting a `min-height` on the iframe to prevent it from collapsing completely
 
