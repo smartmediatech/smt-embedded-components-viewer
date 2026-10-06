@@ -5,6 +5,8 @@ import {
   ApiLoginPayload,
   ApiLoginResponse,
   ApiGetUserResponse,
+  ApiGetAssetProvidersResponse,
+  AssetProvider,
 } from "../../types/auth.types";
 import checkJwtToken from "./checkJwtExpiration";
 import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
@@ -25,6 +27,7 @@ class AuthService {
   private readonly REFRESH_TOKEN_KEY = "refresh_token";
   private readonly USER_KEY = "auth_user";
   private refreshPromise: Promise<string> | null = null;
+  private assetProvidersPromise: Promise<AssetProvider[]> | null = null;
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const payload: ApiLoginPayload = {
@@ -62,6 +65,14 @@ class AuthService {
 
       const data: ApiLoginResponse = await response.json();
 
+      const token = data.payload.access_token.token;
+      const refreshToken = data.payload.refresh_token.token;
+
+      // Store refresh token in localStorage; keep access token in memory.
+      // Done before building the user, since signing the avatar needs them.
+      this.ACCESS_TOKEN = token;
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+
       // Transform API response to our User type
       const user: User = {
         id: data.payload.user.id,
@@ -71,15 +82,9 @@ class AuthService {
           "User",
         firstName: data.payload.user.properties.first_name,
         lastName: data.payload.user.properties.last_name,
-        avatarUri: data.payload.user.properties.avatar_uri,
+        avatarUri: await this.signAssetUrl(data.payload.user.properties.avatar_uri),
       };
 
-      const token = data.payload.access_token.token;
-      const refreshToken = data.payload.refresh_token.token;
-
-      // Store refresh token and user in localStorage; keep access token in memory
-      this.ACCESS_TOKEN = token;
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
       localStorage.setItem(this.USER_KEY, JSON.stringify(user));
 
       return { user, token, refreshToken };
@@ -109,6 +114,7 @@ class AuthService {
   clearSession(): void {
     // Clear local storage and tokens
     this.ACCESS_TOKEN = null;
+    this.assetProvidersPromise = null;
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
   }
@@ -268,7 +274,7 @@ class AuthService {
           "User",
         firstName: data.payload.properties.first_name,
         lastName: data.payload.properties.last_name,
-        avatarUri: data.payload.properties.avatar_uri,
+        avatarUri: await this.signAssetUrl(data.payload.properties.avatar_uri),
       };
 
       // Update stored user
@@ -281,6 +287,65 @@ class AuthService {
       }
       throw new Error("Failed to fetch current user");
     }
+  }
+
+  /**
+   * The CDNs that need signed requests, read once per session. A failure
+   * isn't cached, so the next call tries again.
+   */
+  private getAssetProviders(): Promise<AssetProvider[]> {
+    if (!this.assetProvidersPromise) {
+      this.assetProvidersPromise = this.smtFetch(`${apiBaseUrl()}/v1/user/asset_providers`)
+        .then(async (response) => {
+          if (!response.ok) throw new Error("Failed to fetch asset providers");
+          const data: ApiGetAssetProvidersResponse = await response.json();
+          return data.payload.asset_provider ?? [];
+        })
+        .catch((error) => {
+          this.assetProvidersPromise = null;
+          throw error;
+        });
+    }
+    return this.assetProvidersPromise;
+  }
+
+  /**
+   * Adds the CDN signature to an asset URL (e.g. the avatar), the way the
+   * components' asset provider does. Without it the CDN answers 403
+   * MissingKey. URLs on other hosts, or when providers can't be read, are
+   * returned unchanged.
+   */
+  async signAssetUrl(url: string | undefined): Promise<string | undefined> {
+    if (!url) return url;
+
+    let providers: AssetProvider[];
+    try {
+      providers = await this.getAssetProviders();
+    } catch (error) {
+      console.error("Failed to fetch asset providers:", error);
+      return url;
+    }
+
+    let hostname: string;
+    try {
+      hostname = new URL(url).hostname;
+    } catch {
+      return url;
+    }
+
+    const provider = providers.find((p) => {
+      try {
+        return new URL(p.uri).hostname === hostname;
+      } catch {
+        return false;
+      }
+    });
+    if (!provider) return url;
+
+    const query = Object.entries(provider.descriptor)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+      .join("&");
+    return `${url}${url.includes("?") ? "&" : "?"}${query}`;
   }
 }
 

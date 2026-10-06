@@ -57,3 +57,20 @@ export interface ApiGetUserResponse {
   request_id: string;
   payload: ApiUserResponse;
 }
+
+/**
+ * A CDN that only serves signed requests: assets whose host matches `uri`
+ * load once `descriptor` (CloudFront's Policy, Signature and Key-Pair-Id) is
+ * added as query parameters.
+ */
+export interface AssetProvider {
+  uri: string;
+  descriptor: Record<string, string>;
+}
+
+export interface ApiGetAssetProvidersResponse {
+  request_id: string;
+  payload: {
+    asset_provider?: AssetProvider[];
+  };
+}
