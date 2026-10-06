@@ -642,13 +642,26 @@ Use the `sizeToContent` prop when:
 
 #### How It Works
 
-When `sizeToContent` is set on the `BridgedIframe` component:
+**Which components send it.** The main views — Challenges, Rewards, Discover and
+Giveaways — report their content height. The Card, Reward and Wearable views do
+not: they are meant for fixed-size modals.
 
-1. The embedded component measures its content height
-2. It sends a `frame.resize` request through the bridge with the desired height
-3. The parent container updates the iframe's height to match
-4. The iframe grows/shrinks dynamically as content changes
-5. The page scrollbar handles scrolling instead of the iframe
+1. On load, the component measures its content and sends one `frame.resize`
+   request with `{ height }` in pixels.
+2. If your page answers it, the component keeps sending whenever its content
+   height changes (filtering the list, loading more, opening a section), and drops
+   anything that would pin it to the frame height, so the frame can also shrink.
+3. If your page has no handler, or answers with an error such as
+   `NOT_SUPPORTED`, the component stops after that first request and keeps its
+   own internal scrolling. Nothing else changes.
+4. Your page sets the iframe's height to the value it receives; your page's
+   scrollbar then scrolls the content, with no scrollbar inside the iframe.
+
+**Nothing to enable on the component side**: no query parameter and no config.
+Register the `frame.resize` handler before you set the iframe's `src` (as
+`BridgedIframe` does), so the first request is not lost. Remove any fixed height
+or `overflow` setting on that iframe, other than a sensible initial height to
+avoid a jump while it loads.
 
 #### Implementation
 
@@ -705,7 +718,7 @@ bridge.addRequestHandler("frame.resize", async ({ payload }) => {
 
 1. **Use for variable content**: Enable `sizeToContent` for components with dynamic, variable-height content
 2. **Disable for fixed layouts**: Don't use `sizeToContent` for modals, fixed-height containers, or components with internal scrolling
-3. **Performance**: The embedded component should debounce resize requests to avoid excessive updates
+3. **Performance**: The components send at most one request per animation frame, and only when the height actually changed
 4. **Initial height**: Set a reasonable initial height via CSS to avoid layout shift before the first resize
 5. **Minimum height**: Consider setting a `min-height` on the iframe to prevent it from collapsing completely
 
