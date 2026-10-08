@@ -463,16 +463,38 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       return new BridgeError("NOT_SUPPORTED", "alert.inform is not supported").toJson();
     });
 
-    // The child can ask the host to present a full-page loading state.
+    // The child can ask the host to present a full-page loading state. It
+    // covers the whole app, menu included, so nothing navigates away mid-way
+    // (a purchase uses it for each step). `detail` is an optional second line.
     bridge.addRequestHandler("loader.show", async ({ payload }) => {
-      const { label } = payload as { label: string };
+      const { label, detail } = payload as { label?: string; detail?: string };
+      const title = label || "Loading...";
+
+      // A loader that's already up just changes its text, so a multi-step
+      // process doesn't re-animate the popup at every step.
+      if (Swal.isVisible() && Swal.isLoading()) {
+        Swal.update({ title, text: detail ?? "" });
+        // update() re-renders the actions area, which drops the spinner.
+        Swal.showLoading();
+        return {};
+      }
 
       Swal.fire({
-        title: label || "Loading...",
+        title,
+        text: detail,
         allowOutsideClick: false,
         allowEscapeKey: false,
         allowEnterKey: false,
         showConfirmButton: false,
+        background: "var(--color-ink)",
+        color: "#fff",
+        backdrop: "rgba(0, 0, 0, 0.7)",
+        customClass: {
+          popup: "rounded-2xl! border border-white/10 w-[min(360px,calc(100vw-32px))]!",
+          title: "font-display font-normal! text-[26px]! leading-tight! pt-2!",
+          htmlContainer: "text-[13px]! text-white/60! mt-1!",
+          loader: "border-brand! border-r-transparent! border-l-transparent!",
+        },
         didOpen: () => {
           Swal.showLoading();
         },
