@@ -13,6 +13,12 @@ This example showcases:
 - **Bridge Communication**: Two-way communication using the `smt-base-bridge` library
 - **Logout Handling**: Coordinated logout between container and embedded components
 
+## Live demo
+
+A hosted build of this app runs at
+**https://demo.smartmedialabs.io/embedded-smtembed/** against a neutral SMT demo
+tenant (Challenges, Rewards, Giveaways, Discover). Ask SMT for a demo login.
+
 ## Prerequisites
 
 The **`smt-base-bridge.min.js`** library must be loaded in your HTML to enable communication between the container app and the embedded components.
@@ -355,7 +361,7 @@ components themselves never change.
 | Description | `short_description`, else `description` | |
 | Image | `image`; the featured carousel prefers `image_featured` | Featured artwork should not contain a "Featured" label — the component draws it |
 | Kind (small line above the title) | the offer's tags | also the sub-nav chips; the featured tag is excluded |
-| Featured | the tag SMT configured as *featured* (Palermo: `featured`) | case matters |
+| Featured | the tag SMT configured as *featured* (e.g. `featured`) | case matters |
 | Points | custom field `points` | |
 | XP | custom field `xp` | display only |
 | Badge ("+1 badge") | custom field `badge` = `yes` | |
