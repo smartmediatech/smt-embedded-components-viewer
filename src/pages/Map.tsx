@@ -1,10 +1,11 @@
 import { useCallback, useEffect } from "react";
 import { BridgedIframe, BridgedIframeHandle } from "../components/BridgedIframe";
-import { useApp } from "../context/AppContext";
+import { TENANTS, useApp } from "../context/AppContext";
 
 export const Map = () => {
   const {
     legacyComponentsHost,
+    tenant,
     mapComponentConfig,
     mapQueryParams,
     pendingMapCommand,
@@ -23,7 +24,14 @@ export const Map = () => {
     [setMapIframeHandle],
   );
 
+  // The legacy map reads its tenant from a config file next to it, defaulting to
+  // ./map-config.json, which a host can only have one of. config_url picks the
+  // tenant's own map-config.<fqdn>.json instead, so one map serves every tenant.
+  // A bare file name, not "./…": the map does not URL-decode the value, and
+  // URLSearchParams would send the slash as %2F.
+  const fqdn = TENANTS[tenant]?.fqdn;
   const src = appendUrlParams(`${legacyComponentsHost}/map/`, {
+    config_url: fqdn ? `map-config.${fqdn}.json` : undefined,
     lat: mapQueryParams.lat != null ? String(mapQueryParams.lat) : undefined,
     lon: mapQueryParams.lon != null ? String(mapQueryParams.lon) : undefined,
     zoom: mapQueryParams.zoom != null ? String(mapQueryParams.zoom) : undefined,
