@@ -319,10 +319,16 @@ Displays the standalone map component. Supports the same embedded auth/session c
 > is enabled for your environment before integrating it. If it has not been
 > provisioned, the URL below will not serve anything.
 
-**URL**: `{componentsHost}/map/`
+**URL**: `{componentsHost}/map/?config_url=map-config.<fqdn>.json`
 
 **Component-specific notes**:
 
+- Pass `config_url`. The map does not read `fqdn`; it loads its publisher from the
+  config file named in `config_url`. Without it, the map falls back to the host's
+  default publisher, which may not be yours, and your users get authentication errors.
+- Use the bare file name. Do not prefix it with `./`: the map does not URL-decode
+  the value, so an encoded `.%2F` would request a file that does not exist.
+- SMT provisions `map-config.<fqdn>.json` when the map is enabled for you.
 - Support `component.config.get` to provide initial map configuration
 - Optionally send `component.config.update` for live theme/config changes
 
@@ -819,7 +825,7 @@ Example:
 
 ```typescript
 <BridgedIframe
-  src={`${componentsHost}/map/?lang=en`}
+  src={`${componentsHost}/map/?lang=en&config_url=map-config.${fqdn}.json`}
   className="w-full h-full"
   componentConfig={{
     theme: {
