@@ -55,14 +55,14 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     rule: "label-content-name-mismatch",
     pages: "all",
     scope: "component",
-    reason: 'Card buttons have an aria-label ("Redeem: …", "Start: …", "Open challenge: …", "Enter Giveaway: …") that does not contain the visible text (tier label + title + description).',
+    reason: 'Card buttons have an aria-label ("Redeem: …", "Start: …", "Open challenge: …", "Enter Giveaway: …") that does not contain the visible text (tier label + title + description). Already fixed in smt-embedded-components#31; goes away when the sandbox bundle is redeployed.',
     task: TASKS.wcag6,
   },
   {
     rule: "role-img-alt",
     pages: ["discover", "giveaways", "challenges"],
     scope: "modal",
-    reason: 'The engaged card\'s face (nested cdn.smartmedialabs.io iframe) renders div[role=img] with aria-describedby="card-default_aria_desc" but no accessible name.',
+    reason: 'The engaged card\'s face (nested cdn.smartmedialabs.io iframe) renders div[role=img] with aria-describedby="card-default_aria_desc" but no accessible name. This comes from the face content on the Lab CDN, not from smt-embedded-components source.',
     task: TASKS.wcag6,
   },
 ];
