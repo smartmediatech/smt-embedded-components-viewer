@@ -23,3 +23,7 @@ src/public/viewer/global.json
 .env
 .env.*
 !.env.example
+
+# Playwright e2e output
+/test-results/
+/playwright-report/

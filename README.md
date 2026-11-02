@@ -60,6 +60,13 @@ warning for `https://localhost:3000`, and note that the components load from a
 browser does not trust, you must accept that origin's warning too, by visiting it
 directly once. Otherwise the iframes fail to load with no visible error.
 
+### Accessibility tests
+
+`yarn test:e2e` runs Playwright + axe accessibility checks of this app against
+a sandbox tenant, on your machine. It needs a sandbox login, saved once with
+`E2E_EMAIL=… E2E_PASSWORD=… yarn test:e2e:login`; without one the tests skip.
+See [e2e/README.md](e2e/README.md).
+
 ## Who configures what
 
 Worth being explicit, because it determines who you ask for a change:
