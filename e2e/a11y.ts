@@ -11,7 +11,7 @@ import {
 /** The same tag set as the components' Storybook a11y gate (WCAG 1). */
 export const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
-/** The viewer's modal overlay (see src/pages/*.tsx). */
+/** The viewer's modal overlay (see src/components/ComponentModal.tsx). */
 export const MODAL = "div.fixed.inset-0";
 
 /**

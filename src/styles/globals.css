@@ -1,3 +1,8 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Keep focused content clear of the header when it sticks (2.4.11); AppHeader sets the height. */
+html {
+  scroll-padding-top: var(--app-header-height, 0px);
+}

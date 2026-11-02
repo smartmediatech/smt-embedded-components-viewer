@@ -1,4 +1,4 @@
-import { useState, type ComponentType } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import { GearIcon, XIcon, SunIcon, MoonIcon, UserCircleIcon, BracketsAngleIcon } from "@phosphor-icons/react";
 import { Popover } from "@base-ui/react/popover";
 import { Tabs } from "@base-ui/react/tabs";
@@ -27,6 +27,24 @@ export const AppHeader = () => {
           componentHosts, componentHostKey, setComponentHostKey, smartComponentsHost } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Publishes the header's height as --app-header-height for the page's
+  // scroll-padding-top (globals.css): when the header is sticky, as on most
+  // publishers' sites, scrolling to the focused element stops below it (2.4.11).
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const root = document.documentElement;
+    const observer = new ResizeObserver(() => {
+      root.style.setProperty("--app-header-height", `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty("--app-header-height");
+    };
+  }, []);
 
   const activeComponentTab = (() => {
     const componentTab = COMPONENT_TABS.find(
@@ -64,9 +82,9 @@ export const AppHeader = () => {
 
 
   return (
-    <header className="relative z-20 bg-white border-b border-black/10 dark:bg-black dark:border-white/10">
+    <header ref={headerRef} className="relative z-20 bg-white border-b border-black/10 dark:bg-black dark:border-white/10">
       {/* Primary bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-2 sm:gap-4">
         {/* Left — tenant selector */}
         <div className="flex-1 flex items-center">
           <TenantSelect />
@@ -74,7 +92,7 @@ export const AppHeader = () => {
 
 
         {/* Right actions */}
-        <div className="flex-1 flex items-center justify-end gap-2">
+        <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
           <LanguageSelect />
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
