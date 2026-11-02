@@ -74,8 +74,6 @@ export const ComponentModal = ({ label, onClose, children }: ComponentModalProps
     // The opener: the list iframe, when the card in it sent navigation.go.
     const opener = document.activeElement as HTMLElement | null;
 
-    dialogRef.current?.querySelector("iframe")?.focus();
-
     // Everything else on the page goes inert: no focus, no clicks, hidden from
     // assistive tech. Skip what already was (another overlay's doing).
     const inerted = Array.from(document.body.children).filter(
@@ -91,6 +89,18 @@ export const ComponentModal = ({ label, onClose, children }: ComponentModalProps
       if (opener?.isConnected) opener.focus();
     };
   }, []);
+
+  // Focus the component's iframe on open, and again when navigation inside the
+  // modal (card → reward or wearable) replaces it. Runs after the effect above,
+  // so the opener is captured before focus moves.
+  const focusedIframe = useRef<HTMLIFrameElement | null>(null);
+  useEffect(() => {
+    const iframe = dialogRef.current?.querySelector("iframe") ?? null;
+    if (iframe && iframe !== focusedIframe.current) {
+      focusedIframe.current = iframe;
+      iframe.focus();
+    }
+  });
 
   return createPortal(
     <div
