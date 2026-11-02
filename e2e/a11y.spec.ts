@@ -69,13 +69,18 @@ for (const name of COMPONENT_PAGES) {
       await page.addStyleTag({ content: "header { position: sticky !important; top: 0 !important; }" });
       const header = (await page.locator("header").first().boundingBox())!;
       const headerBottom = header.y + header.height;
+      const viewportHeight = page.viewportSize()!.height;
 
       const hidden = new Set<string>();
       for (const key of ["Tab", "Shift+Tab"] as const) {
         const stops = await walk(page, key, MAX_TABS, crossesComponent);
         for (const stop of stops) {
-          // Fully behind the header: that is what 2.4.11 (AA) forbids.
-          if (stop.frame && stop.rect && stop.rect.top >= header.y && stop.rect.bottom <= headerBottom) {
+          // Everything of it that is on screen is behind the header: that is
+          // what 2.4.11 (AA) forbids.
+          if (!stop.frame || !stop.rect) continue;
+          const top = Math.max(stop.rect.top, 0);
+          const bottom = Math.min(stop.rect.bottom, viewportHeight);
+          if (bottom > top && top >= header.y && bottom <= headerBottom) {
             hidden.add(`${key}: ${stop.label}`);
           }
         }
@@ -146,22 +151,16 @@ for (const name of COMPONENT_PAGES) {
 
       await expectNoNewAxeViolations(page, name, ["host", "component", "modal"], testInfo);
 
-      // Focus containment: everything focusable outside the modal must be inert
-      // (or the modal a native <dialog> opened with showModal, which makes the
-      // rest of the page inert). Walking with Tab can't tell: headless Chromium
-      // bounces between the modal iframe and the browser UI and never wraps to
-      // the page.
-      const reachable = await page.evaluate((modalSelector) => {
-        if (document.querySelector("dialog:modal")) return [];
-        const overlay = document.querySelector(modalSelector);
-        const focusable =
-          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
-        return [...document.querySelectorAll(focusable)]
-          .filter((el) => !overlay?.contains(el) && !el.closest("[inert]") && el.getClientRects().length > 0)
-          .slice(0, 5)
-          .map((el) => `${el.tagName.toLowerCase()} "${(el.getAttribute("aria-label") ?? el.textContent ?? "").trim().slice(0, 30)}"`);
-      }, MODAL);
-      if (reachable.length) observed.add("modal-focus-not-contained");
+      // Focus containment: from the close button, Tab and Shift+Tab must stay
+      // in the modal, iframe included. Focus on the host body means the browser
+      // UI, which is fine (headless Chromium goes there instead of wrapping).
+      const escaped = (stops: FocusStop[]) => stops.some((s) => !s.inModal && s.tag !== "body");
+      const tabs: FocusStop[] = [];
+      for (const key of ["Tab", "Shift+Tab"] as const) {
+        await modal.getByRole("button", { name: "Close modal" }).focus();
+        tabs.push(...(await walk(page, key, 25, escaped)));
+      }
+      if (escaped(tabs)) observed.add("modal-focus-not-contained");
 
       // Close with the close button, by keyboard: focus goes back to the card.
       await modal.getByRole("button", { name: "Close modal" }).focus();
@@ -191,7 +190,7 @@ for (const name of COMPONENT_PAGES) {
         ],
         observed,
         {
-          "modal-focus-not-contained": `reachable behind the modal: ${reachable.join(", ")}`,
+          "modal-focus-not-contained": trail(tabs),
           "modal-focus-not-returned": `focus is on ${after.frame ? "[iframe] " : ""}${after.label}`,
         },
       );

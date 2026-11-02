@@ -68,7 +68,10 @@ function loadSession(origin: string): StorageState | string {
   if (expiry !== null && expiry < Date.now() + 10 * 60 * 1000) {
     return `The saved login at ${storageState} expired (${new Date(expiry).toISOString()}). ${hint}`;
   }
-  return { cookies: [], origins: [{ origin, localStorage: entries }] };
+  // Leave out the dev menu's component host override (AppContext restores it
+  // and it wins over the tenant's host): the suite must test the tenant's build.
+  const session = entries.filter((item) => item.name !== "smt-viewer:componentHost");
+  return { cookies: [], origins: [{ origin, localStorage: session }] };
 }
 
 export const test = base.extend({
