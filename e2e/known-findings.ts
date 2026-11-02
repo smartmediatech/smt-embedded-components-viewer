@@ -29,6 +29,12 @@ export type AxeScope = "host" | "component" | "modal";
 
 export interface KnownAxeFinding {
   rule: string;
+  /**
+   * Matched against each violating node's axe target selector and HTML
+   * snippet, so a new violation of the same rule on another element still
+   * fails the suite.
+   */
+  node: RegExp;
   pages: readonly ComponentPage[] | "all";
   scope: AxeScope;
   reason: string;
@@ -46,13 +52,23 @@ export interface KnownCheckFinding {
 export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
   {
     rule: "color-contrast",
+    node: /\btext-card-eyebrow\b/,
     pages: ["rewards", "challenges"],
     scope: "component",
     reason: "Card eyebrow text (tier / category label, .text-card-eyebrow) in the tenant accent colour on the card background.",
     task: TASKS.wcag6b,
   },
   {
+    rule: "color-contrast",
+    node: /\.bg-badge-background\b/,
+    pages: ["challenges"],
+    scope: "component",
+    reason: 'The time-left badge ("5 days left") on an inactive challenge card: the card is at 50% opacity, so the badge text falls below 4.5:1.',
+    task: TASKS.wcag6b,
+  },
+  {
     rule: "label-content-name-mismatch",
+    node: /aria-label="(Redeem|Start|Open challenge|Enter Giveaway): /,
     pages: "all",
     scope: "component",
     reason: 'Card buttons have an aria-label ("Redeem: …", "Start: …", "Open challenge: …", "Enter Giveaway: …") that does not contain the visible text (tier label + title + description). Already fixed in smt-embedded-components#31; goes away when the sandbox bundle is redeployed.',
@@ -60,6 +76,7 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
   },
   {
     rule: "role-img-alt",
+    node: /aria-describedby="card-default_aria_desc"/,
     pages: ["discover", "giveaways", "challenges"],
     scope: "modal",
     reason: 'The engaged card\'s face (nested cdn.smartmedialabs.io iframe) renders div[role=img] with aria-describedby="card-default_aria_desc" but no accessible name. This comes from the face content on the Lab CDN, not from smt-embedded-components source.',

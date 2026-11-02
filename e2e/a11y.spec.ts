@@ -33,7 +33,7 @@ function crossesComponent(stops: FocusStop[]): boolean {
 function stuckAt(stops: FocusStop[]): string | null {
   for (let i = 1; i < stops.length; i++) {
     const [a, b] = [stops[i - 1], stops[i]];
-    if (a.frame && a.frame === b.frame && a.label === b.label && a.label !== "body") {
+    if (a.frame && a.frame === b.frame && a.id === b.id && a.tag !== "body") {
       return a.label;
     }
   }
@@ -114,7 +114,6 @@ for (const name of COMPONENT_PAGES) {
     test("modal: open from a card by keyboard, axe, focus, Escape, close", async ({ page }, testInfo) => {
       const list = await openComponent(page, name);
       const trigger = list.locator(readySelector(name)).first();
-      const triggerLabel = await trigger.getAttribute("aria-label");
       const modal = page.locator(MODAL);
 
       const open = async () => {
@@ -130,26 +129,47 @@ for (const name of COMPONENT_PAGES) {
       const observed = new Set<string>();
 
       await open();
-      const dialog = await modal.evaluate(
-        (el) => !!(el.matches("[role=dialog],[aria-modal=true]") || el.querySelector("[role=dialog],[aria-modal=true]")),
-      );
+      // One element must carry all three: the dialog role, modality and a name.
+      const dialog = await modal.evaluate((el) => {
+        const d = el.matches("[role=dialog], dialog") ? el : el.querySelector("[role=dialog], dialog");
+        if (!d) return false;
+        const modal = d.getAttribute("aria-modal") === "true" || (d.tagName === "DIALOG" && d.matches(":modal"));
+        const labelledBy = (d.getAttribute("aria-labelledby") ?? "")
+          .split(/\s+/)
+          .map((id) => (id ? document.getElementById(id)?.textContent ?? "" : ""))
+          .join(" ");
+        const named = !!(d.getAttribute("aria-label")?.trim() || labelledBy.trim());
+        return modal && named;
+      });
       if (!dialog) observed.add("modal-no-dialog-role");
       if (!(await focusStop(page)).inModal) observed.add("modal-focus-not-moved");
 
       await expectNoNewAxeViolations(page, name, ["host", "component", "modal"], testInfo);
 
-      // Focus containment: from the close button, Tab must stay in the modal
-      // (leaving the document for the browser chrome is fine).
-      await modal.getByRole("button", { name: "Close modal" }).focus();
-      const tabs = await walk(page, "Tab", 25, (stops) => stops.some((s) => !s.inModal && s.label !== "body"));
-      if (tabs.some((s) => !s.inModal && s.label !== "body")) observed.add("modal-focus-not-contained");
+      // Focus containment: everything focusable outside the modal must be inert
+      // (or the modal a native <dialog> opened with showModal, which makes the
+      // rest of the page inert). Walking with Tab can't tell: headless Chromium
+      // bounces between the modal iframe and the browser UI and never wraps to
+      // the page.
+      const reachable = await page.evaluate((modalSelector) => {
+        if (document.querySelector("dialog:modal")) return [];
+        const overlay = document.querySelector(modalSelector);
+        const focusable =
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+        return [...document.querySelectorAll(focusable)]
+          .filter((el) => !overlay?.contains(el) && !el.closest("[inert]") && el.getClientRects().length > 0)
+          .slice(0, 5)
+          .map((el) => `${el.tagName.toLowerCase()} "${(el.getAttribute("aria-label") ?? el.textContent ?? "").trim().slice(0, 30)}"`);
+      }, MODAL);
+      if (reachable.length) observed.add("modal-focus-not-contained");
 
       // Close with the close button, by keyboard: focus goes back to the card.
       await modal.getByRole("button", { name: "Close modal" }).focus();
       await page.keyboard.press("Enter");
       await expect(modal).toBeHidden();
       const after = await focusStop(page);
-      if (!(after.frame === list && after.label.includes(`"${triggerLabel}"`))) {
+      const backOnTrigger = after.frame === list && (await trigger.evaluate((el) => el === document.activeElement));
+      if (!backOnTrigger) {
         observed.add("modal-focus-not-returned");
       }
 
@@ -171,7 +191,7 @@ for (const name of COMPONENT_PAGES) {
         ],
         observed,
         {
-          "modal-focus-not-contained": trail(tabs),
+          "modal-focus-not-contained": `reachable behind the modal: ${reachable.join(", ")}`,
           "modal-focus-not-returned": `focus is on ${after.frame ? "[iframe] " : ""}${after.label}`,
         },
       );
