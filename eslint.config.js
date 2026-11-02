@@ -57,4 +57,27 @@ module.exports = [
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     },
   },
+  {
+    // Playwright e2e (see e2e/README.md): Node and browser code, no React.
+    files: ["e2e/**/*.ts", "playwright.config.ts"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        project: "./e2e/tsconfig.json",
+      },
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+    plugins: {
+      "@typescript-eslint": tsPlugin,
+    },
+    rules: {
+      ...tsPlugin.configs.recommended.rules,
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    },
+  },
 ];

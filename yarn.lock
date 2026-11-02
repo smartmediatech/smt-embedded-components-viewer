@@ -12,6 +12,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/playwright@npm:4.14.0":
+  version: 4.14.0
+  resolution: "@axe-core/playwright@npm:4.14.0"
+  dependencies:
+    axe-core: "npm:~4.14.0"
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: 10c0/a42bca2305bbb80a374be9ff6642cac7b45f5f0aef1be9170ae42617c3423501ab1a33c8581641a71554a0c6a69f6ca512a5cc6e320ed197339a9ac4edfa713c
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/code-frame@npm:7.29.7"
@@ -932,6 +943,17 @@ __metadata:
     react: ">= 16.8"
     react-dom: ">= 16.8"
   checksum: 10c0/9a469e1bdcabcd3db02eda13142d57be250847ebbeb82b33c8900580a6a23ed4f411dbb9b9deacef726ff3fa8ffc960c8868b518e448bd2cee654cedf3fa4bda
+  languageName: node
+  linkType: hard
+
+"@playwright/test@npm:1.64.1":
+  version: 1.64.1
+  resolution: "@playwright/test@npm:1.64.1"
+  dependencies:
+    playwright: "npm:1.64.1"
+  bin:
+    playwright: cli.js
+  checksum: 10c0/0a1a853d76d6c532cafaf0366a5448584b766737ebd39bbd23dc0580f3d3b6ef4c833082af47a792e7fc2501f444debdfaad37a87a76cc5b195f3803fc80ea3c
   languageName: node
   linkType: hard
 
@@ -1967,6 +1989,13 @@ __metadata:
   dependencies:
     possible-typed-array-names: "npm:^1.0.0"
   checksum: 10c0/d07226ef4f87daa01bd0fe80f8f310982e345f372926da2e5296aecc25c41cab440916bbaa4c5e1034b453af3392f67df5961124e4b586df1e99793a1374bdb2
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:~4.14.0":
+  version: 4.14.0
+  resolution: "axe-core@npm:4.14.0"
+  checksum: 10c0/8aaa0bf748e0dcf202e8f837951a37b28b4b62d639bed58c07a6890bf035ed6a11ede9f4006db9ca8041db821dc80476c27cff08fd70afa9195ee58fb995a958
   languageName: node
   linkType: hard
 
@@ -5200,6 +5229,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright-core@npm:1.64.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10c0/91c4f5ed1cff4b0e18b6ac62f66770f5f1b6c204d4aebd6a321c07466dca18a70822ac692597c6059705a703f9768097ac551df179fb49294d639509148e04f3
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright@npm:1.64.1"
+  dependencies:
+    playwright-core: "npm:1.64.1"
+  bin:
+    playwright: cli.js
+  checksum: 10c0/edf52d0a79feca37bf383e841a467aa68750684128218eac560063991c9e4b615a94901f580cd8a088bb05fd53008ab4a0e5e8d976067698b60ae5d1de2459f3
+  languageName: node
+  linkType: hard
+
 "possible-typed-array-names@npm:^1.0.0, possible-typed-array-names@npm:^1.1.0":
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
@@ -5981,8 +6030,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "smt-embedded-components-viewer@workspace:."
   dependencies:
+    "@axe-core/playwright": "npm:4.14.0"
     "@base-ui/react": "npm:^1.4.0"
     "@phosphor-icons/react": "npm:^2.1.10"
+    "@playwright/test": "npm:1.64.1"
     "@tailwindcss/postcss": "npm:^4.1.14"
     "@types/node": "npm:^24.10.0"
     "@types/react": "npm:^19.2.2"
