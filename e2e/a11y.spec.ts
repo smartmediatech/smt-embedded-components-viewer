@@ -157,13 +157,13 @@ for (const name of COMPONENT_PAGES) {
       const escaped = (stops: FocusStop[]) => stops.some((s) => !s.inModal && s.tag !== "body");
       const tabs: FocusStop[] = [];
       for (const key of ["Tab", "Shift+Tab"] as const) {
-        await modal.getByRole("button", { name: "Close modal" }).focus();
+        await modal.getByRole("button", { name: "Close", exact: true }).focus();
         tabs.push(...(await walk(page, key, 25, escaped)));
       }
       if (escaped(tabs)) observed.add("modal-focus-not-contained");
 
       // Close with the close button, by keyboard: focus goes back to the card.
-      await modal.getByRole("button", { name: "Close modal" }).focus();
+      await modal.getByRole("button", { name: "Close", exact: true }).focus();
       await page.keyboard.press("Enter");
       await expect(modal).toBeHidden();
       const after = await focusStop(page);

@@ -86,45 +86,15 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
 
 export const KNOWN_CHECK_FINDINGS: readonly KnownCheckFinding[] = [
   {
-    check: "reflow-host-320",
-    pages: "all",
-    reason: "At 320 px the viewer header's right-hand actions (language, theme, dev menu, account) overflow by about 10 px: the page scrolls sideways.",
-    task: TASKS.wcag5,
-  },
-  {
-    check: "focus-hidden-by-sticky-header",
-    pages: ["rewards"],
-    reason: "With a sticky host header, Shift+Tab back to the filter chips at the top of the iframe scrolls them under the header (no scroll-padding-top on the host).",
-    task: TASKS.wcag5,
-  },
-  {
-    check: "modal-no-dialog-role",
-    pages: "all",
-    reason: "The modal is a plain fixed div: no role=dialog, aria-modal or accessible name.",
-    task: TASKS.wcag5,
-  },
-  {
-    check: "modal-focus-not-moved",
-    pages: "all",
-    reason: "Opening the modal leaves focus on the card in the list iframe behind it.",
-    task: TASKS.wcag5,
-  },
-  {
-    check: "modal-focus-not-contained",
-    pages: "all",
-    reason: "Tab moves from the modal to the page behind it (header, list iframe); the background is not inert.",
-    task: TASKS.wcag5,
-  },
-  {
     check: "modal-escape-from-iframe",
     pages: "all",
-    reason: "Escape only closes the modal from the host document; with focus inside the modal's iframe it does nothing.",
+    reason: "Escape only closes the modal from the host document; with focus inside the modal's iframe the keydown never reaches the host, and the bridge has no request a component sends to close it (needs one in smart-sdk and the components).",
     task: TASKS.wcag5,
   },
   {
     check: "modal-focus-not-returned",
     pages: "all",
-    reason: "Closing the modal does not return focus to the card that opened it.",
+    reason: "Closing the modal returns focus to the list iframe, not to the card in it: Chromium drops the card's focus inside that iframe when focus moves to the modal's iframe. Putting it back on the card needs a bridge message (e.g. focus.restore) in smart-sdk and the components.",
     task: TASKS.wcag5,
   },
 ];

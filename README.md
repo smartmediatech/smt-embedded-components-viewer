@@ -505,6 +505,44 @@ The following languages are currently supported: `ar`, `da`, `de`, `en`, `es`, `
 - Invalid or unsupported language codes will fall back to the browser language or English
 - The `lang` parameter can be combined with other query parameters (e.g., `?id=123&lang=es`)
 
+## Accessibility: what your page is responsible for
+
+The components target WCAG 2.2 AA inside their iframes. A screen reader or
+keyboard user meets your page first, and some of what they need only your page
+can provide:
+
+- **Iframe placement.** Put each iframe in the DOM where it sits on screen, in
+  reading order (no CSS reordering), so Tab moves into and out of the component
+  where people expect it. Don't put it in a container that clips its content
+  (`overflow: hidden` with a fixed height) unless you use `sizeToContent`.
+- **A `title` on every iframe.** Screen readers announce it when focus enters
+  the frame (WCAG 4.1.2). Use a short name in the page's language, such as
+  "Rewards" or "Challenges", never a generic "Embedded Content". The example
+  app keeps one per component in 12 languages: `src/i18n/a11yLabels.ts`.
+- **Sticky headers.** A sticky or fixed header must not cover the element that
+  has focus inside the component (2.4.11). Give the scrolling element a
+  `scroll-padding-top` at least as tall as the header:
+
+  ```css
+  html { scroll-padding-top: 80px; } /* your header's height */
+  ```
+
+  The example app measures its header and sets this for you (see
+  `src/components/AppHeader.tsx`).
+- **Page language.** Set `<html lang>` to the language you pass as `?lang=`, so
+  your page and the component read in the same voice (3.1.1). If the iframe's
+  `title` is in another language than the page, put that `lang` on the iframe.
+- **Your own contrast and focus styles.** The components can't fix colours or
+  focus outlines on your page: header, navigation, the space around the iframe
+  (1.4.3, 1.4.11, 2.4.7).
+- **Modals you open.** If you show a card or reward in your own overlay (from
+  `navigation.go`), it is a dialog you own: one element with `role="dialog"`,
+  `aria-modal="true"` and a name; the rest of the page `inert` while it is
+  open; focus moved to the modal's iframe on open and back to the list iframe on
+  close; a close button with a translated label. Escape works only while focus
+  is in your document: a key pressed inside the iframe never reaches your page.
+  `src/components/ComponentModal.tsx` is a working example.
+
 ## Bridge Communication
 
 ### Bridge Setup
