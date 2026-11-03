@@ -67,14 +67,6 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     task: TASKS.wcag6b,
   },
   {
-    rule: "label-content-name-mismatch",
-    node: /aria-label="(Redeem|Start|Open challenge|Enter Giveaway): /,
-    pages: "all",
-    scope: "component",
-    reason: 'Card buttons have an aria-label ("Redeem: …", "Start: …", "Open challenge: …", "Enter Giveaway: …") that does not contain the visible text (tier label + title + description). Already fixed in smt-embedded-components#31; goes away when the sandbox bundle is redeployed.',
-    task: TASKS.wcag6,
-  },
-  {
     rule: "role-img-alt",
     node: /aria-describedby="card-default_aria_desc"/,
     pages: ["discover", "giveaways", "challenges"],
