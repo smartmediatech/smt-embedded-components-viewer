@@ -11,7 +11,14 @@ interface ComponentModalProps {
   children: ReactNode;
 }
 
-/** A 10:16 box that fits the window, with less margin on small screens. */
+/** Room above the box for the close button (h-9 at -top-12). */
+const CLOSE_BUTTON_SPACE = 48;
+
+/**
+ * A 10:16 box that fits the window, with less margin on small screens. The
+ * box is centred, so keeping CLOSE_BUTTON_SPACE above and below it keeps the
+ * close button on screen in short windows.
+ */
 function fitDimensions() {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
@@ -19,7 +26,7 @@ function fitDimensions() {
   const isMobile = windowWidth < 768;
   const padding = isMobile ? 10 : 80;
   const maxWidth = windowWidth - padding * 2;
-  const maxHeight = windowHeight - padding * 2;
+  const maxHeight = windowHeight - Math.max(padding, CLOSE_BUTTON_SPACE) * 2;
 
   let width = maxWidth;
   let height = width / aspectRatio;

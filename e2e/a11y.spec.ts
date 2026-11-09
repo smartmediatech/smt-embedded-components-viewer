@@ -196,5 +196,20 @@ for (const name of COMPONENT_PAGES) {
         },
       );
     });
+
+    // The close button sits above the dialog box; in a short window it must
+    // still be on screen (Escape from inside the iframe does not close).
+    test("modal: close button stays on screen in a short window (640x400)", async ({ page }) => {
+      await page.setViewportSize({ width: 640, height: 400 });
+      const list = await openComponent(page, name);
+      await list.locator(readySelector(name)).first().focus();
+      await page.keyboard.press("Enter");
+      const modal = page.locator(MODAL);
+      await expect(modal).toBeVisible({ timeout: 20_000 });
+      const box = await modal.getByRole("button", { name: "Close", exact: true }).boundingBox();
+      expect(box, "close button has no layout box").not.toBeNull();
+      expect(box!.y, "close button is above the top of the window").toBeGreaterThanOrEqual(0);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(400);
+    });
   });
 }
