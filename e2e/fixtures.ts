@@ -55,7 +55,9 @@ function loadBackendOptions() {
     const tenantConfig = await response.json();
     return {
       fqdn: tenant.fqdn as string,
-      appId: tenant.appId as string,
+      // Same fallback as getActiveAppId(): a tenant without its own appId
+      // authenticates with the viewer-wide auth.appId.
+      appId: (tenant.appId ?? viewer.auth.appId) as string,
       coin: (tenantConfig.marketplace?.coin as string) ?? "Points",
       componentsOrigin,
     };
