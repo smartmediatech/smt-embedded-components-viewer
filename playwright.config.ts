@@ -1,8 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Accessibility e2e for the viewer: see e2e/README.md. Local only; it needs a
- * saved sandbox login and skips without one.
+ * Accessibility e2e for the viewer: see e2e/README.md. Mocked backend data by
+ * default (E2E_DATA=live for real sandbox data and a saved login).
  */
 const port = Number(process.env.E2E_PORT ?? 4173);
 const baseURL = process.env.E2E_BASE_URL ?? `https://localhost:${port}/`;

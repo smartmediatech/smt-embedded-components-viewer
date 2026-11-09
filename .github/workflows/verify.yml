@@ -36,3 +36,42 @@ jobs:
 
       - name: Lint (advisory)
         run: yarn lint || true
+
+  # WCAG 2.2 AA checks against each tenant's live sandbox components and
+  # tenant config, with mocked backend data: no login, no secrets
+  # (see e2e/README.md and docs/adr/0001-mock-backend-data-keep-components-live.md).
+  a11y:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tenant: [palermofcsandbox, smtembed]
+    name: a11y (${{ matrix.tenant }})
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: corepack enable && yarn install --immutable
+
+      - name: Install Chromium
+        run: yarn playwright install --with-deps chromium
+
+      - name: Accessibility e2e
+        run: yarn test:e2e
+        env:
+          E2E_TENANT: ${{ matrix.tenant }}
+          E2E_DATA: mocked
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.tenant }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
