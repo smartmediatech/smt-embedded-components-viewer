@@ -75,7 +75,7 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     pages: ["challenges"],
     scope: "component",
     tenants: ["palermofcsandbox"],
-    reason: 'The time-left badge ("5 days left") on an inactive challenge card: the card is at 50% opacity, so the badge text falls below 4.5:1.',
+    reason: 'The image label badge (e.g. "Completed", or "5 days left" in live data) on a dimmed challenge card: the card image is at reduced opacity, so the badge text falls below 4.5:1. In mocked data the two completed challenges show it.',
     task: TASKS.wcag6b,
   },
   {
