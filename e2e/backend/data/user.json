@@ -1,0 +1,50 @@
+{
+  "id": "e2e00000-0000-4000-8000-000000000001",
+  "meta": {
+    "created_by": "e2e",
+    "data_type": "v1::UserType",
+    "modified_by": "e2e",
+    "when_created": "2026-01-01T00:00:00Z",
+    "when_modified": "2026-01-01T00:00:00Z"
+  },
+  "properties": {
+    "avatar_public": true,
+    "avatar_uri": "",
+    "birthday": "",
+    "first_name": "Test",
+    "guest_id": "",
+    "is_password_set": true,
+    "language": "en",
+    "last_name": "User",
+    "name_public": true,
+    "nonpush_notification": true,
+    "notification_settings": {
+      "bulk_notifications": {
+        "allow_notifications": true
+      }
+    },
+    "personal_avatar_set": false,
+    "profile": {
+      "birthday": "",
+      "first_name": "Test",
+      "last_name": "User",
+      "name_public": false
+    },
+    "system_notifications": {
+      "email_sms_enabled": true,
+      "push_enabled": false
+    },
+    "unsubscribe_key": "",
+    "user_consents": []
+  },
+  "system_properties": {
+    "activated": true,
+    "disabled": false,
+    "is_admin": false,
+    "is_merchant": false,
+    "last_login": "2026-01-01T00:00:00Z",
+    "net_user_id": "e2e00000-0000-4000-8000-000000000003",
+    "platform_id": "vatomlabs",
+    "pub_fqdn": ""
+  }
+}

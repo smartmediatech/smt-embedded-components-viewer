@@ -1,0 +1,342 @@
+{
+  "Challenges": [
+    {
+      "fqdn": "{{fqdn}}",
+      "category": {
+        "_id": "663e899bca75452ea716b4ce",
+        "name": "Challenges",
+        "__v": 0,
+        "created_at": "2024-05-10T20:54:49.369Z",
+        "translations": {
+          "en": "Challenges",
+          "de": "Herausforderungen",
+          "fr": "D\u00e9fis"
+        },
+        "updated_at": "2024-05-15T10:03:00.432Z"
+      },
+      "region": "global",
+      "os": "all",
+      "start_date": "1970-01-01T00:00:00.000Z",
+      "end_date": "2099-12-31T23:23:59.000Z",
+      "test": false,
+      "hidden": false,
+      "rank": 17,
+      "layout": {
+        "_id": "664701448753637ba26166ae",
+        "name": "Challenge",
+        "type": "challenge",
+        "__v": 0,
+        "blob": "eyJ0eXBlIjoiY3RhLWltYWdlIn0=",
+        "created_at": "2024-05-17T07:03:32.787Z",
+        "properties": {
+          "title": "$feed.title",
+          "description": "$feed.description",
+          "image": "$feed.image",
+          "ratio": "$feed.image_ratio",
+          "cta": "$feed.cta",
+          "action_text": "$feed.action_text",
+          "event_type": "$feed.event_type",
+          "custom_id": "$feed.custom_id"
+        },
+        "updated_at": "2024-05-17T07:03:32.787Z"
+      },
+      "token_gate": [],
+      "properties": {
+        "en": {
+          "title": "Match Check In",
+          "description": "Check in on matchday to earn points.",
+          "image": "https://img.e2e.test/check-in.png",
+          "image_ratio": 0.8,
+          "image_featured": null,
+          "tags": [
+            "Play"
+          ],
+          "cta": "#/perform-action-tpl/{{fqdn}}::1001::v1::Action::AcquireOffer/{{fqdn}}::1001::v1::checkin::v1",
+          "action_text": "",
+          "event_type": null,
+          "custom_id": "0101"
+        }
+      },
+      "address": null,
+      "locations": [],
+      "custom": {
+        "points": 100,
+        "xp": 500
+      },
+      "_id": "e2e000000000000000000101",
+      "updated_at": "2026-01-01T00:00:00.000Z",
+      "status_check": "eligible"
+    },
+    {
+      "fqdn": "{{fqdn}}",
+      "category": {
+        "_id": "663e899bca75452ea716b4ce",
+        "name": "Challenges",
+        "__v": 0,
+        "created_at": "2024-05-10T20:54:49.369Z",
+        "translations": {
+          "en": "Challenges",
+          "de": "Herausforderungen",
+          "fr": "D\u00e9fis"
+        },
+        "updated_at": "2024-05-15T10:03:00.432Z"
+      },
+      "region": "global",
+      "os": "all",
+      "start_date": "1970-01-01T00:00:00.000Z",
+      "end_date": "2099-12-31T23:23:59.000Z",
+      "test": false,
+      "hidden": false,
+      "rank": 17,
+      "layout": {
+        "_id": "664701448753637ba26166ae",
+        "name": "Challenge",
+        "type": "challenge",
+        "__v": 0,
+        "blob": "eyJ0eXBlIjoiY3RhLWltYWdlIn0=",
+        "created_at": "2024-05-17T07:03:32.787Z",
+        "properties": {
+          "title": "$feed.title",
+          "description": "$feed.description",
+          "image": "$feed.image",
+          "ratio": "$feed.image_ratio",
+          "cta": "$feed.cta",
+          "action_text": "$feed.action_text",
+          "event_type": "$feed.event_type",
+          "custom_id": "$feed.custom_id"
+        },
+        "updated_at": "2024-05-17T07:03:32.787Z"
+      },
+      "token_gate": [],
+      "properties": {
+        "en": {
+          "title": "Club Quiz",
+          "description": "Answer five questions about the club.",
+          "image": "https://img.e2e.test/quiz.png",
+          "image_ratio": 0.8,
+          "image_featured": null,
+          "tags": [
+            "Play"
+          ],
+          "cta": "#/load/{{fqdn}}::1002::v1::quiz::v1",
+          "action_text": "",
+          "event_type": null,
+          "custom_id": "0102"
+        }
+      },
+      "address": null,
+      "locations": [],
+      "custom": {
+        "points": 75,
+        "xp": 200
+      },
+      "_id": "e2e000000000000000000102",
+      "updated_at": "2026-01-01T00:00:00.000Z",
+      "status_check": "eligible"
+    }
+  ],
+  "Rewards": [
+    {
+      "fqdn": "{{fqdn}}",
+      "category": {
+        "_id": "663e899bca75452ea716b4e8",
+        "name": "Rewards",
+        "__v": 0,
+        "created_at": "2024-05-10T20:54:51.274Z",
+        "translations": {
+          "en": "Rewards",
+          "de": "Belohnungen",
+          "fr": "R\u00e9compenses"
+        },
+        "updated_at": "2025-10-01T08:08:08.642Z"
+      },
+      "region": "global",
+      "os": "all",
+      "start_date": "1970-01-01T00:00:00.000Z",
+      "end_date": "2099-12-31T23:23:59.000Z",
+      "test": false,
+      "hidden": false,
+      "rank": 1,
+      "layout": {
+        "_id": "664701448753637ba26166ae",
+        "name": "Challenge",
+        "type": "challenge",
+        "__v": 0,
+        "blob": "eyJ0eXBlIjoiY3RhLWltYWdlIn0=",
+        "created_at": "2024-05-17T07:03:32.787Z",
+        "properties": {
+          "title": "$feed.title",
+          "description": "$feed.description",
+          "image": "$feed.image",
+          "ratio": "$feed.image_ratio",
+          "cta": "$feed.cta",
+          "action_text": "$feed.action_text",
+          "event_type": "$feed.event_type",
+          "custom_id": "$feed.custom_id"
+        },
+        "updated_at": "2024-05-17T07:03:32.787Z"
+      },
+      "token_gate": [],
+      "properties": {
+        "en": {
+          "title": "Mystery Box",
+          "description": "Redeem it and see what is inside.",
+          "image": "https://img.e2e.test/mystery-box.png",
+          "image_ratio": 1,
+          "image_featured": null,
+          "tags": [
+            "Supporter"
+          ],
+          "cta": "#/marketplace/e2e000000000000000000301",
+          "action_text": "",
+          "event_type": "marketplace",
+          "custom_id": "0201"
+        }
+      },
+      "address": null,
+      "locations": [],
+      "custom": {
+        "points": 5
+      },
+      "_id": "e2e000000000000000000201",
+      "updated_at": "2026-01-01T00:00:00.000Z",
+      "status_check": "eligible"
+    },
+    {
+      "fqdn": "{{fqdn}}",
+      "category": {
+        "_id": "663e899bca75452ea716b4e8",
+        "name": "Rewards",
+        "__v": 0,
+        "created_at": "2024-05-10T20:54:51.274Z",
+        "translations": {
+          "en": "Rewards",
+          "de": "Belohnungen",
+          "fr": "R\u00e9compenses"
+        },
+        "updated_at": "2025-10-01T08:08:08.642Z"
+      },
+      "region": "global",
+      "os": "all",
+      "start_date": "1970-01-01T00:00:00.000Z",
+      "end_date": "2099-12-31T23:23:59.000Z",
+      "test": false,
+      "hidden": false,
+      "rank": 1,
+      "layout": {
+        "_id": "664701448753637ba26166ae",
+        "name": "Challenge",
+        "type": "challenge",
+        "__v": 0,
+        "blob": "eyJ0eXBlIjoiY3RhLWltYWdlIn0=",
+        "created_at": "2024-05-17T07:03:32.787Z",
+        "properties": {
+          "title": "$feed.title",
+          "description": "$feed.description",
+          "image": "$feed.image",
+          "ratio": "$feed.image_ratio",
+          "cta": "$feed.cta",
+          "action_text": "$feed.action_text",
+          "event_type": "$feed.event_type",
+          "custom_id": "$feed.custom_id"
+        },
+        "updated_at": "2024-05-17T07:03:32.787Z"
+      },
+      "token_gate": [],
+      "properties": {
+        "en": {
+          "title": "Supporter Badge",
+          "description": "A digital badge for loyal supporters.",
+          "image": "https://img.e2e.test/badge.png",
+          "image_ratio": 1,
+          "image_featured": null,
+          "tags": [],
+          "cta": "#/marketplace/e2e000000000000000000302",
+          "action_text": "",
+          "event_type": "marketplace",
+          "custom_id": "0202"
+        }
+      },
+      "address": null,
+      "locations": [],
+      "custom": {
+        "points": 300
+      },
+      "_id": "e2e000000000000000000202",
+      "updated_at": "2026-01-01T00:00:00.000Z",
+      "status_check": "ineligible"
+    }
+  ],
+  "Sweepstakes": [
+    {
+      "fqdn": "{{fqdn}}",
+      "category": {
+        "_id": "69ef3ff948ef32a5d3717c41",
+        "name": "Sweepstakes",
+        "__v": 0,
+        "created_at": "2026-04-27T10:52:49.369Z",
+        "translations": {
+          "en": "Sweepstakes"
+        },
+        "updated_at": "2026-04-27T10:52:49.369Z"
+      },
+      "region": "global",
+      "os": "all",
+      "start_date": "1970-01-01T00:00:00.000Z",
+      "end_date": "2099-12-31T23:23:59.000Z",
+      "test": false,
+      "hidden": false,
+      "rank": 1,
+      "layout": {
+        "_id": "6a16a4d248ef32a5d38d3484",
+        "name": "Detail_Benefit_CTA",
+        "type": "reward",
+        "__v": 0,
+        "blob": "eyJ0eXBlIjoiZGV0YWlsLXZpZXctY3RhIn0=",
+        "created_at": "2025-10-06T14:23:19.548Z",
+        "properties": {
+          "title": "$feed.title",
+          "description": "$feed.description",
+          "short_description": "$feed.short_description",
+          "image": "$feed.image",
+          "terms": "$feed.terms",
+          "partner_name": "$feed.partner_name",
+          "partner_description": "$feed.partner_description",
+          "marketplace_id": "$feed.marketplace_id",
+          "tags": "$feed.tags",
+          "event_type": "$feed.event_type",
+          "custom_id": "$feed.custom_id",
+          "cta": "$feed.cta"
+        },
+        "updated_at": "2025-10-06T14:23:19.548Z"
+      },
+      "token_gate": [],
+      "properties": {
+        "en": {
+          "title": "Signed Shirt Giveaway",
+          "description": "Enter for a chance to win a signed shirt.",
+          "short_description": null,
+          "image": [
+            "https://img.e2e.test/shirt.png"
+          ],
+          "image_featured": null,
+          "tags": [],
+          "terms": null,
+          "partner_name": null,
+          "partner_description": null,
+          "partner_logo": null,
+          "marketplace_id": null,
+          "event_type": "",
+          "custom_id": "0401",
+          "cta": "#/load/{{fqdn}}::1003::v1::shirtgiveaway::v1"
+        }
+      },
+      "address": null,
+      "locations": [],
+      "custom": {},
+      "_id": "e2e000000000000000000401",
+      "updated_at": "2026-01-01T00:00:00.000Z",
+      "status_check": "eligible"
+    }
+  ]
+}

@@ -1,10 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Frame, Page, TestInfo } from "@playwright/test";
+import { DATA_MODE } from "./dataMode";
 import { expect, type ComponentPage } from "./fixtures";
 import {
   KNOWN_AXE_FINDINGS,
   KNOWN_CHECK_FINDINGS,
-  pageMatches,
+  applies,
   type AxeScope,
 } from "./known-findings";
 
@@ -27,6 +28,12 @@ export async function expectNoNewAxeViolations(
   name: ComponentPage,
   scopes: readonly AxeScope[],
   testInfo: TestInfo,
+  /**
+   * Scopes whose known findings must show up in mocked mode. With a modal open
+   * the page behind it is covered, so axe cannot judge its contrast: the modal
+   * test only vouches for the modal.
+   */
+  requireSeenIn: readonly AxeScope[] = scopes,
 ): Promise<void> {
   const results = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
   const unexpected: string[] = [];
@@ -39,7 +46,7 @@ export async function expectNoNewAxeViolations(
         (f) =>
           f.rule === violation.id &&
           f.scope === scope &&
-          pageMatches(f.pages, name) &&
+          applies(f, name) &&
           f.node.test(`${node.target.join(" ")} ${node.html}`),
       );
       if (known) {
@@ -53,12 +60,15 @@ export async function expectNoNewAxeViolations(
   }
 
   for (const finding of KNOWN_AXE_FINDINGS) {
-    if (!scopes.includes(finding.scope) || !pageMatches(finding.pages, name)) continue;
-    if (!seen.has(finding)) {
-      testInfo.annotations.push({
-        type: "known finding not seen",
-        description: `${finding.rule} ${finding.node} in ${finding.scope} (${finding.task}): remove it from known-findings.ts if it is fixed`,
-      });
+    if (!scopes.includes(finding.scope) || !applies(finding, name)) continue;
+    if (seen.has(finding)) continue;
+    const description = `${finding.rule} ${finding.node} in ${finding.scope} (${finding.task}): remove it from known-findings.ts if it is fixed`;
+    if (DATA_MODE === "mocked" && requireSeenIn.includes(finding.scope)) {
+      // Fixed data: a known finding that is gone was fixed.
+      expect.soft(false, `Known finding no longer happens on ${name}: ${description}`).toBe(true);
+    } else {
+      // Live data changes what axe sees: only note it.
+      testInfo.annotations.push({ type: "known finding not seen", description });
     }
   }
 
@@ -89,7 +99,7 @@ export function expectKnownCheckFindings(
 ): void {
   for (const check of checks) {
     const known = KNOWN_CHECK_FINDINGS.find(
-      (f) => f.check === check && pageMatches(f.pages, name),
+      (f) => f.check === check && applies(f, name),
     );
     const detail = details[check] ? `: ${details[check]}` : "";
     if (observed.has(check)) {

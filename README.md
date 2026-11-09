@@ -63,9 +63,9 @@ directly once. Otherwise the iframes fail to load with no visible error.
 ### Accessibility tests
 
 `yarn test:e2e` runs Playwright + axe accessibility checks of this app against
-a sandbox tenant, on your machine. It needs a sandbox login, saved once with
-`E2E_EMAIL=… E2E_PASSWORD=… yarn test:e2e:login`; without one the tests skip.
-See [e2e/README.md](e2e/README.md).
+a tenant's sandbox components, with mocked backend data, so it needs no login
+and runs in CI. `E2E_DATA=live` runs it against real sandbox data with a saved
+login instead. See [e2e/README.md](e2e/README.md).
 
 ## Who configures what
 

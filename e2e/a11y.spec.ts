@@ -129,7 +129,8 @@ for (const name of COMPONENT_PAGES) {
         const content = (await modalFrame!.contentFrame())!;
         await content.locator("body *").first().waitFor({ timeout: 30_000 });
         // Card faces load in a nested iframe after the component renders.
-        await page.waitForLoadState("networkidle").catch(() => {});
+        // Capped: some modals (games) never let the network go idle.
+        await page.waitForLoadState("networkidle", { timeout: 10_000 }).catch(() => {});
       };
       const observed = new Set<string>();
 
@@ -149,7 +150,7 @@ for (const name of COMPONENT_PAGES) {
       if (!dialog) observed.add("modal-no-dialog-role");
       if (!(await focusStop(page)).inModal) observed.add("modal-focus-not-moved");
 
-      await expectNoNewAxeViolations(page, name, ["host", "component", "modal"], testInfo);
+      await expectNoNewAxeViolations(page, name, ["host", "component", "modal"], testInfo, ["modal"]);
 
       // Focus containment: from the close button, Tab and Shift+Tab must stay
       // in the modal, iframe included. Focus on the host body means the browser

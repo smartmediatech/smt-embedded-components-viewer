@@ -1,4 +1,6 @@
 import type { ComponentPage } from "./fixtures";
+import { DATA_MODE, type DataMode } from "./dataMode";
+import { TENANT_KEY } from "./tenants";
 
 /**
  * Today's known WCAG 2.2 AA findings. The suite fails on anything not listed
@@ -37,6 +39,10 @@ export interface KnownAxeFinding {
   node: RegExp;
   pages: readonly ComponentPage[] | "all";
   scope: AxeScope;
+  /** Keys of tenants.ts the finding happens on (their content differs); every tenant when unset. */
+  tenants?: readonly string[];
+  /** The one data mode the finding happens in (e.g. it comes from live Lab content); both when unset. */
+  onlyIn?: DataMode;
   reason: string;
   task: Task;
 }
@@ -45,6 +51,10 @@ export interface KnownCheckFinding {
   /** A check id from checks.ts. */
   check: string;
   pages: readonly ComponentPage[] | "all";
+  /** Keys of tenants.ts the finding happens on (their content differs); every tenant when unset. */
+  tenants?: readonly string[];
+  /** The one data mode the finding happens in (e.g. it comes from live Lab content); both when unset. */
+  onlyIn?: DataMode;
   reason: string;
   task: Task;
 }
@@ -55,6 +65,7 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     node: /\btext-card-eyebrow\b/,
     pages: ["rewards", "challenges"],
     scope: "component",
+    tenants: ["palermofcsandbox"],
     reason: "Card eyebrow text (tier / category label, .text-card-eyebrow) in the tenant accent colour on the card background.",
     task: TASKS.wcag6b,
   },
@@ -63,6 +74,7 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     node: /\.bg-badge-background\b/,
     pages: ["challenges"],
     scope: "component",
+    tenants: ["palermofcsandbox"],
     reason: 'The time-left badge ("5 days left") on an inactive challenge card: the card is at 50% opacity, so the badge text falls below 4.5:1.',
     task: TASKS.wcag6b,
   },
@@ -71,7 +83,18 @@ export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
     node: /aria-describedby="card-default_aria_desc"/,
     pages: ["discover", "giveaways", "challenges"],
     scope: "modal",
+    onlyIn: "live",
     reason: 'The engaged card\'s face (nested cdn.smartmedialabs.io iframe) renders div[role=img] with aria-describedby="card-default_aria_desc" but no accessible name. This comes from the face content on the Lab CDN, not from smt-embedded-components source.',
+    task: TASKS.wcag6,
+  },
+  {
+    rule: "aria-command-name",
+    node: /\bcard-area\b/,
+    pages: ["giveaways"],
+    scope: "modal",
+    tenants: ["smtembed"],
+    onlyIn: "live",
+    reason: 'The "Giveaway - Sweepstake" card face (Lab SMT 21608, card "default", nested cdn.smartmedialabs.io iframe) has a clickable area that sets accept_terms: the Lab renders it as div.card-area[role=button] with no accessible name, and its card editor has no field to give an area one. Comes from the Lab face generator, not from smt-embedded-components source.',
     task: TASKS.wcag6,
   },
 ];
@@ -91,6 +114,9 @@ export const KNOWN_CHECK_FINDINGS: readonly KnownCheckFinding[] = [
   },
 ];
 
-export function pageMatches(pages: KnownAxeFinding["pages"], page: ComponentPage): boolean {
-  return pages === "all" || pages.includes(page);
+/** Whether a known finding is expected on this page for the tenant (E2E_TENANT) and data mode (E2E_DATA) under test. */
+export function applies(finding: KnownAxeFinding | KnownCheckFinding, page: ComponentPage): boolean {
+  const onPage = finding.pages === "all" || finding.pages.includes(page);
+  const forTenant = !finding.tenants || finding.tenants.includes(TENANT_KEY);
+  return onPage && forTenant && (!finding.onlyIn || finding.onlyIn === DATA_MODE);
 }

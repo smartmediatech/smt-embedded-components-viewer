@@ -1,0 +1,365 @@
+[
+  {
+    "vatom": {
+      "id": "e2e00000-0000-4000-8000-000000000001",
+      "when_created": "2026-01-01T00:00:00Z",
+      "when_modified": "2026-01-01T00:00:00Z",
+      "when_added": "2026-01-01T00:00:00Z",
+      "vAtom::vAtomType": {
+        "parent_id": ".",
+        "publisher_fqdn": "{{fqdn}}",
+        "root_type": "vAtom::vAtomType",
+        "owner": "e2e00000-0000-4000-8000-000000000001",
+        "author": "e2e00000-0000-4000-8000-000000000002",
+        "template": "{{fqdn}}::1001::v1",
+        "template_variation": "{{fqdn}}::1001::v1::checkin::v1",
+        "title": "Match Check In",
+        "description": "",
+        "disabled": false,
+        "category": "Challenges",
+        "tags": [],
+        "transferable": true,
+        "acquirable": true,
+        "tradeable": false,
+        "transferred_by": "",
+        "cloned_from": "",
+        "cloning_score": 0,
+        "redeemable": true,
+        "resources": [
+          {
+            "name": "ActivatedImage",
+            "resourceType": "ResourceType::Image::PNG",
+            "value": {
+              "resourceValueType": "ResourceValueType::URI",
+              "value": "https://img.e2e.test/check-in.png"
+            }
+          }
+        ],
+        "visibility": {
+          "type": "owner",
+          "value": "*"
+        },
+        "num_direct_clones": 0,
+        "geo_pos": {
+          "type": "Point",
+          "coordinates": [
+            0,
+            0
+          ],
+          "geo_hash": "s00000000000"
+        },
+        "dropped": false,
+        "child_policy": null,
+        "child_return_policy": null
+      },
+      "eth": null,
+      "private": {
+        "info": [],
+        "pii": [],
+        "thelab": {}
+      },
+      "version": "",
+      "sync": 0
+    },
+    "faces": [
+      {
+        "id": "e2e00000-0000-4000-8000-000000010000",
+        "template": "{{fqdn}}::1001::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "native://image",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "icon",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {
+            "image": "https://img.e2e.test/check-in.png"
+          }
+        }
+      },
+      {
+        "id": "e2e00000-0000-4000-8000-000000010001",
+        "template": "{{fqdn}}::1001::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "https://face.e2e.test/card.html?title=Match%20Check%20In",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "card",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {}
+        }
+      }
+    ]
+  },
+  {
+    "vatom": {
+      "id": "e2e00000-0000-4000-8000-000000000002",
+      "when_created": "2026-01-01T00:00:00Z",
+      "when_modified": "2026-01-01T00:00:00Z",
+      "when_added": "2026-01-01T00:00:00Z",
+      "vAtom::vAtomType": {
+        "parent_id": ".",
+        "publisher_fqdn": "{{fqdn}}",
+        "root_type": "vAtom::vAtomType",
+        "owner": "e2e00000-0000-4000-8000-000000000001",
+        "author": "e2e00000-0000-4000-8000-000000000002",
+        "template": "{{fqdn}}::1002::v1",
+        "template_variation": "{{fqdn}}::1002::v1::quiz::v1",
+        "title": "Club Quiz",
+        "description": "",
+        "disabled": false,
+        "category": "Challenges",
+        "tags": [],
+        "transferable": true,
+        "acquirable": true,
+        "tradeable": false,
+        "transferred_by": "",
+        "cloned_from": "",
+        "cloning_score": 0,
+        "redeemable": true,
+        "resources": [
+          {
+            "name": "ActivatedImage",
+            "resourceType": "ResourceType::Image::PNG",
+            "value": {
+              "resourceValueType": "ResourceValueType::URI",
+              "value": "https://img.e2e.test/quiz.png"
+            }
+          }
+        ],
+        "visibility": {
+          "type": "owner",
+          "value": "*"
+        },
+        "num_direct_clones": 0,
+        "geo_pos": {
+          "type": "Point",
+          "coordinates": [
+            0,
+            0
+          ],
+          "geo_hash": "s00000000000"
+        },
+        "dropped": false,
+        "child_policy": null,
+        "child_return_policy": null
+      },
+      "eth": null,
+      "private": {
+        "info": [],
+        "pii": [],
+        "thelab": {}
+      },
+      "version": "",
+      "sync": 0
+    },
+    "faces": [
+      {
+        "id": "e2e00000-0000-4000-8000-000000020000",
+        "template": "{{fqdn}}::1002::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "native://image",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "icon",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {
+            "image": "https://img.e2e.test/quiz.png"
+          }
+        }
+      },
+      {
+        "id": "e2e00000-0000-4000-8000-000000020001",
+        "template": "{{fqdn}}::1002::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "https://face.e2e.test/card.html?title=Club%20Quiz",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "card",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {}
+        }
+      }
+    ]
+  },
+  {
+    "vatom": {
+      "id": "e2e00000-0000-4000-8000-000000000003",
+      "when_created": "2026-01-01T00:00:00Z",
+      "when_modified": "2026-01-01T00:00:00Z",
+      "when_added": "2026-01-01T00:00:00Z",
+      "vAtom::vAtomType": {
+        "parent_id": ".",
+        "publisher_fqdn": "{{fqdn}}",
+        "root_type": "vAtom::vAtomType",
+        "owner": "e2e00000-0000-4000-8000-000000000001",
+        "author": "e2e00000-0000-4000-8000-000000000002",
+        "template": "{{fqdn}}::1003::v1",
+        "template_variation": "{{fqdn}}::1003::v1::shirtgiveaway::v1",
+        "title": "Signed Shirt Giveaway",
+        "description": "",
+        "disabled": false,
+        "category": "Prize",
+        "tags": [],
+        "transferable": true,
+        "acquirable": true,
+        "tradeable": false,
+        "transferred_by": "",
+        "cloned_from": "",
+        "cloning_score": 0,
+        "redeemable": true,
+        "resources": [
+          {
+            "name": "ActivatedImage",
+            "resourceType": "ResourceType::Image::PNG",
+            "value": {
+              "resourceValueType": "ResourceValueType::URI",
+              "value": "https://img.e2e.test/shirt.png"
+            }
+          }
+        ],
+        "visibility": {
+          "type": "owner",
+          "value": "*"
+        },
+        "num_direct_clones": 0,
+        "geo_pos": {
+          "type": "Point",
+          "coordinates": [
+            0,
+            0
+          ],
+          "geo_hash": "s00000000000"
+        },
+        "dropped": false,
+        "child_policy": null,
+        "child_return_policy": null
+      },
+      "eth": null,
+      "private": {
+        "info": [],
+        "pii": [],
+        "thelab": {}
+      },
+      "version": "",
+      "sync": 0
+    },
+    "faces": [
+      {
+        "id": "e2e00000-0000-4000-8000-000000030000",
+        "template": "{{fqdn}}::1003::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "native://image",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "icon",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {
+            "image": "https://img.e2e.test/shirt.png"
+          }
+        }
+      },
+      {
+        "id": "e2e00000-0000-4000-8000-000000030001",
+        "template": "{{fqdn}}::1003::v1",
+        "language": "en",
+        "meta": {
+          "created_by": "e2e",
+          "when_created": "2026-01-01T00:00:00Z",
+          "modified_by": "e2e",
+          "when_modified": "2026-01-01T00:00:00Z",
+          "data_type": "v1::FaceType"
+        },
+        "properties": {
+          "display_url": "https://face.e2e.test/card.html?title=Signed%20Shirt%20Giveaway",
+          "package_url": ".",
+          "constraints": {
+            "bluetooth_le": false,
+            "contact_list": false,
+            "gps": false,
+            "three_d": false,
+            "view_mode": "card",
+            "platform": "generic",
+            "quality": "high"
+          },
+          "resources": null,
+          "config": {}
+        }
+      }
+    ]
+  }
+]
