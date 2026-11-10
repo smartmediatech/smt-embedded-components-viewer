@@ -2,12 +2,9 @@ import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { OTPField } from "@base-ui/react/otp-field";
 import { useAuth } from "../../context/AuthContext";
-import { getSignupConfig } from "../../services/authService/userApi";
-import {
-  isGoogleAvailable,
-  isSmtAvailable,
-  takeRedirectResult,
-} from "../../services/authService/redirectSignIn";
+import { useApp } from "../../context/AppContext";
+import { getViewerConfig } from "../../config/viewerConfig";
+import { takeRedirectResult } from "../../services/authService/redirectSignIn";
 import { TenantSelect } from "../../components/TenantSelect";
 import { EmailIcon, GoogleIcon, SmtMark } from "./icons";
 import { TermsCheckbox, TermsDialog } from "./TermsConsent";
@@ -123,10 +120,12 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
     }
   }, [isSignup, navigate]);
 
-  // Tenant-dependent, so read on each render (the picker below can change it).
-  const emailAvailable = !!getSignupConfig();
-  const googleAvailable = isGoogleAvailable();
-  const smtAvailable = !isSignup && isSmtAvailable();
+  // Read from the tenant in AppContext, so the methods follow the picker below.
+  const { tenant } = useApp();
+  const tenantConfig = getViewerConfig().tenants[tenant];
+  const emailAvailable = !!tenantConfig?.signup;
+  const googleAvailable = !!tenantConfig?.signup?.googleClientId;
+  const smtAvailable = !isSignup && !!tenantConfig?.oidc;
 
   const run = async (fn: () => Promise<void>, fallback: string) => {
     setError("");
