@@ -78,14 +78,6 @@ function saveResult(result: RedirectResult): void {
   sessionStorage.setItem(RESULT_KEY, JSON.stringify(result));
 }
 
-export function isGoogleAvailable(): boolean {
-  return !!getSignupConfig()?.googleClientId;
-}
-
-export function isSmtAvailable(): boolean {
-  return !!getActiveTenant().oidc;
-}
-
 /** Leaves for Google's sign-in. A sign-up has already collected consent. */
 export function startGoogle(signup: boolean): void {
   const clientId = getSignupConfig()?.googleClientId;

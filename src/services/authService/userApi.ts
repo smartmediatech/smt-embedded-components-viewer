@@ -76,8 +76,8 @@ async function call(action: string, body: Record<string, unknown>): Promise<Reco
     const code = (data.error_code ?? data.error ?? response.status) as number | string;
     if (Number(code) === ERROR.noAccount) throw new AccountNotFoundError();
     const message =
-      MESSAGES[Number(code)] ??
-      (typeof data.message === "string" && data.message) ??
+      MESSAGES[Number(code)] ||
+      (typeof data.message === "string" && data.message) ||
       "Something went wrong. Please try again.";
     throw new UserApiError(code, `${message} (${code})`);
   }
