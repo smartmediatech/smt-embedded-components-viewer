@@ -89,6 +89,10 @@ class AuthService {
   }
 
   getRefreshToken(): string | null {
+    // A tab signed in with SMT (access token only) stays that session even if
+    // another tab later signs in someone else and writes a refresh token:
+    // mixing the two would show one user and hand components the other.
+    if (sessionStorage.getItem(this.ACCESS_TOKEN_KEY)) return null;
     return localStorage.getItem(this.REFRESH_TOKEN_KEY);
   }
 
