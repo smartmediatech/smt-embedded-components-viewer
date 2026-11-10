@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { AppProvider } from "./context/AppContext";
 import { AppLayout } from "./components/AppLayout";
-import { Login } from "./pages/Login";
+import { AuthPage } from "./pages/auth/AuthPage";
 import { Challenges } from "./pages/Challenges";
 import { Discover } from "./pages/Discover";
 import { Rewards } from "./pages/Rewards";
@@ -28,7 +28,9 @@ function App() {
       <AuthProvider>
         <AppProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            {/* key: a fresh form when switching between log in and sign up */}
+            <Route path="/login" element={<AuthPage key="login" mode="login" />} />
+            <Route path="/signup" element={<AuthPage key="signup" mode="signup" />} />
             <Route element={<AppLayout />}>
               <Route path="/" element={<Navigate to="/discover" replace />} />
               <Route path="/discover" element={<Discover />} />
