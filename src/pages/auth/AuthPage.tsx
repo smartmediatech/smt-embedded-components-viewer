@@ -71,7 +71,25 @@ const errorMessage = (err: unknown, fallback: string) =>
  * Logging in with an email or Google account that doesn't exist yet moves to
  * sign-up with the email kept, so the user only has to agree to the terms.
  */
+const FONTS_URL =
+  "https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap";
+
+/**
+ * The design's fonts, loaded only when a sign-in page opens: the component
+ * pages don't use them, and shouldn't make a request to Google for them.
+ */
+function useAuthFonts() {
+  useEffect(() => {
+    if (document.querySelector(`link[href="${FONTS_URL}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = FONTS_URL;
+    document.head.appendChild(link);
+  }, []);
+}
+
 export const AuthPage = ({ mode }: { mode: AuthMode }) => {
+  useAuthFonts();
   const navigate = useNavigate();
   const { user, requestEmailCode, confirmEmailCode, signInWithGoogle, signInWithSmt } = useAuth();
 
