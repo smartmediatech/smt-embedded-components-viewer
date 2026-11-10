@@ -5,13 +5,21 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { User, LoginCredentials } from "../types/auth.types";
+import { User } from "../types/auth.types";
 import { authService } from "../services/authService";
+import { confirmCode, requestCode } from "../services/authService/userApi";
+import { fromAnswer, startGoogle, startSmt } from "../services/authService/redirectSignIn";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
+  /** Emails a one-time code; a sign-up also records consent (see userApi). */
+  requestEmailCode: (args: { email: string; signup: boolean }) => Promise<void>;
+  confirmEmailCode: (args: { email: string; code: string }) => Promise<void>;
+  /** Leaves for Google. A sign-up must have collected consent first. */
+  signInWithGoogle: (args: { signup: boolean }) => Promise<void>;
+  /** Leaves for the SMT login. */
+  signInWithSmt: () => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
@@ -56,10 +64,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  const login = async (credentials: LoginCredentials) => {
-    const { user } = await authService.login(credentials);
-    setUser(user);
+  const requestEmailCode = async ({ email, signup }: { email: string; signup: boolean }) => {
+    await requestCode(email, signup);
   };
+
+  const confirmEmailCode = async ({ email, code }: { email: string; code: string }) => {
+    const session = fromAnswer(await confirmCode(email, code));
+    setUser(await authService.startSession(session, email));
+  };
+
+  const signInWithGoogle = async ({ signup }: { signup: boolean }) => {
+    startGoogle(signup);
+  };
+
+  const signInWithSmt = () => startSmt();
 
   const logout = async () => {
     await authService.logout();
@@ -69,7 +87,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const value: AuthContextType = {
     user,
     loading,
-    login,
+    requestEmailCode,
+    confirmEmailCode,
+    signInWithGoogle,
+    signInWithSmt,
     logout,
     isAuthenticated: !!user,
   };

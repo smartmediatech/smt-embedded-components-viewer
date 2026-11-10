@@ -10,7 +10,7 @@
     "lint": "eslint src e2e playwright.config.ts --ext .ts,.tsx",
     "typecheck": "tsc --noEmit && tsc -p e2e",
     "test:e2e": "playwright test --project=a11y",
-    "test:e2e:login": "playwright test --project=login"
+    "test:e2e:login": "playwright test --project=login --headed"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

@@ -257,7 +257,9 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
     // Child components ask the host for auth instead of owning tokens directly.
     bridge.addRequestHandler("session.get", async () => {
       // Access token or refresh token is supported
-      if (useRefreshTokenRef.current) {
+      // An SMT (OIDC) sign-in as a public client has no refresh token, so it
+      // can only hand over its access token.
+      if (useRefreshTokenRef.current && authService.getRefreshToken()) {
         const refreshToken = authService.getRefreshToken();
         console.log(
           "[ComponentBridge] 'session.get' called, returning refreshToken:",

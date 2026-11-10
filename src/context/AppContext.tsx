@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { BridgedIframeHandle } from "../components/BridgedIframe";
 import {
+  getActiveTenantKey,
   getViewerConfig,
   setActiveTenant,
   type MapComponentConfig,
@@ -111,9 +112,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [theme, setThemeState] = useState<Theme>("dark");
   // loadViewerConfig() already seeded the active tenant, so this initializer is
   // pure — no side effect during render, and no dependence on provider order.
-  const [tenant, setTenantState] = useState<Tenant>(
-    () => getViewerConfig().defaultTenant,
-  );
+  // Usually the default; after a Google or SMT sign-in redirect, the tenant
+  // the sign-in started on (restored before the app rendered).
+  const [tenant, setTenantState] = useState<Tenant>(() => getActiveTenantKey());
 
   /**
    * Switching tenant switches the app id the viewer authenticates with, so any

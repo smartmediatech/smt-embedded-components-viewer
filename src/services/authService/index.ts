@@ -1,11 +1,5 @@
-import {
-  LoginCredentials,
-  AuthResponse,
-  User,
-  ApiLoginPayload,
-  ApiLoginResponse,
-  ApiGetUserResponse,
-} from "../../types/auth.types";
+import { User, ApiGetUserResponse } from "../../types/auth.types";
+import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
 import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
 
@@ -24,71 +18,36 @@ class AuthService {
   private ACCESS_TOKEN: string | null = null;
   private readonly REFRESH_TOKEN_KEY = "refresh_token";
   private readonly USER_KEY = "auth_user";
+  /** An access token with no refresh token behind it (SMT login). */
+  private readonly ACCESS_TOKEN_KEY = "access_token";
   private refreshPromise: Promise<string> | null = null;
 
-  async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const payload: ApiLoginPayload = {
-      token: credentials.email,
-      token_type: "email",
-      auth_data: {
-        password: credentials.password,
-      },
-    };
+  /**
+   * Starts a session from a finished sign-in: a platform refresh token (email
+   * code, Google), or an access token (SMT login as a public client, which
+   * gets no refresh token, so the session ends when the access token does).
+   * Then loads the user.
+   */
+  async startSession(session: FinishedSession, email = ""): Promise<User> {
+    this.storeSession(session, email);
+    return this.fetchCurrentUser();
+  }
 
-    try {
-      const response = await fetch(`${apiBaseUrl()}/v1/user/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "App-Id": appId(),
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        try {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Authentication failed");
-        } catch (parseError) {
-          if (
-            parseError instanceof Error &&
-            parseError.message !== "Authentication failed"
-          ) {
-            throw new Error("Invalid email or password");
-          }
-          throw parseError;
-        }
+  /** Keeps the tokens without loading the user (AuthProvider loads it on mount). */
+  storeSession(session: FinishedSession, email = ""): void {
+    this.clearSession();
+    if (session.kind === "refresh") {
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
+    } else {
+      this.ACCESS_TOKEN = session.accessToken;
+      if (session.refreshToken) {
+        localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
+      } else {
+        // Kept for this tab only, so a reload doesn't sign the user out.
+        sessionStorage.setItem(this.ACCESS_TOKEN_KEY, session.accessToken);
       }
-
-      const data: ApiLoginResponse = await response.json();
-
-      // Transform API response to our User type
-      const user: User = {
-        id: data.payload.user.id,
-        email: credentials.email,
-        name:
-          `${data.payload.user.properties.first_name || ""} ${data.payload.user.properties.last_name || ""}`.trim() ||
-          "User",
-        firstName: data.payload.user.properties.first_name,
-        lastName: data.payload.user.properties.last_name,
-        avatarUri: data.payload.user.properties.avatar_uri,
-      };
-
-      const token = data.payload.access_token.token;
-      const refreshToken = data.payload.refresh_token.token;
-
-      // Store refresh token and user in localStorage; keep access token in memory
-      this.ACCESS_TOKEN = token;
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-
-      return { user, token, refreshToken };
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Login failed. Please try again.");
     }
+    localStorage.setItem(this.USER_KEY, JSON.stringify({ email }));
   }
 
   async logout(): Promise<void> {
@@ -111,6 +70,7 @@ class AuthService {
     this.ACCESS_TOKEN = null;
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
+    sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
   getCurrentUser(): User | null {
@@ -125,7 +85,7 @@ class AuthService {
   }
 
   getToken(): string | null {
-    return this.ACCESS_TOKEN;
+    return this.ACCESS_TOKEN ?? sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
   }
 
   getRefreshToken(): string | null {
@@ -135,8 +95,9 @@ class AuthService {
   isAuthenticated(): boolean {
     const refresh = this.getRefreshToken();
     // Make sure remaining user session is at least 5 min
-    const isValid = checkJwtToken(refresh, 5 * 60 * 1000);
-    return isValid;
+    if (refresh) return checkJwtToken(refresh, 5 * 60 * 1000);
+    // An access-token-only session (SMT login) lasts as long as its token.
+    return checkJwtToken(this.getToken(), 60 * 1000);
   }
 
   async refreshAccessToken(): Promise<string> {
@@ -207,6 +168,9 @@ class AuthService {
 
     // Check if access token is valid
     if (!accessToken || !checkJwtToken(accessToken)) {
+      if (!this.getRefreshToken()) {
+        throw new Error("The session has ended. Please login again.");
+      }
       // Access token is invalid or expired, refresh it
       try {
         accessToken = await this.refreshAccessToken();
