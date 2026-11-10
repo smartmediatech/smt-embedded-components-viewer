@@ -1,0 +1,98 @@
+[
+  {
+    "label": {
+      "en": "Mystery Box"
+    },
+    "image": {
+      "url": {
+        "en": "https://img.e2e.test/mystery-box.png"
+      },
+      "details": {
+        "en": null
+      },
+      "_id": "e2e000000000000000000309"
+    },
+    "additional_images": [],
+    "release_date": "2026-01-01T00:00:00.000Z",
+    "quantity": -1,
+    "total_quantity": -1,
+    "category": [],
+    "fqdn": "{{fqdn}}",
+    "platform": "vatomlabs",
+    "prices": [
+      {
+        "currency": "{{coin}}",
+        "value": 5,
+        "type": "coin"
+      }
+    ],
+    "details": {
+      "description": {
+        "en": "Redeem it and see what is inside."
+      },
+      "template_variations": [
+        {
+          "name": "{{fqdn}}::1004::v1::mysterybox::v1",
+          "num": 1,
+          "action": "{{fqdn}}::1004::v1::Action::BuyWithPoints"
+        }
+      ]
+    },
+    "owner_id": "e2e00000-0000-4000-8000-000000000002",
+    "hidden": false,
+    "limit": null,
+    "buyPreCondition": null,
+    "geoConstraint": null,
+    "created_at": "2026-01-01T00:00:00.000Z",
+    "updated_at": "2026-01-01T00:00:00.000Z",
+    "id": "e2e000000000000000000301"
+  },
+  {
+    "label": {
+      "en": "Supporter Badge"
+    },
+    "image": {
+      "url": {
+        "en": "https://img.e2e.test/badge.png"
+      },
+      "details": {
+        "en": null
+      },
+      "_id": "e2e000000000000000000309"
+    },
+    "additional_images": [],
+    "release_date": "2026-01-01T00:00:00.000Z",
+    "quantity": -1,
+    "total_quantity": -1,
+    "category": [],
+    "fqdn": "{{fqdn}}",
+    "platform": "vatomlabs",
+    "prices": [
+      {
+        "currency": "{{coin}}",
+        "value": 300,
+        "type": "coin"
+      }
+    ],
+    "details": {
+      "description": {
+        "en": "A digital badge for loyal supporters."
+      },
+      "template_variations": [
+        {
+          "name": "{{fqdn}}::1005::v1::badge::v1",
+          "num": 1,
+          "action": "{{fqdn}}::1005::v1::Action::BuyWithPoints"
+        }
+      ]
+    },
+    "owner_id": "e2e00000-0000-4000-8000-000000000002",
+    "hidden": false,
+    "limit": null,
+    "buyPreCondition": null,
+    "geoConstraint": null,
+    "created_at": "2026-01-01T00:00:00.000Z",
+    "updated_at": "2026-01-01T00:00:00.000Z",
+    "id": "e2e000000000000000000302"
+  }
+]

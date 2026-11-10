@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Card</title>
+    <style>
+      body { margin: 0; padding: 24px; font: 16px/1.5 system-ui, sans-serif; color: #111; background: #fff; }
+      h1 { font-size: 24px; margin: 0 0 8px; }
+      button { font: inherit; padding: 12px 20px; border: 0; border-radius: 8px; background: #111; color: #fff; cursor: pointer; }
+      button:focus-visible { outline: 3px solid #0057ff; outline-offset: 2px; }
+    </style>
+  </head>
+  <body>
+    <!--
+      The card face the accessibility suite's mocked mode frames in the card
+      modal, in place of a Lab-built face. It is accessible on purpose: the
+      modal checks are about the viewer and the card component, not the face.
+    -->
+    <main>
+      <h1 id="title">Card</h1>
+      <p>A stand-in card face for the accessibility suite.</p>
+      <button type="button">Continue</button>
+    </main>
+    <script>
+      const title = new URLSearchParams(location.search).get("title");
+      if (title) document.getElementById("title").textContent = title;
+    </script>
+  </body>
+</html>

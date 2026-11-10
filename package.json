@@ -7,8 +7,10 @@
   "scripts": {
     "dev": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "lint": "eslint src --ext .ts,.tsx",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint src e2e playwright.config.ts --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit && tsc -p e2e",
+    "test:e2e": "playwright test --project=a11y",
+    "test:e2e:login": "playwright test --project=login"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",
@@ -20,6 +22,8 @@
     "sweetalert2": "^11.26.18"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",

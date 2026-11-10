@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useApp } from "../context/AppContext";
 import { getViewerConfig } from "../config/viewerConfig";
 import { authService } from "../services/authService";
+import { componentKeyOf, useA11yLabels } from "../i18n/a11yLabels";
 import ParentBridge from "@/types/smt-base-bridge/parent-bridge";
 import Swal from "sweetalert2";
 
@@ -71,6 +72,8 @@ export const BridgedIframe = forwardRef<
     mapIframeHandle,
     setPendingMapCommand,
   } = useApp();
+  const { lang, labels } = useA11yLabels();
+  const componentKey = componentKeyOf(src);
   const [iframe, setIframe] = useState<HTMLIFrameElement | null>(null);
   const bridgeRef = useRef<ParentBridge | null>(null);
   const [iframeSrc, setIframeSrc] = useState<string | null>(null);
@@ -570,7 +573,9 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       ref={setIframeRef}
       src={iframeSrc || undefined}
       className={className}
-      title="Embedded Content"
+      // A short name per component, in the component's language (2.4.1, 4.1.2).
+      title={componentKey ? labels[componentKey] : labels.embedded}
+      lang={lang}
       onLoad={() => setIframeLoaded(true)}
       allow="geolocation; camera; microphone; fullscreen; autoplay; clipboard-write; encrypted-media; gyroscope; accelerometer; web-share; xr-spatial-tracking"
       referrerPolicy={suppressReferrer ? "no-referrer" : undefined}

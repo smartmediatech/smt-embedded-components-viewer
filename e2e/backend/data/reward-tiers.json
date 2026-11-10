@@ -1,0 +1,63 @@
+{
+  "tiers": [
+    {
+      "tier": "1",
+      "threshold": 1,
+      "meta": {
+        "name": "Supporter",
+        "title": "0 to 9,999 Season XP",
+        "description": "Rewards: Digital Collectibles"
+      },
+      "levels": [
+        {
+          "level": "1.1",
+          "threshold": 1
+        }
+      ]
+    },
+    {
+      "tier": "2",
+      "threshold": 10000,
+      "meta": {
+        "name": "Pro",
+        "title": "10,000 to 24,999 Season XP",
+        "description": "Rewards: Physical Merchandise"
+      },
+      "levels": [
+        {
+          "level": "2.1",
+          "threshold": 10000
+        }
+      ]
+    },
+    {
+      "tier": "3",
+      "threshold": 25000,
+      "meta": {
+        "name": "Champion",
+        "title": "25,000 to 39,999 Season XP",
+        "description": "Rewards: Experiences"
+      },
+      "levels": [
+        {
+          "level": "3.1",
+          "threshold": 25000
+        }
+      ]
+    },
+    {
+      "tier": "4",
+      "threshold": 40000,
+      "meta": {
+        "name": "Legend",
+        "title": "40,000+ Season XP"
+      },
+      "levels": [
+        {
+          "level": "4.1",
+          "threshold": 40000
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+import type { ComponentPage } from "./fixtures";
+import { DATA_MODE, type DataMode } from "./dataMode";
+import { TENANT_KEY } from "./tenants";
+
+/**
+ * Today's known WCAG 2.2 AA findings. The suite fails on anything not listed
+ * here, so a new problem turns it red, and a fixed one (for the checks that
+ * are deterministic: keyboard, modal, focus, reflow) does too, until its entry
+ * is removed. Same idea as the per-story a11y exceptions in the components'
+ * Storybook (WCAG 1).
+ *
+ * Each entry names the Asana task that owns the fix:
+ */
+export const TASKS = {
+  /** Container and customer snippet: iframe title, focus, resize, modals. */
+  wcag5: "https://app.asana.com/0/0/1219990291224925",
+  /** Component fixes (Rewards, Reward detail, Challenges, Discover, Giveaways, Card). */
+  wcag6: "https://app.asana.com/0/0/1219990342152734",
+  /** Colour contrast: palette and tokens per tenant. */
+  wcag6b: "https://app.asana.com/0/0/1220140054842172",
+} as const;
+
+type Task = (typeof TASKS)[keyof typeof TASKS];
+
+/**
+ * Where an axe violation sits: the viewer's own document, the component's
+ * iframe, or the iframe of a modal the viewer opened over it (nested frames
+ * count as their top-level iframe).
+ */
+export type AxeScope = "host" | "component" | "modal";
+
+export interface KnownAxeFinding {
+  rule: string;
+  /**
+   * Matched against each violating node's axe target selector and HTML
+   * snippet, so a new violation of the same rule on another element still
+   * fails the suite.
+   */
+  node: RegExp;
+  pages: readonly ComponentPage[] | "all";
+  scope: AxeScope;
+  /** Keys of tenants.ts the finding happens on (their content differs); every tenant when unset. */
+  tenants?: readonly string[];
+  /** The one data mode the finding happens in (e.g. it comes from live Lab content); both when unset. */
+  onlyIn?: DataMode;
+  reason: string;
+  task: Task;
+}
+
+export interface KnownCheckFinding {
+  /** A check id from checks.ts. */
+  check: string;
+  pages: readonly ComponentPage[] | "all";
+  /** Keys of tenants.ts the finding happens on (their content differs); every tenant when unset. */
+  tenants?: readonly string[];
+  /** The one data mode the finding happens in (e.g. it comes from live Lab content); both when unset. */
+  onlyIn?: DataMode;
+  reason: string;
+  task: Task;
+}
+
+export const KNOWN_AXE_FINDINGS: readonly KnownAxeFinding[] = [
+  {
+    rule: "color-contrast",
+    node: /\btext-card-eyebrow\b/,
+    pages: ["rewards", "challenges"],
+    scope: "component",
+    tenants: ["palermofcsandbox"],
+    reason: "Card eyebrow text (tier / category label, .text-card-eyebrow) in the tenant accent colour on the card background.",
+    task: TASKS.wcag6b,
+  },
+  {
+    rule: "color-contrast",
+    node: /\.bg-badge-background\b/,
+    pages: ["challenges"],
+    scope: "component",
+    tenants: ["palermofcsandbox"],
+    reason: 'The image label badge (e.g. "Completed", or "5 days left" in live data) on a dimmed challenge card: the card image is at reduced opacity, so the badge text falls below 4.5:1. In mocked data the two completed challenges show it.',
+    task: TASKS.wcag6b,
+  },
+  {
+    rule: "role-img-alt",
+    node: /aria-describedby="card-default_aria_desc"/,
+    pages: ["discover", "giveaways", "challenges"],
+    scope: "modal",
+    onlyIn: "live",
+    reason: 'The engaged card\'s face (nested cdn.smartmedialabs.io iframe) renders div[role=img] with aria-describedby="card-default_aria_desc" but no accessible name. This comes from the face content on the Lab CDN, not from smt-embedded-components source.',
+    task: TASKS.wcag6,
+  },
+  {
+    rule: "aria-command-name",
+    node: /\bcard-area\b/,
+    pages: ["giveaways"],
+    scope: "modal",
+    tenants: ["smtembed"],
+    onlyIn: "live",
+    reason: 'The "Giveaway - Sweepstake" card face (Lab SMT 21608, card "default", nested cdn.smartmedialabs.io iframe) has a clickable area that sets accept_terms: the Lab renders it as div.card-area[role=button] with no accessible name, and its card editor has no field to give an area one. Comes from the Lab face generator, not from smt-embedded-components source.',
+    task: TASKS.wcag6,
+  },
+];
+
+export const KNOWN_CHECK_FINDINGS: readonly KnownCheckFinding[] = [
+  {
+    check: "modal-escape-from-iframe",
+    pages: "all",
+    reason: "Escape only closes the modal from the host document; with focus inside the modal's iframe the keydown never reaches the host, and the bridge has no request a component sends to close it (needs one in smart-sdk and the components).",
+    task: TASKS.wcag5,
+  },
+  {
+    check: "modal-focus-not-returned",
+    pages: "all",
+    reason: "Closing the modal returns focus to the list iframe, not to the card in it: Chromium drops the card's focus inside that iframe when focus moves to the modal's iframe. Putting it back on the card needs a bridge message (e.g. focus.restore) in smart-sdk and the components.",
+    task: TASKS.wcag5,
+  },
+];
+
+/** Whether a known finding is expected on this page for the tenant (E2E_TENANT) and data mode (E2E_DATA) under test. */
+export function applies(finding: KnownAxeFinding | KnownCheckFinding, page: ComponentPage): boolean {
+  const onPage = finding.pages === "all" || finding.pages.includes(page);
+  const forTenant = !finding.tenants || finding.tenants.includes(TENANT_KEY);
+  return onPage && forTenant && (!finding.onlyIn || finding.onlyIn === DATA_MODE);
+}

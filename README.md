@@ -13,6 +13,12 @@ This example showcases:
 - **Bridge Communication**: Two-way communication using the `smt-base-bridge` library
 - **Logout Handling**: Coordinated logout between container and embedded components
 
+## Live demo
+
+A hosted build of this app runs at
+**https://demo.smartmedialabs.io/embedded-smtembed/** against a neutral SMT demo
+tenant (Challenges, Rewards, Giveaways, Discover). Ask SMT for a demo login.
+
 ## Prerequisites
 
 The **`smt-base-bridge.min.js`** library must be loaded in your HTML to enable communication between the container app and the embedded components.
@@ -54,17 +60,40 @@ warning for `https://localhost:3000`, and note that the components load from a
 browser does not trust, you must accept that origin's warning too, by visiting it
 directly once. Otherwise the iframes fail to load with no visible error.
 
+### Accessibility tests
+
+`yarn test:e2e` runs Playwright + axe accessibility checks of this app against
+a tenant's sandbox components, with mocked backend data, so it needs no login
+and runs in CI. `E2E_DATA=live` runs it against real sandbox data with a saved
+login instead. See [e2e/README.md](e2e/README.md).
+
 ## Who configures what
 
 Worth being explicit, because it determines who you ask for a change:
 
-**SMT configures the components.** Branding, colours, typography, layout, which
-tabs and reward tiers exist, the currency name, your allowed embedding origins —
-all of it lives in a per-publisher config that SMT authors and publishes to the
-CDN. The component fetches it at runtime using the `fqdn` you pass. **There is no
-file in this repo, and no query parameter, that changes any of it.** To change
-your branding or behaviour, ask SMT; it takes effect without you redeploying
-anything and without a new component release.
+**SMT configures the components.** Branding, colours, typography and fonts,
+corner radii, icons, layout, which tabs and reward tiers exist, the currency
+name, your allowed embedding origins — and the *content mapping*: which
+categories, tags and fields of your content the components read, which tag
+marks a featured item, what the challenge sub-nav filters on, and how the
+"completed", "coming soon" and "time left" states are derived. All of it lives
+in a per-publisher config that SMT authors and publishes to the CDN. The
+component fetches it at runtime using the `fqdn` you pass. **There is no file in
+this repo, and no query parameter, that changes any of it.** To change your
+branding, content mapping or behaviour, ask SMT; it takes effect without you
+redeploying anything and without a new component release.
+
+What SMT needs from you for that configuration:
+
+| You provide | SMT turns it into |
+| --- | --- |
+| Design: colours, corner radii, the two font faces as `.woff2` (or `.otf`) files with licence confirmation, optional custom icons | the theme; fonts are hosted by SMT next to your config, so nothing is needed on your side |
+| Your content model: category names, the tag that marks featured items, the tags you use to classify challenges (they become the sub-nav chips), where points, XP, CTA label and badge live on an offer | the content mapping |
+| Reward tiers: the tier names in ascending order, and which tag on a reward offer marks its tier | the tier chips and the tier label on reward cards |
+| Which components you embed, and whether challenges show your users' *owned* challenges or the full *catalogue* | the per-component behaviour |
+
+See [Content the components read](#content-the-components-read) for what must be
+on your offers for each element to appear.
 
 **You configure the container.** This app — authentication, navigation, modals,
 loaders, consent, and the values below that tell it which components to load.
@@ -175,6 +204,7 @@ All embedded components should be rendered in a `BridgedIframe` and share the sa
 - Handle `session.get` so the component can authenticate
 - Handle `session.clear` so embedded logout clears the host session
 - Support `loader.show` and `loader.hide` for embedded loading states
+- Handle `navigation.open` so a component can open an external link in a new tab — a card face's "go to store" button, or an offer whose CTA is an https URL. Components never open URLs themselves; a host that does not answer this request makes those buttons do nothing. See [Opening External Links](#opening-external-links)
 - Optionally support `tracking.consent.request` and `tracking.consent.update` if your integration uses OneTrust
 
 Additional bridge features depend on the component:
@@ -193,13 +223,24 @@ The primary landing experience within the embedded component suite, showing chal
 **Component-specific notes**:
 
 - Optionally handle `navigation.go` if you want to open card or reward details in host-controlled modals
+- An offer whose CTA is an https URL opens through `navigation.open`
 - Consider `sizeToContent` when embedding inline in a scrolling page
 
 ### Rewards Component
 
-Displays the user's rewards, including rewards they have acquired and can claim. Supports navigation to individual reward details and engaged cards via modals.
+Displays the rewards a user can redeem and the ones they already own. A
+featured carousel at the top shows the reward offers carrying your *featured*
+tag; a row of chips filters by tier or shows the user's own rewards; the grid
+lists the rest. Supports navigation to individual reward details and engaged
+cards via modals.
 
 **URL**: `{componentsHost}/rewards/`
+
+**Configured by SMT** (ask SMT to change any of these): the card style, the tabs
+and their labels, the tier names and the tag that marks a reward's tier, and
+what the cost row shows. Two card styles exist — the original card, and the
+*catalogue* card shared with the challenge catalogue (image with label, tier
+name above the title, cost row, square call to action).
 
 **Component-specific notes**:
 
@@ -209,14 +250,37 @@ Displays the user's rewards, including rewards they have acquired and can claim.
 
 ### Challenges Component
 
-Displays challenges that the user has started and their progress. Supports navigation to engaged cards via modal.
+Has two modes, chosen by SMT in your configuration:
+
+- **Owned challenges** — lists the challenges the user has started, with their
+  progress. A challenge appears once the user has it.
+- **Catalogue** — lists *every available* challenge, with the user's own state
+  overlaid on each card: available, in progress (with a progress bar), or
+  completed (faded, with a "View" action). A featured carousel at the top shows
+  the challenges carrying your *featured* tag; chips derived from the tags on
+  your challenges filter the grid; an item count sits below the chips. Each
+  card shows the challenge's kind (its tag) above the title, what it earns
+  (points, XP, a badge), and a call to action whose label comes from the offer.
+  A single label on the image says "Featured" (carousel), or the state
+  (grid): "Completed", "Coming soon" for a challenge whose start date is in the
+  future, or the time left when the end date is within a week — in hours during
+  the last day.
+
+Visitors who are not logged in see the catalogue without any personal state.
 
 **URL**: `{componentsHost}/challenges/`
+
+**Configured by SMT**: the mode, which labels appear, the sub-nav chips and
+their per-language labels, what the reward row shows, and which fields on your
+content carry each value (see [Content the components read](#content-the-components-read)).
 
 **Component-specific notes**:
 
 - Optionally handle `navigation.go` if you want to open engaged card details in a host-controlled modal
 - Consider `sizeToContent` when embedding inline in a scrolling page
+- The catalogue reads the whole feed once and filters chips client-side, so
+  chip labels are exactly your tag names unless SMT has configured a
+  translation for them. A typo in a tag shows up verbatim.
 
 ### Giveaways Component
 
@@ -226,7 +290,7 @@ Displays promotions such as sweepstakes, contests, and games that are not direct
 
 **Component-specific notes**:
 
-- Each giveaway card has an optional `cta` property — when set to an HTTPS URL it opens externally, when set to a deep link it navigates internally, and when empty the card is rendered without a clickable action
+- Each giveaway card has an optional `cta` property — when set to an HTTPS URL it opens externally through `navigation.open`, when set to a deep link it navigates internally, and when empty the card is rendered without a clickable action
 - No additional bridge handlers are required beyond the standard set
 - Consider `sizeToContent` when embedding inline in a scrolling page
 
@@ -240,6 +304,7 @@ Displays detailed card information. Requires card ID as query parameter.
 
 - Include the required `id` query parameter
 - Do not use `sizeToContent` if rendering inside a fixed-size modal
+- Handle `navigation.open` on this iframe as well: a card's face links out through it (for example a "go to store" button), and the card is usually loaded in a second, modal `BridgedIframe` that needs the same handlers as the first
 
 ### Reward Component
 
@@ -261,10 +326,16 @@ Displays the standalone map component. Supports the same embedded auth/session c
 > is enabled for your environment before integrating it. If it has not been
 > provisioned, the URL below will not serve anything.
 
-**URL**: `{componentsHost}/map/`
+**URL**: `{componentsHost}/map/?config_url=map-config.<fqdn>.json`
 
 **Component-specific notes**:
 
+- Pass `config_url`. The map does not read `fqdn`; it loads its publisher from the
+  config file named in `config_url`. Without it, the map falls back to the host's
+  default publisher, which may not be yours, and your users get authentication errors.
+- Use the bare file name. Do not prefix it with `./`: the map does not URL-decode
+  the value, so an encoded `.%2F` would request a file that does not exist.
+- SMT provisions `map-config.<fqdn>.json` when the map is enabled for you.
 - Support `component.config.get` to provide initial map configuration
 - Optionally send `component.config.update` for live theme/config changes
 
@@ -288,6 +359,37 @@ type MapComponentConfig = {
   };
 };
 ```
+
+## Content the components read
+
+The components render **your** content from the SMT platform. Which field plays
+which role is part of the configuration SMT maintains for you, with sensible
+defaults; the table shows the defaults, so you know what to fill in. If your
+content uses different names, tell SMT and the mapping is changed — the
+components themselves never change.
+
+| Shown on the card | Read from your offer (default) | Notes |
+| --- | --- | --- |
+| Title | `title` | |
+| Description | `short_description`, else `description` | |
+| Image | `image`; the featured carousel prefers `image_featured` | Featured artwork should not contain a "Featured" label — the component draws it |
+| Kind (small line above the title) | the offer's tags | also the sub-nav chips; the featured tag is excluded |
+| Featured | the tag SMT configured as *featured* (e.g. `featured`) | case matters |
+| Points | custom field `points` | |
+| XP | custom field `xp` | display only |
+| Badge ("+1 badge") | custom field `badge` = `yes` | |
+| Call-to-action label | custom field `cta_label` (per language), else `action_text`, else "Start" / "Redeem" | |
+| Time left | the offer's end date, when set | the platform's default open-ended end date shows nothing |
+| Coming soon | the offer's start date in the future | |
+| Progress bar | custom field `challenge_type` = `progressive` on the offer; the value from the user's own challenge item (`progress_status` / `progress_max`) | per-user progress never lives on the offer |
+| Completed | the user's own challenge item has reached `progress_max`, or the platform reports the offer as no longer acquirable for them | |
+| Reward tier | a tag on the reward offer matching one of the configured tier names | the tier name shows above the reward title |
+
+Rule of thumb, agreed with SMT: **anything shown before a user starts a
+challenge lives on the offer; per-user progress lives on the user's item.**
+
+Fonts, icons, colours and radii are not content: they are part of the theme
+SMT configures, and fonts are hosted by SMT alongside your configuration.
 
 ## Configuration
 
@@ -403,6 +505,44 @@ The following languages are currently supported: `ar`, `da`, `de`, `en`, `es`, `
 - Invalid or unsupported language codes will fall back to the browser language or English
 - The `lang` parameter can be combined with other query parameters (e.g., `?id=123&lang=es`)
 
+## Accessibility: what your page is responsible for
+
+The components target WCAG 2.2 AA inside their iframes. A screen reader or
+keyboard user meets your page first, and some of what they need only your page
+can provide:
+
+- **Iframe placement.** Put each iframe in the DOM where it sits on screen, in
+  reading order (no CSS reordering), so Tab moves into and out of the component
+  where people expect it. Don't put it in a container that clips its content
+  (`overflow: hidden` with a fixed height) unless you use `sizeToContent`.
+- **A `title` on every iframe.** Screen readers announce it when focus enters
+  the frame (WCAG 4.1.2). Use a short name in the page's language, such as
+  "Rewards" or "Challenges", never a generic "Embedded Content". The example
+  app keeps one per component in 12 languages: `src/i18n/a11yLabels.ts`.
+- **Sticky headers.** A sticky or fixed header must not cover the element that
+  has focus inside the component (2.4.11). Give the scrolling element a
+  `scroll-padding-top` at least as tall as the header:
+
+  ```css
+  html { scroll-padding-top: 80px; } /* your header's height */
+  ```
+
+  The example app measures its header and sets this for you (see
+  `src/components/AppHeader.tsx`).
+- **Page language.** Set `<html lang>` to the language you pass as `?lang=`, so
+  your page and the component read in the same voice (3.1.1). If the iframe's
+  `title` is in another language than the page, put that `lang` on the iframe.
+- **Your own contrast and focus styles.** The components can't fix colours or
+  focus outlines on your page: header, navigation, the space around the iframe
+  (1.4.3, 1.4.11, 2.4.7).
+- **Modals you open.** If you show a card or reward in your own overlay (from
+  `navigation.go`), it is a dialog you own: one element with `role="dialog"`,
+  `aria-modal="true"` and a name; the rest of the page `inert` while it is
+  open; focus moved to the modal's iframe on open and back to the list iframe on
+  close; a close button with a translated label. Escape works only while focus
+  is in your document: a key pressed inside the iframe never reaches your page.
+  `src/components/ComponentModal.tsx` is a working example.
+
 ## Bridge Communication
 
 ### Bridge Setup
@@ -454,7 +594,7 @@ useEffect(() => {
 
 1. **Container loads** the embedded component in an iframe
 2. **Bridge initialization**: `ParentBridge` is created with the iframe reference and origin
-3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `loader.show`, `loader.hide`, etc.
+3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `navigation.open`, `loader.show`, `loader.hide`, etc.
 4. **Embedded component requests auth**: Calls `session.get` through the bridge
 5. **Container responds**: Returns the access token (or refresh token for legacy viewer)
 6. **Embedded component authenticates**: Uses the token for API requests
@@ -538,6 +678,49 @@ onNavigation?: (
 />
 ```
 
+### Opening External Links
+
+Embedded components never open a URL themselves: a component runs in an
+iframe and leaves the decision of how to open a link — new tab, in-app
+browser, native handler — to the host. Whenever a component needs an external
+page opened it sends a `navigation.open` request with the URL in the payload.
+This happens when:
+
+- a card's face asks for a website to be opened (a "go to store" or "buy
+  tickets" button inside the card);
+- a Discover or Giveaways offer has an https URL as its CTA.
+
+The host must register a handler for `navigation.open` on **every**
+`BridgedIframe`, including the one that loads the Card component in a modal.
+If the handler is missing, the bridge answers `NOT_SUPPORTED` and the button
+silently does nothing — there is no fallback inside the component.
+
+The handler in `src/components/BridgedIframe.tsx`:
+
+```typescript
+bridge.addRequestHandler("navigation.open", async ({ payload }) => {
+  const url = (payload as { url?: unknown } | undefined)?.url;
+
+  // The URL crosses the bridge from the iframe, so treat it as untrusted:
+  //  - restrict to http(s), or a `javascript:` URL would execute in this
+  //    (host) document rather than the iframe's;
+  //  - noopener, or the opened tab can reach back through window.opener and
+  //    navigate this page (reverse tabnabbing).
+  if (typeof url !== "string" || !/^https?:\/\//i.test(url)) {
+    return new BridgeError(
+      "INVALID_PARAMETER",
+      "navigation.open requires an http(s) url",
+    ).toJson();
+  }
+
+  window.open(url, "_blank", "noopener,noreferrer");
+  return {};
+});
+```
+
+Return `{}` once the link has been opened, or a `BridgeError` (as JSON) to
+refuse a URL.
+
 ### Loader and Alert Handlers
 
 The `BridgedIframe` component handles loader and alert requests from embedded components:
@@ -596,13 +779,26 @@ Use the `sizeToContent` prop when:
 
 #### How It Works
 
-When `sizeToContent` is set on the `BridgedIframe` component:
+**Which components send it.** The main views — Challenges, Rewards, Discover and
+Giveaways — report their content height. The Card, Reward and Wearable views do
+not: they are meant for fixed-size modals.
 
-1. The embedded component measures its content height
-2. It sends a `frame.resize` request through the bridge with the desired height
-3. The parent container updates the iframe's height to match
-4. The iframe grows/shrinks dynamically as content changes
-5. The page scrollbar handles scrolling instead of the iframe
+1. On load, the component measures its content and sends one `frame.resize`
+   request with `{ height }` in pixels.
+2. If your page answers it, the component keeps sending whenever its content
+   height changes (filtering the list, loading more, opening a section), and drops
+   anything that would pin it to the frame height, so the frame can also shrink.
+3. If your page has no handler, or answers with an error such as
+   `NOT_SUPPORTED`, the component stops after that first request and keeps its
+   own internal scrolling. Nothing else changes.
+4. Your page sets the iframe's height to the value it receives; your page's
+   scrollbar then scrolls the content, with no scrollbar inside the iframe.
+
+**Nothing to enable on the component side**: no query parameter and no config.
+Register the `frame.resize` handler before you set the iframe's `src` (as
+`BridgedIframe` does), so the first request is not lost. Remove any fixed height
+or `overflow` setting on that iframe, other than a sensible initial height to
+avoid a jump while it loads.
 
 #### Implementation
 
@@ -659,7 +855,7 @@ bridge.addRequestHandler("frame.resize", async ({ payload }) => {
 
 1. **Use for variable content**: Enable `sizeToContent` for components with dynamic, variable-height content
 2. **Disable for fixed layouts**: Don't use `sizeToContent` for modals, fixed-height containers, or components with internal scrolling
-3. **Performance**: The embedded component should debounce resize requests to avoid excessive updates
+3. **Performance**: The components send at most one request per animation frame, and only when the height actually changed
 4. **Initial height**: Set a reasonable initial height via CSS to avoid layout shift before the first resize
 5. **Minimum height**: Consider setting a `min-height` on the iframe to prevent it from collapsing completely
 
@@ -674,7 +870,7 @@ Example:
 
 ```typescript
 <BridgedIframe
-  src={`${componentsHost}/map/?lang=en`}
+  src={`${componentsHost}/map/?lang=en&config_url=map-config.${fqdn}.json`}
   className="w-full h-full"
   componentConfig={{
     theme: {
