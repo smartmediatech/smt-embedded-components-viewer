@@ -53,6 +53,54 @@ export interface ViewerTenant {
   smartComponentsHost: string;
   legacyComponentsHost: string;
   disabled?: boolean;
+  /** Email code and Google sign-in through the SMT user API. Absent hides both. */
+  signup?: SignupConfig;
+  /** "Continue with SMT" (OpenID Connect). Absent hides the button. */
+  oidc?: OidcConfig;
+}
+
+/**
+ * Email code and Google sign-in for one tenant, through the SMT user API (the
+ * user lambda the claim page calls), so a sign-up records consent the same way.
+ */
+export interface SignupConfig {
+  /** User API base, without the action: e.g. `https://cpl-b.smartmedialabs.io/user`. */
+  userApiUrl: string;
+  /**
+   * `X-Api-Key`: base64 of the publisher name in the user API's client table.
+   * Defaults to base64 of the tenant `fqdn`.
+   */
+  apiKey?: string;
+  /** Which claim config the user API reads: `v0` test, `v1` live. */
+  version: "v0" | "v1";
+  /**
+   * Claim campaign whose consent policies the sign-up accepts. Without it the
+   * user API records no consent and won't create an account from Google.
+   */
+  campaign?: string;
+  /**
+   * `policies_accepted`: the campaign's consent policies for `language`, the
+   * same keys and URLs as its claim config (the user API compares them exactly).
+   */
+  policies?: Record<string, string>;
+  language?: string;
+  /**
+   * Google OAuth client id (the publisher's `google_app_id`). Google sends the
+   * user back to `redirectUri`, which must be both registered with this client
+   * and the publisher's `connect_url` in the user API, which passes the same
+   * redirect URI to the platform. Absent hides the Google button.
+   */
+  googleClientId?: string;
+}
+
+/** SMT as an OpenID provider, used as a public client with PKCE. */
+export interface OidcConfig {
+  /** e.g. `https://i.smartmedialabs.io/v1/idp/<app_id>` (the IdP is only on the i. host). */
+  issuer: string;
+  /** Defaults to the tenant's app id: the IdP's client id is the app id. */
+  clientId?: string;
+  /** Defaults to `openid profile email`. */
+  scope?: string;
 }
 
 export interface ViewerConfig {
@@ -75,6 +123,11 @@ export interface ViewerConfig {
   auth: {
     apiBaseUrl: string;
     appId: string;
+    /**
+     * Where Google and the SMT login send the user back: this page's URL
+     * without the hash route. Defaults to the current origin and path.
+     */
+    redirectUri?: string;
   };
   oneTrust?: {
     domainScriptId: string;
@@ -108,6 +161,20 @@ export function getViewerConfig(): ViewerConfig {
  */
 export function setActiveTenant(key: string): void {
   activeTenant = key;
+}
+
+/** The selected tenant's key (the default until something selects another). */
+export function getActiveTenantKey(): string {
+  return activeTenant ?? getViewerConfig().defaultTenant;
+}
+
+export function getActiveTenant(): ViewerTenant {
+  return getViewerConfig().tenants[getActiveTenantKey()];
+}
+
+/** The URL Google and the SMT login return to. */
+export function getRedirectUri(): string {
+  return getViewerConfig().auth.redirectUri ?? window.location.origin + window.location.pathname;
 }
 
 /**
