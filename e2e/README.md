@@ -83,8 +83,11 @@ In live mode tests skip, with a message, when there is no saved login or it has
 expired. Save one (the file goes outside the repo, readable by you only):
 
 ```sh
-E2E_EMAIL=… E2E_PASSWORD=… yarn test:e2e:login
+E2E_EMAIL=… yarn test:e2e:login
 ```
+
+Sign-in is by emailed code, so this opens a browser window: type the code
+there. Without `E2E_EMAIL`, sign in any way you like in that window.
 
 A Playwright storage state saved by logging in to the hosted demo viewer of the
 same tenant works as well: the suite copies its session to the local origin.

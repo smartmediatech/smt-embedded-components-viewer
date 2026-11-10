@@ -6,7 +6,7 @@ This project demonstrates a **container application** that embeds **SMT Embedded
 
 This example showcases:
 
-- **User Authentication**: Login flow with email/password
+- **User Authentication**: Log in and sign up with an emailed code, Google, or SMT login (OpenID Connect), with consent to the terms on sign-up
 - **Auth Token Passing**: Securely passing tokens to embedded components
 - **Isolated Embeddable Components**: Standalone components that can be embedded independently (Discover, Rewards, Challenges, Giveaways, Card, Reward)
 - **Modal Navigation**: Opening detailed views in modals with navigation handling
@@ -415,6 +415,50 @@ Your application must be configured with an **App ID** provided by SMT. This App
 
 In this example both the App ID and the auth API base URL come from
 `config.json` (`auth.appId` / `auth.apiBaseUrl`) rather than being compiled in.
+
+### Sign-in methods
+
+The log-in page (`#/login`) and sign-up page (`#/signup`) show a method only
+when its block is set on the selected tenant in `config.json`:
+
+| Method | Tenant block | How it works |
+| --- | --- | --- |
+| Email code | `signup` | Calls the SMT user API (`/login`, `/signup`, `/confirm`), as the claim page does. A sign-up shows the terms box under the email field and sends `campaign` + `policies` so the consent is recorded. |
+| Google | `signup.googleClientId` | Redirect to Google, then the user API's `/connect`. On sign-up the terms open in a dialog first. A log-in with a Google account that has no SMT account moves to sign-up. |
+| SMT | `oidc` | OpenID Connect against the SMT IdP (authorization code + PKCE). Log-in only. |
+
+```json
+"signup": {
+  "userApiUrl": "https://cpl-b.smartmedialabs.io/user",
+  "version": "v1",
+  "campaign": "<claim campaign whose consent policies sign-up accepts>",
+  "language": "en",
+  "policies": { "platform_terms": "<url>", "platform_privacy": "<url>" },
+  "googleClientId": "<publisher google_app_id>"
+},
+"oidc": { "issuer": "https://i.smartmedialabs.io/v1/idp/<app_id>" }
+```
+
+What has to exist outside this repo:
+
+- **Email / Google:** a user API client record for the publisher whose app is
+  the tenant's `appId` (the user API signs in with the record's app, and the
+  components only accept tokens for theirs). `signup.apiKey` defaults to
+  base64 of the tenant `fqdn`. `policies` must match the campaign's claim
+  config exactly. For Google, the record's `connect_url` and the Google
+  client's redirect URIs must both be the viewer URL (see `auth.redirectUri`).
+- **SMT (OIDC):** the tenant's app registered for OIDC
+  (`PATCH /v1/publisher/apps/{app_id}` with `oidc`), with the viewer URL in
+  `redirect_uris`. Its `login_url` must be a login page
+  (`https://<host>/login/<viewer>/`) whose config uses the **same app id**,
+  or the user API answers `idp_app_mismatch`. A publisher whose existing
+  login page runs on another app needs its own login page and user API
+  record for the demo app. The viewer swaps the code at `{issuer}/token` from
+  the browser, so register it as a public client: it gets no refresh token,
+  and the session ends when the access token does.
+- Google and the SMT login send the user back to `auth.redirectUri` (default:
+  the page's own URL without the `#` route). It must match the registered
+  redirect URI exactly.
 
 ### Parent origin
 

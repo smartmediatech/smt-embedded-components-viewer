@@ -6,7 +6,21 @@
       "fqdn": "<your-fqdn>",
       "appId": "<your-app-id>",
       "smartComponentsHost": "https://<your-components-host>/components",
-      "legacyComponentsHost": "https://<your-components-host>/components"
+      "legacyComponentsHost": "https://<your-components-host>/components",
+      "signup": {
+        "userApiUrl": "https://cpl-b.smartmedialabs.io/user",
+        "version": "v1",
+        "campaign": "<claim-campaign-with-consent-policies>",
+        "language": "en",
+        "policies": {
+          "platform_terms": "https://www.smartmediatech.io/legal/en/terms",
+          "platform_privacy": "https://www.smartmediatech.io/legal/en/privacy-policy"
+        },
+        "googleClientId": "<publisher-google-app-id>"
+      },
+      "oidc": {
+        "issuer": "https://i.smartmedialabs.io/v1/idp/<your-app-id>"
+      }
     }
   },
   "auth": {
