@@ -8,6 +8,16 @@ import { ComponentModal } from "../components/ComponentModal";
 import { TENANTS, useApp } from "../context/AppContext";
 import { useA11yLabels } from "../i18n/a11yLabels";
 
+type ModalType = "card" | "reward" | "wearable";
+
+// navigation.go features from the modal's component that open another modal
+// view, as on the Discover page; any other feature closes the modal.
+const MODAL_TYPES: Record<string, ModalType> = {
+  engaged: "card",
+  reward: "reward",
+  "ar-face-filter": "wearable",
+};
+
 export const Map = () => {
   const {
     legacyComponentsHost,
@@ -24,7 +34,9 @@ export const Map = () => {
     smartComponentsHost,
   } = useApp();
   const { labels } = useA11yLabels();
-  const [cardId, setCardId] = useState<string | undefined>();
+  // What the modal over the map shows: the picked-up SMT's card, or wherever
+  // that card navigates to (a reward, a wearable).
+  const [modal, setModal] = useState<{ id: string; type: ModalType }>();
 
   // After a pickup the map reports interaction { action: "pickup", status:
   // "completed", smtId }. It is the only message that names the picked-up SMT
@@ -32,16 +44,13 @@ export const Map = () => {
   // show an SMT itself, so the host opens its card.
   const onInteraction = useCallback((interaction: ComponentInteraction) => {
     if (interaction.action === "pickup" && interaction.status === "completed" && interaction.smtId) {
-      setCardId(interaction.smtId);
+      setModal({ id: interaction.smtId, type: "card" });
     }
   }, []);
 
-  const onCardNavigation = useCallback(async (feature: string, focus?: string) => {
-    if (feature === "engaged" && focus) {
-      setCardId(focus);
-    } else {
-      setCardId(undefined);
-    }
+  const onModalNavigation = useCallback(async (feature: string, focus?: string) => {
+    const type = focus ? MODAL_TYPES[feature] : undefined;
+    setModal(type && focus ? { id: focus, type } : undefined);
     return undefined;
   }, []);
 
@@ -120,15 +129,16 @@ export const Map = () => {
         useRefreshToken={bootMode === "refresh-token"}
       />
 
-      {cardId && (
-        <ComponentModal label={labels.card} onClose={() => setCardId(undefined)}>
+      {modal && (
+        <ComponentModal label={labels[modal.type]} onClose={() => setModal(undefined)}>
           <BridgedIframe
-            src={appendUrlParams(`${smartComponentsHost}/card/`, {
-              id: cardId,
+            key={`${modal.type}:${modal.id}`}
+            src={appendUrlParams(`${smartComponentsHost}/${modal.type}/`, {
+              id: modal.id,
               origin: "map",
             })}
             className="w-full h-full rounded-lg shadow-2xl border-0"
-            onNavigation={onCardNavigation}
+            onNavigation={onModalNavigation}
             useRefreshToken={bootMode === "refresh-token"}
           />
         </ComponentModal>
