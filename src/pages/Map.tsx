@@ -50,7 +50,13 @@ export const Map = () => {
 
   const onModalNavigation = useCallback(async (feature: string, focus?: string) => {
     const type = focus ? MODAL_TYPES[feature] : undefined;
-    setModal(type && focus ? { id: focus, type } : undefined);
+    if (type && focus) {
+      setModal({ id: focus, type });
+      // Handled here: a non-undefined reply skips BridgedIframe's default
+      // handling, which would otherwise reject ar-face-filter with an alert.
+      return { feature: "", params: {} };
+    }
+    setModal(undefined);
     return undefined;
   }, []);
 
