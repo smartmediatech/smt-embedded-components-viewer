@@ -338,6 +338,25 @@ Displays the standalone map component. Supports the same embedded auth/session c
 - SMT provisions `map-config.<fqdn>.json` when the map is enabled for you.
 - Support `component.config.get` to provide initial map configuration
 - Optionally send `component.config.update` for live theme/config changes
+- Handle the `interaction` request to open an SMT after the user picks it up (see below)
+
+**Opening an SMT after a pickup**:
+
+The map cannot show an SMT itself. After the user picks one up, it sends:
+
+| Request | Payload | When |
+| --- | --- | --- |
+| `interaction` | `{ action: "pickup", status, smtId, context, eventId }` | `status` is `started`, then `completed` or `failed`; `cancelled` if the user declines |
+| `navigation.go` | `{ feature: "inventory" }` | Right after a successful pickup. No SMT id |
+
+To open the picked-up SMT, handle `interaction`: when `action` is `"pickup"` and
+`status` is `"completed"`, open the Card component for `smtId`
+(`{componentsHost}/card/?id=<smtId>&origin=map`), the same way you open a card on
+`navigation.go` with `feature: "engaged"` from the other components. Reply `{}`; the
+map does not use the reply.
+
+Keep the map on screen when `navigation.go` with `feature: "inventory"` arrives
+right after the pickup, or the card opens over a page the user did not expect.
 
 The example app demonstrates a simple light/dark theme toggle using:
 

@@ -1,6 +1,22 @@
-import { useCallback, useEffect } from "react";
-import { BridgedIframe, BridgedIframeHandle } from "../components/BridgedIframe";
+import { useCallback, useEffect, useState } from "react";
+import {
+  BridgedIframe,
+  BridgedIframeHandle,
+  ComponentInteraction,
+} from "../components/BridgedIframe";
+import { ComponentModal } from "../components/ComponentModal";
 import { TENANTS, useApp } from "../context/AppContext";
+import { useA11yLabels } from "../i18n/a11yLabels";
+
+type ModalType = "card" | "reward" | "wearable";
+
+// navigation.go features from the modal's component that open another modal
+// view, as on the Discover page; any other feature closes the modal.
+const MODAL_TYPES: Record<string, ModalType> = {
+  engaged: "card",
+  reward: "reward",
+  "ar-face-filter": "wearable",
+};
 
 export const Map = () => {
   const {
@@ -15,7 +31,34 @@ export const Map = () => {
     setCurrentIframeUrl,
     appendUrlParams,
     bootMode,
+    smartComponentsHost,
   } = useApp();
+  const { labels } = useA11yLabels();
+  // What the modal over the map shows: the picked-up SMT's card, or wherever
+  // that card navigates to (a reward, a wearable).
+  const [modal, setModal] = useState<{ id: string; type: ModalType }>();
+
+  // After a pickup the map reports interaction { action: "pickup", status:
+  // "completed", smtId }. It is the only message that names the picked-up SMT
+  // (the navigation.go "inventory" that follows has no id), and the map cannot
+  // show an SMT itself, so the host opens its card.
+  const onInteraction = useCallback((interaction: ComponentInteraction) => {
+    if (interaction.action === "pickup" && interaction.status === "completed" && interaction.smtId) {
+      setModal({ id: interaction.smtId, type: "card" });
+    }
+  }, []);
+
+  const onModalNavigation = useCallback(async (feature: string, focus?: string) => {
+    const type = focus ? MODAL_TYPES[feature] : undefined;
+    if (type && focus) {
+      setModal({ id: focus, type });
+      // Handled here: a non-undefined reply skips BridgedIframe's default
+      // handling, which would otherwise reject ar-face-filter with an alert.
+      return { feature: "", params: {} };
+    }
+    setModal(undefined);
+    return undefined;
+  }, []);
 
   const handleRef = useCallback(
     (handle: BridgedIframeHandle | null) => {
@@ -88,8 +131,24 @@ export const Map = () => {
         src={src}
         className="w-full h-full rounded-lg shadow-lg border-0 grow"
         componentConfig={mapComponentConfig}
+        onInteraction={onInteraction}
         useRefreshToken={bootMode === "refresh-token"}
       />
+
+      {modal && (
+        <ComponentModal label={labels[modal.type]} onClose={() => setModal(undefined)}>
+          <BridgedIframe
+            key={`${modal.type}:${modal.id}`}
+            src={appendUrlParams(`${smartComponentsHost}/${modal.type}/`, {
+              id: modal.id,
+              origin: "map",
+            })}
+            className="w-full h-full rounded-lg shadow-2xl border-0"
+            onNavigation={onModalNavigation}
+            useRefreshToken={bootMode === "refresh-token"}
+          />
+        </ComponentModal>
+      )}
     </>
   );
 };

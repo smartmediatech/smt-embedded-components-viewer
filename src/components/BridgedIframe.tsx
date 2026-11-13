@@ -25,6 +25,20 @@ declare global {
   }
 }
 
+/**
+ * An `interaction` request from a component: something the user did, reported
+ * so the host can react. The map sends `action: "pickup"` with `status`
+ * `started`, then `completed` or `failed` (`cancelled` if declined).
+ */
+export interface ComponentInteraction {
+  eventId?: string;
+  action: string;
+  status: string;
+  smtId?: string;
+  context?: string;
+  error?: unknown;
+}
+
 interface BridgedIframeProps {
   src: string;
   className?: string;
@@ -45,6 +59,7 @@ interface BridgedIframeProps {
       }
     | undefined
   >;
+  onInteraction?: (interaction: ComponentInteraction) => void;
 }
 
 export interface BridgedIframeHandle {
@@ -65,7 +80,7 @@ export const BridgedIframe = forwardRef<
   BridgedIframeHandle,
   BridgedIframeProps
 >(
-  ({ src, className, onNavigation, useRefreshToken, sizeToContent, componentConfig }, ref) => {
+  ({ src, className, onNavigation, onInteraction, useRefreshToken, sizeToContent, componentConfig }, ref) => {
   const {
     suppressReferrer,
     setMapQueryParams,
@@ -85,12 +100,16 @@ export const BridgedIframe = forwardRef<
     locationRef.current = location;
   }, [location]);
   const onNavigationRef = useRef(onNavigation);
+  const onInteractionRef = useRef(onInteraction);
   const useRefreshTokenRef = useRef(useRefreshToken);
   const componentConfigRef = useRef(componentConfig);
   // Keep the latest props available to bridge handlers without tearing down the bridge.
   useEffect(() => {
     onNavigationRef.current = onNavigation;
   }, [onNavigation]);
+  useEffect(() => {
+    onInteractionRef.current = onInteraction;
+  }, [onInteraction]);
   useEffect(() => {
     useRefreshTokenRef.current = useRefreshToken;
   }, [useRefreshToken]);
@@ -409,6 +428,14 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       return {};
     });
 
+    // Fire-and-forget report of a user action; the component ignores the reply.
+    bridge.addRequestHandler("interaction", async ({ payload }) => {
+      const interaction = payload as ComponentInteraction | undefined;
+      if (interaction?.action && interaction.status) {
+        onInteractionRef.current?.(interaction);
+      }
+      return {};
+    });
 
     // Return a bridge error for host features this example container does not implement.
     bridge.addRequestHandler("alert.notify", async () => {
@@ -501,6 +528,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         bridge.removeRequestHandler("session.clear");
         bridge.removeRequestHandler("navigation.go");
         bridge.removeRequestHandler("navigation.open");
+        bridge.removeRequestHandler("interaction");
         bridge.removeRequestHandler("alert.notify");
         bridge.removeRequestHandler("alert.notifyDetail");
         bridge.removeRequestHandler("alert.confirm");
