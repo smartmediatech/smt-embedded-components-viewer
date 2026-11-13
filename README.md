@@ -213,6 +213,7 @@ Additional bridge features depend on the component:
 - Use `sizeToContent` for inline, variable-height embeds that should grow with the page
 - Avoid `sizeToContent` for fixed-size modal embeds
 - Use `component.config.get` and `component.config.update` for components like Map that accept host-provided configuration
+- Handle `interaction` if you embed the Map, so the picked-up SMT opens. See [Component Interactions](#component-interactions-interaction)
 
 ### Discover Component
 
@@ -346,7 +347,7 @@ The map cannot show an SMT itself. After the user picks one up, it sends:
 
 | Request | Payload | When |
 | --- | --- | --- |
-| `interaction` | `{ action: "pickup", status, smtId, context, eventId }` | `status` is `started`, then `completed` or `failed`; `cancelled` if the user declines |
+| `interaction` | `{ action: "pickup", status, smtId, context, eventId }` | `status` is `started`, then `completed` or `failed`; `cancelled` if the user declines. Full payload: [Component Interactions](#component-interactions-interaction) |
 | `navigation.go` | `{ feature: "inventory" }` | Right after a successful pickup. No SMT id |
 
 To open the picked-up SMT, handle `interaction`: when `action` is `"pickup"` and
@@ -357,6 +358,12 @@ map does not use the reply.
 
 Keep the map on screen when `navigation.go` with `feature: "inventory"` arrives
 right after the pickup, or the card opens over a page the user did not expect.
+
+Do not wait for any other message to open the SMT. The map never asks the host to
+open a picked-up SMT, and an SMT's auto-open setting does not change that: it only
+shows the card expanded once the SMT is already open. Without an `interaction`
+handler, nothing opens after a pickup. Code for both a `BridgedIframe` and a plain
+`ParentBridge` is in [Component Interactions](#component-interactions-interaction).
 
 The example app demonstrates a simple light/dark theme toggle using:
 
@@ -609,17 +616,22 @@ useEffect(() => {
 }, [src, navigate]);
 ```
 
+The full component registers more handlers the same way: `navigation.go`,
+`navigation.open`, `loader.show`/`loader.hide`, `frame.resize`, `component.config.get`,
+`interaction` and the tracking-consent requests. Each is described below.
+
 ### Communication Flow
 
 1. **Container loads** the embedded component in an iframe
 2. **Bridge initialization**: `ParentBridge` is created with the iframe reference and origin
-3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `navigation.open`, `loader.show`, `loader.hide`, etc.
+3. **Request handlers registered**: Container registers handlers for `session.get`, `session.clear`, `navigation.go`, `navigation.open`, `loader.show`, `loader.hide`, `interaction`, etc.
 4. **Embedded component requests auth**: Calls `session.get` through the bridge
 5. **Container responds**: Returns the access token (or refresh token for legacy viewer)
 6. **Embedded component authenticates**: Uses the token for API requests
 7. **Navigation requests**: Either side can request navigation changes through the bridge
 8. **Modal handling**: Container can intercept navigation to open modals with isolated components
 9. **Logout coordination**: Either side can initiate logout, which is handled by both
+10. **User actions reported**: A component reports what the user did (for example, a map pickup) with `interaction`. It never tells the container what to do next; the container decides
 
 ### Passing Auth to Embedded Components
 
@@ -696,6 +708,85 @@ onNavigation?: (
   sizeToContent
 />
 ```
+
+### Component Interactions (`interaction`)
+
+A component sends an `interaction` request to report something the user did.
+It is a report, not a command: the component does not ask the container to do
+anything and ignores the reply. What happens next is the container's decision.
+This example app opens the SMT's card; another integration might open a profile
+page or do nothing.
+
+Today only the [Map](#map-component) sends it, when the user picks up or drops an
+SMT. Payload:
+
+| Field | Type | Always sent | Meaning |
+| --- | --- | :---: | --- |
+| `eventId` | `string` | Yes | Ties `started` to the `completed` or `failed` that follows |
+| `action` | `"pickup"` \| `"drop"` | Yes | What the user did |
+| `status` | `"started"` \| `"completed"` \| `"failed"` \| `"cancelled"` | Yes | Stage of the action (see below) |
+| `smtId` | `string` | Yes | The SMT the action is about |
+| `context` | `"map"` \| `"ar-world"` \| `"ar-engaged"` \| `"unknown"` | No | Where it happened |
+| `location` | `{ lat, lon }` | No | Sent for drops |
+| `error` | `{ message, requestId? }` | No | Sent when `status` is `"failed"` |
+
+Stages:
+
+```
+started → completed   success
+started → failed      server error
+cancelled             the user declined the confirmation (sent alone, with its own eventId)
+started               AR handoff (context "ar-world" or "ar-engaged"); it finishes in the AR experience
+```
+
+Reply `{}`. One user action sends several requests, so act on the stage you need
+(to open a picked-up SMT: `action` `"pickup"`, `status` `"completed"`) and ignore
+the rest. This example app types the payload as `ComponentInteraction` in
+`src/components/BridgedIframe.tsx`.
+
+**With `BridgedIframe`**: pass `onInteraction`. `BridgedIframe` replies `{}` itself
+and calls `onInteraction` only for payloads that have both `action` and `status`.
+
+```typescript
+onInteraction?: (interaction: ComponentInteraction) => void;
+```
+
+Example (`src/pages/Map.tsx`), opening the card in a modal after a pickup:
+
+```typescript
+const onInteraction = useCallback((interaction: ComponentInteraction) => {
+  if (interaction.action === "pickup" && interaction.status === "completed" && interaction.smtId) {
+    setModal({ id: interaction.smtId, type: "card" });
+  }
+}, []);
+
+<BridgedIframe
+  src={src}
+  componentConfig={mapComponentConfig}
+  onInteraction={onInteraction}
+/>
+```
+
+The modal renders the Card component, `{componentsHost}/card/?id=<smtId>&origin=map`,
+in its own `BridgedIframe`.
+
+**With a plain `ParentBridge`** (no React, or your own bridge wrapper): register the
+handler on the map iframe's bridge, next to `session.get` and `navigation.go`:
+
+```javascript
+// Map iframe bridge: open the SMT card after a pickup.
+mapBridge.addRequestHandler("interaction", async ({ payload }) => {
+  if (payload?.action === "pickup" && payload.status === "completed" && payload.smtId) {
+    // Open the Card component for this SMT, the same way you do on
+    // navigation.go { feature: "engaged", focus } from the other components,
+    // e.g. in a modal: <componentsHost>/card/?id=<smtId>&origin=map
+    openCard(payload.smtId);
+  }
+  return {}; // the map ignores the reply
+});
+```
+
+`openCard` stands for whatever your page already calls to open a card on `engaged`.
 
 ### Opening External Links
 
