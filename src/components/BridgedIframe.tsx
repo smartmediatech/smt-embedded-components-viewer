@@ -27,16 +27,23 @@ declare global {
 
 /**
  * An `interaction` request from a component: something the user did, reported
- * so the host can react. The map sends `action: "pickup"` with `status`
- * `started`, then `completed` or `failed` (`cancelled` if declined).
+ * so the host can react. Mirrors the map's `InteractionBridgePayload`.
+ *
+ * Stages: `started` → `completed` | `failed`; `cancelled` is sent alone (with
+ * its own `eventId`) when the user declines; an AR handoff (`context`
+ * `ar-world` / `ar-engaged`) sends only `started`.
  */
 export interface ComponentInteraction {
-  eventId?: string;
-  action: string;
-  status: string;
-  smtId?: string;
-  context?: string;
-  error?: unknown;
+  /** Ties `started` to the `completed` or `failed` that follows. */
+  eventId: string;
+  action: "pickup" | "drop";
+  status: "started" | "completed" | "failed" | "cancelled";
+  smtId: string;
+  context?: "map" | "ar-world" | "ar-engaged" | "unknown";
+  /** Sent for drops. */
+  location?: { lat: number; lon: number };
+  /** Sent when `status` is `failed`. */
+  error?: { message: string; requestId?: string | number };
 }
 
 interface BridgedIframeProps {

@@ -741,8 +741,8 @@ started               AR handoff (context "ar-world" or "ar-engaged"); it finish
 
 Reply `{}`. One user action sends several requests, so act on the stage you need
 (to open a picked-up SMT: `action` `"pickup"`, `status` `"completed"`) and ignore
-the rest. This example app types the payload as `ComponentInteraction` in
-`src/components/BridgedIframe.tsx`.
+the rest. The same contract is typed as `ComponentInteraction` in
+`src/components/BridgedIframe.tsx`; copy it if you use TypeScript.
 
 **With `BridgedIframe`**: pass `onInteraction`. `BridgedIframe` replies `{}` itself
 and calls `onInteraction` only for payloads that have both `action` and `status`.
