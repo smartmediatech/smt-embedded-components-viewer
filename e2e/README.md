@@ -30,8 +30,8 @@ out of scope):
 | Test | What |
 | --- | --- |
 | axe | The host page and every iframe in it (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`, the same tags as the components' Storybook gate). |
-| keyboard | Tab from the header into the component iframe, through it and out again; then Shift+Tab back. Fails if focus never gets in or out, or sticks on one element. |
-| 2.4.11 | Makes the header `position: sticky` (as a publisher's site would), Tabs both ways through the iframe and fails if a focused element ends up entirely behind the header. |
+| keyboard | Tab from the sidebar into the component iframe, through it and out again; then Shift+Tab back. Fails if focus never gets in or out, or sticks on one element. |
+| 2.4.11 | At phone width (390 px), Tabs both ways through the iframe and fails if a focused element ends up entirely behind the top bar or the fixed bottom tab bar. On desktop the sidebar sits beside the component, so nothing can cover it. |
 | reflow | No horizontal scroll on the host page or inside the iframe at 320 px (1.4.10) and at 640 px (1280 px at 200% zoom: Playwright has no browser zoom, so a narrower viewport stands in for it). |
 | modal | Opens a modal from the first card with Enter, runs axe with it open, and checks dialog semantics, focus moving in, focus staying in, Escape from inside the modal's iframe, and focus returning to the card. |
 
