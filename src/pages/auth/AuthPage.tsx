@@ -6,7 +6,7 @@ import { useApp } from "../../context/AppContext";
 import { getViewerConfig } from "../../config/viewerConfig";
 import { takeRedirectResult } from "../../services/authService/redirectSignIn";
 import { TenantSelect } from "../../components/TenantSelect";
-import { EmailIcon, GoogleIcon, SmtMark } from "./icons";
+import { EmailIcon, GoogleIcon, SmtLogo, SmtMark } from "./icons";
 import { TermsCheckbox, TermsDialog } from "./TermsConsent";
 
 export type AuthMode = "login" | "signup";
@@ -388,7 +388,7 @@ type RedirectState = { email?: string; notice?: string; google?: boolean };
 const Shell = ({ lead, children }: { lead: string; children: ReactNode }) => (
   <div className="min-h-screen flex flex-wrap bg-[#111] text-[#B3B3B3] font-[Manrope,system-ui,sans-serif]">
     <section className="hidden md:flex flex-[1_1_520px] min-w-0 flex-col justify-between gap-12 border-r border-[#262626] px-[clamp(24px,5vw,72px)] py-12 text-white">
-      <span className="font-[Archivo,sans-serif] text-[28px] font-extrabold tracking-tight">SMT</span>
+      <SmtLogo className="h-11 w-auto self-start" />
       <div className="flex max-w-[560px] flex-col gap-6">
         <h1 className="m-0 font-[Archivo,sans-serif] text-[clamp(40px,5vw,64px)] font-extrabold uppercase leading-[1.02] tracking-[-.01em]">
           My Rewards
@@ -401,7 +401,7 @@ const Shell = ({ lead, children }: { lead: string; children: ReactNode }) => (
 
     <main className="flex flex-[1_1_440px] min-w-0 items-center justify-center px-4 py-12 sm:px-6">
       <div className="flex w-full max-w-[400px] flex-col gap-7">
-        <span className="md:hidden font-[Archivo,sans-serif] text-[28px] font-extrabold tracking-tight text-white">SMT</span>
+        <SmtLogo className="md:hidden h-10 w-auto self-start" />
         {children}
         {/*
           The tenant has to be picked before signing in: it selects the app id
