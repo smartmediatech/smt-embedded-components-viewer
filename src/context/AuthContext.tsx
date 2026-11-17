@@ -16,6 +16,8 @@ interface AuthContextType {
   /** Emails a one-time code; a sign-up also records consent (see userApi). */
   requestEmailCode: (args: { email: string; signup: boolean }) => Promise<void>;
   confirmEmailCode: (args: { email: string; code: string }) => Promise<void>;
+  /** Email and password (`/v1/user/login`); log in only. */
+  signInWithPassword: (args: { email: string; password: string }) => Promise<void>;
   /** Leaves for Google. A sign-up must have collected consent first. */
   signInWithGoogle: (args: { signup: boolean }) => Promise<void>;
   /** Leaves for the SMT login. */
@@ -73,6 +75,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(await authService.startSession(session, email));
   };
 
+  const signInWithPassword = async ({ email, password }: { email: string; password: string }) => {
+    const session = await authService.loginWithPassword(email, password);
+    setUser(await authService.startSession(session, email));
+  };
+
   const signInWithGoogle = async ({ signup }: { signup: boolean }) => {
     startGoogle(signup);
   };
@@ -89,6 +96,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loading,
     requestEmailCode,
     confirmEmailCode,
+    signInWithPassword,
     signInWithGoogle,
     signInWithSmt,
     logout,

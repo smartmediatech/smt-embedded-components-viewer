@@ -6,11 +6,11 @@ import { useApp } from "../../context/AppContext";
 import { getViewerConfig } from "../../config/viewerConfig";
 import { takeRedirectResult } from "../../services/authService/redirectSignIn";
 import { TenantSelect } from "../../components/TenantSelect";
-import { EmailIcon, GoogleIcon, SmtLogo, SmtMark } from "./icons";
+import { EmailIcon, GoogleIcon, PasswordIcon, SmtLogo, SmtMark } from "./icons";
 import { TermsCheckbox, TermsDialog } from "./TermsConsent";
 
 export type AuthMode = "login" | "signup";
-type Step = "choose" | "email" | "code";
+type Step = "choose" | "email" | "code" | "password";
 
 const CODE_LENGTH = 6;
 
@@ -20,7 +20,7 @@ const COPY = {
     subtitle: "Log in to your SMT account to continue.",
     lead: "Sign in to earn, track and redeem your rewards points.",
     google: "Continue with Google",
-    email: "Continue with Email",
+    email: "Email me a code",
     submit: "Continue",
     back: "← Other sign-in options",
   },
@@ -60,8 +60,10 @@ const errorMessage = (err: unknown, fallback: string) =>
 
 /**
  * Log in and sign up for the embed demo, after the "SMT Sign-in & Sign-up"
- * design. Three ways in:
+ * design. The ways in:
  *
+ * - Email and password: the platform's own login, as the viewer had before
+ *   (log in only). Needs no tenant config, so it is always offered.
  * - Email: a one-time code, as on the claim page. On sign-up the terms box
  *   sits under the email field, above the submit button.
  * - Google: on sign-up the terms open in a dialog first, then Google's
@@ -91,11 +93,12 @@ function useAuthFonts() {
 export const AuthPage = ({ mode }: { mode: AuthMode }) => {
   useAuthFonts();
   const navigate = useNavigate();
-  const { user, requestEmailCode, confirmEmailCode, signInWithGoogle, signInWithSmt } = useAuth();
+  const { user, requestEmailCode, confirmEmailCode, signInWithPassword, signInWithGoogle, signInWithSmt } = useAuth();
 
   const [step, setStep] = useState<Step>("choose");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState("");
   const [termsOpen, setTermsOpen] = useState(false);
@@ -144,6 +147,7 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
   const emailAvailable = !!tenantConfig?.signup;
   const googleAvailable = !!tenantConfig?.signup?.googleClientId;
   const smtAvailable = !isSignup && !!tenantConfig?.oidc;
+  const passwordAvailable = !isSignup;
 
   const run = async (fn: () => Promise<void>, fallback: string) => {
     setError("");
@@ -185,6 +189,19 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
     }, "That code didn't work. Please try again.");
   };
 
+  const passwordLogin = (e: FormEvent) => {
+    e.preventDefault();
+    setNotice("");
+    void run(async () => {
+      try {
+        await signInWithPassword({ email: email.trim(), password });
+      } finally {
+        setPassword("");
+      }
+      navigate("/");
+    }, "Could not log in. Please try again.");
+  };
+
   const google = () => {
     if (isSignup && !consent) {
       setTermsOpen(true);
@@ -224,6 +241,12 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
 
       {step === "choose" && (
         <div className="flex flex-col gap-3">
+          {passwordAvailable && (
+            <button type="button" className={optionBtnCls} onClick={() => setStep("password")} disabled={busy}>
+              <PasswordIcon />
+              Continue with Email and Password
+            </button>
+          )}
           {googleAvailable && (
             <button type="button" className={optionBtnCls} onClick={google} disabled={busy}>
               <GoogleIcon />
@@ -242,7 +265,7 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
               {copy.email}
             </button>
           )}
-          {!googleAvailable && !smtAvailable && !emailAvailable && (
+          {!passwordAvailable && !googleAvailable && !smtAvailable && !emailAvailable && (
             <p className="m-0 text-sm text-[#B3B3B3]">
               {isSignup ? "Sign-up" : "Sign-in"} {"isn't"} set up for this publisher. Add <code>signup</code> or{" "}
               <code>oidc</code> to its tenant in <code>config.json</code>.
@@ -284,6 +307,50 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
           )}
           <button type="submit" className={`${primaryBtnCls} mt-2`} disabled={busy}>
             {busy ? "Sending code…" : copy.submit}
+          </button>
+          <button type="button" className={linkBtnCls} onClick={() => setStep("choose")} disabled={busy}>
+            {copy.back}
+          </button>
+        </form>
+      )}
+
+      {step === "password" && (
+        <form className="flex flex-col gap-4" onSubmit={passwordLogin}>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="auth-email" className="text-sm font-semibold text-white">
+              Email
+            </label>
+            <input
+              id="auth-email"
+              className={fieldCls}
+              type="email"
+              autoComplete="username"
+              spellCheck={false}
+              placeholder="you@example.com"
+              required
+              autoFocus
+              disabled={busy}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="auth-password" className="text-sm font-semibold text-white">
+              Password
+            </label>
+            <input
+              id="auth-password"
+              className={fieldCls}
+              type="password"
+              autoComplete="current-password"
+              required
+              disabled={busy}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className={`${primaryBtnCls} mt-2`} disabled={busy}>
+            {busy ? "Logging in…" : "Log in"}
           </button>
           <button type="button" className={linkBtnCls} onClick={() => setStep("choose")} disabled={busy}>
             {copy.back}
