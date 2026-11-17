@@ -1,4 +1,4 @@
-import { User, ApiGetUserResponse } from "../../types/auth.types";
+import { User, ApiGetUserResponse, ApiLoginPayload, ApiLoginResponse } from "../../types/auth.types";
 import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
 import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
@@ -31,6 +31,35 @@ class AuthService {
   async startSession(session: FinishedSession, email = ""): Promise<User> {
     this.storeSession(session, email);
     return this.fetchCurrentUser();
+  }
+
+  /**
+   * Email and password against the platform (`/v1/user/login`), signed with
+   * the tenant's app id. Needs no tenant config, unlike the other methods.
+   */
+  async loginWithPassword(email: string, password: string): Promise<FinishedSession> {
+    const payload: ApiLoginPayload = { token: email, token_type: "email", auth_data: { password } };
+    let response: Response;
+    try {
+      response = await fetch(`${apiBaseUrl()}/v1/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "App-Id": appId() },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      throw new Error("Couldn't reach the sign-in service. Check your connection and try again.");
+    }
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as { message?: unknown };
+      throw new Error(typeof data.message === "string" && data.message ? data.message : "Invalid email or password.");
+    }
+    const data: ApiLoginResponse = await response.json();
+    return {
+      kind: "access",
+      accessToken: data.payload.access_token.token,
+      expiresIn: data.payload.access_token.expires_in,
+      refreshToken: data.payload.refresh_token.token,
+    };
   }
 
   /** Keeps the tokens without loading the user (AuthProvider loads it on mount). */
