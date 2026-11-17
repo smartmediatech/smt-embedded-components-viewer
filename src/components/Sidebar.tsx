@@ -69,10 +69,12 @@ export const Sidebar = () => {
                 <button
                   type="button"
                   onClick={() => navigate(tab.path)}
+                  aria-current={isActive ? "page" : undefined}
                   className={`flex w-full items-center gap-3 rounded-[11px] px-3 py-[11px] font-display text-[13.5px] font-medium transition-colors cursor-pointer ${
                     isActive
                       ? "bg-white/[0.07] text-white"
-                      : "text-white/40 hover:bg-white/5 hover:text-white/70"
+                      : // /55 like the mobile tab bar: /40 is 3.8:1 on ink (1.4.3 needs 4.5:1).
+                        "text-white/55 hover:bg-white/5 hover:text-white/70"
                   }`}
                 >
                   <Icon size={18} weight={isActive ? "fill" : "regular"} className={isActive ? "text-brand" : undefined} aria-hidden="true" />
@@ -245,7 +247,6 @@ export const Sidebar = () => {
         <button
           type="button"
           onClick={() => navigate("/profile")}
-          aria-label="Your profile"
           aria-current={location.pathname === "/profile" ? "page" : undefined}
           className="flex w-full items-center gap-[11px] rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-white/5 cursor-pointer aria-[current=page]:bg-white/10"
         >
@@ -261,6 +262,8 @@ export const Sidebar = () => {
             <UserCircleIcon size={34} weight="fill" className="shrink-0 text-white/70" aria-hidden="true" />
           )}
           <span className="min-w-0 flex-1">
+            {/* Not aria-label: the name must contain the visible name and email (2.5.3). */}
+            <span className="sr-only">Your profile: </span>
             <span className="block truncate font-display text-[12.5px] font-bold text-white">
               {user?.name}
             </span>
