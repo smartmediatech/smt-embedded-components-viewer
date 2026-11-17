@@ -299,23 +299,29 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
             if (code.length === CODE_LENGTH) verifyCode(code);
           }}
         >
-          <span id="auth-code-label" className="text-sm font-semibold text-white">
+          {/*
+            A real <label> for the first input: Base UI ignores aria-label on
+            it, and hands the field's label down only when the root has no
+            aria-labelledby of its own. The other inputs keep "Digit N of 6".
+          */}
+          <label htmlFor="auth-code" className="text-sm font-semibold text-white">
             Code
-          </span>
+          </label>
           <OTPField.Root
+            id="auth-code"
             length={CODE_LENGTH}
             value={code}
             onValueChange={setCode}
             onValueComplete={verifyCode}
             disabled={busy}
-            aria-labelledby="auth-code-label"
             className="flex gap-2"
           >
             {Array.from({ length: CODE_LENGTH }, (_, i) => (
               <OTPField.Input
                 key={i}
                 aria-label={`Digit ${i + 1} of ${CODE_LENGTH}`}
-                className={`${fieldCls} !w-12 !px-0 text-center text-xl`}
+                // Shrinks below 48px so six fit a 320px screen (1.4.10).
+                className={`${fieldCls} !w-auto min-w-0 max-w-12 flex-1 !px-0 text-center text-xl`}
               />
             ))}
           </OTPField.Root>
