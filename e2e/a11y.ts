@@ -176,7 +176,7 @@ export async function focusStop(page: Page): Promise<FocusStop> {
 
 /**
  * Resolves once the page has stopped scrolling (scrollY unchanged for two
- * frames, at most ~1 s). The page scrolls smoothly, so where focus is on
+ * frames), or after 1 s at most (time, not frames: frame rates differ). The page scrolls smoothly, so where focus is on
  * screen is only known once the scroll that focus started has ended.
  */
 export async function scrollSettled(page: Page): Promise<void> {
@@ -186,12 +186,13 @@ export async function scrollSettled(page: Page): Promise<void> {
         let last = window.scrollY;
         let still = 0;
         let frames = 0;
+        const deadline = performance.now() + 1000;
         const tick = () => {
           frames++;
           still = window.scrollY === last ? still + 1 : 0;
           last = window.scrollY;
           // Wait a few frames first: a smooth scroll may start a frame late.
-          if ((frames >= 4 && still >= 2) || frames > 60) resolve();
+          if ((frames >= 4 && still >= 2) || performance.now() > deadline) resolve();
           else requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);

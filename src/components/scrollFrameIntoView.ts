@@ -73,18 +73,21 @@ const SLACK_MS = 50;
 
 /**
  * Resolves once window.scrollY has not changed for two frames, after at least
- * `minFrames` frames (a smooth scroll may start a frame late), max ~1 s.
+ * `minFrames` frames (a smooth scroll may start a frame late), or after 1 s
+ * at most. The cap is time, not frames: at 240 Hz, 60 frames is a quarter of a
+ * second, shorter than a smooth scroll.
  */
 function scrollIdle(minFrames = 0): Promise<void> {
   return new Promise((resolve) => {
     let last = window.scrollY;
     let still = 0;
     let frames = 0;
+    const deadline = performance.now() + 1000;
     const tick = () => {
       frames++;
       still = window.scrollY === last ? still + 1 : 0;
       last = window.scrollY;
-      if ((frames >= minFrames && still >= 2) || frames > 60) resolve();
+      if ((frames >= minFrames && still >= 2) || performance.now() > deadline) resolve();
       else requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
