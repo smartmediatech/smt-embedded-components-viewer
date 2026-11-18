@@ -9,7 +9,7 @@
  * stopped scrolling, then:
  * - if the browser scrolled the page since focus moved (Chrome), it trusts that
  *   scroll and acts only if the band is still entirely out of view. Correcting
- *   a few pixels after it (say, a card's top edge under a sticky header) shows
+ *   a few pixels after it (say, a card's top edge under a header) shows
  *   as a second, tiny scroll;
  * - otherwise (Safari) it scrolls the band to the middle of the visible area.
  *
@@ -45,6 +45,29 @@ export function trackScrolls(): void {
   );
 }
 
+/**
+ * How much of the top of the viewport is covered: the bottom of any fixed or
+ * sticky element stuck there (a sticky header) above column `x`, else 0.
+ * Measured, not read from scroll-padding-top: a page may set that for a header
+ * that only sticks sometimes, or not at all, and nothing covers the top then.
+ */
+function coveredTop(x: number): number {
+  let covered = 0;
+  for (const hit of document.elementsFromPoint(x, 1)) {
+    for (let el: Element | null = hit; el && el !== document.body; el = el.parentElement) {
+      const { position } = getComputedStyle(el);
+      if (position !== "fixed" && position !== "sticky") continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 1) covered = Math.max(covered, rect.bottom);
+      break;
+    }
+  }
+  return covered;
+}
+
+/** Increments per request; a request that is no longer the latest is stale. */
+let latestRequest = 0;
+
 /** Scroll events this long before the focus time still count as its scroll. */
 const SLACK_MS = 50;
 
@@ -71,7 +94,7 @@ function scrollIdle(minFrames = 0): Promise<void> {
 /**
  * How far to scroll so the band [top, bottom] (viewport coordinates) lies in
  * the visible area [start, end], or 0 when it already does. `start` is below
- * any sticky header (the page's scroll-padding-top).
+ * whatever covers the top of the viewport (see coveredTop).
  *
  * A band that fits is centred in the area, as Chrome centres an element it
  * scrolls to for focus, so both browsers land in the same place. A band taller
@@ -98,11 +121,13 @@ export async function scrollFrameIntoView(
 ): Promise<void> {
   trackScrolls();
   const since = (focusedAt ?? Date.now() - 500) - SLACK_MS;
+  const request = ++latestRequest;
   await scrollIdle();
-  // The frame may have gone while we waited; its coordinates mean nothing now.
-  if (!iframe.isConnected) return;
+  // While we waited, focus may have moved on (a newer request speaks for it),
+  // left the frame, or the frame may have gone: this band means nothing now.
+  if (request !== latestRequest || !iframe.isConnected || document.activeElement !== iframe) return;
   const frame = iframe.getBoundingClientRect();
-  const header = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const header = coveredTop(Math.min(Math.max(frame.left + frame.width / 2, 0), window.innerWidth - 1));
   const bandTop = frame.top + top;
   const bandBottom = frame.top + bottom;
   if (lastBrowserScroll >= since) {
