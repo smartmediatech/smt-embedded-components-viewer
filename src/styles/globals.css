@@ -6,3 +6,11 @@
 html {
   scroll-padding-top: var(--app-header-height, 0px);
 }
+
+/* Glide, don't jump, when focus moves the page (Chrome's own focus scroll
+   follows this), unless the user asked for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
