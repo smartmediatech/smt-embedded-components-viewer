@@ -46,21 +46,38 @@ export function trackScrolls(): void {
 }
 
 /**
- * How much of the top of the viewport is covered: the bottom of any fixed or
- * sticky element stuck there (a sticky header) above column `x`, else 0.
+ * The bottom of the fixed or sticky elements at viewport point (x, y) that
+ * start at or above `y`, or `y - 1` when there are none.
+ */
+function stuckBottom(x: number, y: number): number {
+  let bottom = y - 1;
+  for (const hit of document.elementsFromPoint(x, y)) {
+    for (let el: Element | null = hit; el && el !== document.body; el = el.parentElement) {
+      const { position } = getComputedStyle(el);
+      if (position !== "fixed" && position !== "sticky") continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= y) bottom = Math.max(bottom, rect.bottom);
+      break;
+    }
+  }
+  return bottom;
+}
+
+/**
+ * How much of the top of the viewport is covered above column `x`: the bottom
+ * of the fixed or sticky elements stuck there (a header, or a top bar with a
+ * sticky menu under it), else 0. Each one found, it looks again just below it,
+ * so stacked bars add up.
  * Measured, not read from scroll-padding-top: a page may set that for a header
  * that only sticks sometimes, or not at all, and nothing covers the top then.
  */
 function coveredTop(x: number): number {
   let covered = 0;
-  for (const hit of document.elementsFromPoint(x, 1)) {
-    for (let el: Element | null = hit; el && el !== document.body; el = el.parentElement) {
-      const { position } = getComputedStyle(el);
-      if (position !== "fixed" && position !== "sticky") continue;
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= 1) covered = Math.max(covered, rect.bottom);
-      break;
-    }
+  // A few bars at most; the cap only guards against a pathological page.
+  for (let i = 0; i < 8 && covered < window.innerHeight - 1; i++) {
+    const bottom = stuckBottom(x, Math.max(covered, 0) + 1);
+    if (bottom <= covered) break;
+    covered = bottom;
   }
   return covered;
 }
