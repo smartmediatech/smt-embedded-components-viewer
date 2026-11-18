@@ -3,11 +3,11 @@
  * host-sized iframe (frame coordinates `top`..`bottom`, usually the focused
  * card) is on screen.
  *
- * The component asks whenever focus lands on something that isn't fully on
- * screen. Chrome has usually scrolled the page to it already, maybe smoothly
- * and still moving; Safari never scrolls a page for focus inside a cross-origin
- * frame. So this waits until the page has stopped scrolling, then:
- * - if the browser scrolled the page itself just now (Chrome), it trusts that
+ * The component asks on every focus change. Chrome has usually scrolled the
+ * page to it already, maybe smoothly and still moving; Safari never scrolls a
+ * page for focus inside a cross-origin frame. So this waits until the page has
+ * stopped scrolling, then:
+ * - if the browser scrolled the page since focus moved (Chrome), it trusts that
  *   scroll and acts only if the band is still entirely out of view. Correcting
  *   a few pixels after it (say, a card's top edge under a sticky header) shows
  *   as a second, tiny scroll;
@@ -22,36 +22,46 @@ const MARGIN = 16;
 /** Off-by-a-few-pixels results of the browser's own scroll count as in view. */
 const TOLERANCE = 4;
 
-/** Scrolls this module started end before this time; they are not the browser's. */
-let ownScrollUntil = 0;
-/** When the page last scrolled other than by us. */
+/** True while a scroll this module started is running: its events are not the browser's. */
+let ownScroll = false;
+/** Date.now() of the page's last scroll event that was not ours. */
 let lastBrowserScroll = -Infinity;
-let listening = false;
-function trackScrolls() {
-  if (listening) return;
-  listening = true;
+let tracking = false;
+
+/**
+ * Start recording the page's scroll events. Call it before the frame can take
+ * focus (when registering the handler): the browser's focus scroll may happen
+ * before the first request arrives, and it must not be missed.
+ */
+export function trackScrolls(): void {
+  if (tracking) return;
+  tracking = true;
   window.addEventListener(
     "scroll",
     () => {
-      if (performance.now() > ownScrollUntil) lastBrowserScroll = performance.now();
+      if (!ownScroll) lastBrowserScroll = Date.now();
     },
     { passive: true },
   );
 }
-/** The browser's focus scroll lands within a frame or two of the request. */
-const RECENT_MS = 500;
 
-/** Resolves once window.scrollY has not changed for two frames (max ~1 s). */
-function scrollIdle(): Promise<void> {
+/** Scroll events this long before the focus time still count as its scroll. */
+const SLACK_MS = 50;
+
+/**
+ * Resolves once window.scrollY has not changed for two frames, after at least
+ * `minFrames` frames (a smooth scroll may start a frame late), max ~1 s.
+ */
+function scrollIdle(minFrames = 0): Promise<void> {
   return new Promise((resolve) => {
     let last = window.scrollY;
     let still = 0;
     let frames = 0;
     const tick = () => {
-      const now = window.scrollY;
-      still = now === last ? still + 1 : 0;
-      last = now;
-      if (still >= 2 || ++frames > 60) resolve();
+      frames++;
+      still = window.scrollY === last ? still + 1 : 0;
+      last = window.scrollY;
+      if ((frames >= minFrames && still >= 2) || frames > 60) resolve();
       else requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -75,23 +85,37 @@ export function scrollDelta(top: number, bottom: number, start: number, end: num
   return (top + bottom) / 2 - (start + end) / 2;
 }
 
-export async function scrollFrameIntoView(iframe: HTMLIFrameElement, top: number, bottom: number): Promise<void> {
+/**
+ * @param focusedAt Date.now() in the frame when focus moved. Only scrolls from
+ *   then on count as the browser's focus scroll, so a user's own scrolling just
+ *   before Tab doesn't. Without it, any scroll in the last half second counts.
+ */
+export async function scrollFrameIntoView(
+  iframe: HTMLIFrameElement,
+  top: number,
+  bottom: number,
+  focusedAt?: number,
+): Promise<void> {
   trackScrolls();
-  const asked = performance.now();
+  const since = (focusedAt ?? Date.now() - 500) - SLACK_MS;
   await scrollIdle();
+  // The frame may have gone while we waited; its coordinates mean nothing now.
+  if (!iframe.isConnected) return;
   const frame = iframe.getBoundingClientRect();
   const header = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
   const bandTop = frame.top + top;
   const bandBottom = frame.top + bottom;
-  if (lastBrowserScroll > asked - RECENT_MS) {
-    // The browser handled it; leave its result alone unless nothing shows.
+  if (lastBrowserScroll >= since) {
+    // The browser scrolled for this focus; leave its result alone unless nothing shows.
     const someVisible = bandBottom > header && bandTop < window.innerHeight;
     if (someVisible) return;
   }
   const delta = scrollDelta(bandTop, bandBottom, header, window.innerHeight);
   if (delta === 0) return;
   const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  // Long enough for a smooth scroll to finish; its scroll events aren't the browser's.
-  ownScrollUntil = performance.now() + 1000;
+  ownScroll = true;
   window.scrollBy({ top: delta, behavior: reduce ? "auto" : "smooth" });
+  // Ours until it has actually stopped, not for a fixed time.
+  await scrollIdle(4);
+  ownScroll = false;
 }

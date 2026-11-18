@@ -174,7 +174,32 @@ export async function focusStop(page: Page): Promise<FocusStop> {
   };
 }
 
-/** Presses `key` up to `max` times and records each focus stop. */
+/**
+ * Resolves once the page has stopped scrolling (scrollY unchanged for two
+ * frames, at most ~1 s). The page scrolls smoothly, so where focus is on
+ * screen is only known once the scroll that focus started has ended.
+ */
+export async function scrollSettled(page: Page): Promise<void> {
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) => {
+        let last = window.scrollY;
+        let still = 0;
+        let frames = 0;
+        const tick = () => {
+          frames++;
+          still = window.scrollY === last ? still + 1 : 0;
+          last = window.scrollY;
+          // Wait a few frames first: a smooth scroll may start a frame late.
+          if ((frames >= 4 && still >= 2) || frames > 60) resolve();
+          else requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }),
+  );
+}
+
+/** Presses `key` up to `max` times and records each focus stop, once scrolling has settled. */
 export async function walk(
   page: Page,
   key: "Tab" | "Shift+Tab",
@@ -184,6 +209,7 @@ export async function walk(
   const stops: FocusStop[] = [];
   for (let i = 0; i < max; i++) {
     await page.keyboard.press(key);
+    await scrollSettled(page);
     stops.push(await focusStop(page));
     if (until?.(stops)) break;
   }

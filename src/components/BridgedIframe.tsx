@@ -13,7 +13,7 @@ import { authService } from "../services/authService";
 import { componentKeyOf, useA11yLabels } from "../i18n/a11yLabels";
 import ParentBridge from "@/types/smt-base-bridge/parent-bridge";
 import Swal from "sweetalert2";
-import { scrollFrameIntoView } from "./scrollFrameIntoView";
+import { scrollFrameIntoView, trackScrolls } from "./scrollFrameIntoView";
 
 // Extend Window interface to include OneTrust
 declare global {
@@ -513,6 +513,8 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       return {};
     });
 
+    // Record page scrolls from now on, before the frame can take focus.
+    if (sizeToContent) trackScrolls();
     // A sized frame never scrolls itself; the page does. Safari doesn't scroll
     // the page for focus inside a cross-origin frame, so the component asks.
     bridge.addRequestHandler("frame.scrollIntoView", async ({ payload }) => {
@@ -523,7 +525,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         ).toJson();
       }
 
-      const { top, bottom } = payload as { top: number; bottom: number };
+      const { top, bottom, focusedAt } = payload as { top: number; bottom: number; focusedAt?: number };
       if (typeof top !== "number" || typeof bottom !== "number" || bottom < top) {
         return new BridgeError(
           "INVALID_PARAMETER",
@@ -531,7 +533,9 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         ).toJson();
       }
 
-      if (iframe) await scrollFrameIntoView(iframe, top, bottom);
+      if (iframe) {
+        await scrollFrameIntoView(iframe, top, bottom, typeof focusedAt === "number" ? focusedAt : undefined);
+      }
       return {};
     });
 
