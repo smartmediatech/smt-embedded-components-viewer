@@ -13,6 +13,7 @@ import { authService } from "../services/authService";
 import { componentKeyOf, useA11yLabels } from "../i18n/a11yLabels";
 import ParentBridge from "@/types/smt-base-bridge/parent-bridge";
 import Swal from "sweetalert2";
+import { scrollFrameIntoView, trackScrolls } from "./scrollFrameIntoView";
 
 // Extend Window interface to include OneTrust
 declare global {
@@ -512,6 +513,32 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       return {};
     });
 
+    // Record page scrolls from now on, before the frame can take focus.
+    if (sizeToContent) trackScrolls();
+    // A sized frame never scrolls itself; the page does. Safari doesn't scroll
+    // the page for focus inside a cross-origin frame, so the component asks.
+    bridge.addRequestHandler("frame.scrollIntoView", async ({ payload }) => {
+      if (!sizeToContent) {
+        return new BridgeError(
+          "NOT_SUPPORTED",
+          "frame.scrollIntoView is not supported when sizeToContent is disabled",
+        ).toJson();
+      }
+
+      const { top, bottom, focusedAt } = payload as { top: number; bottom: number; focusedAt?: number };
+      if (typeof top !== "number" || typeof bottom !== "number" || bottom < top) {
+        return new BridgeError(
+          "INVALID_PARAMETER",
+          "top and bottom must be numbers, bottom >= top",
+        ).toJson();
+      }
+
+      if (iframe) {
+        await scrollFrameIntoView(iframe, top, bottom, typeof focusedAt === "number" ? focusedAt : undefined);
+      }
+      return {};
+    });
+
     console.log("Bridge handlers registered successfully");
 
     // Only start loading the child once all handlers are in place.
@@ -543,6 +570,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         bridge.removeRequestHandler("loader.show");
         bridge.removeRequestHandler("loader.hide");
         bridge.removeRequestHandler("frame.resize");
+        bridge.removeRequestHandler("frame.scrollIntoView");
         bridge.dispose();
         if (bridgeRef.current === bridge) {
           bridgeRef.current = null;
