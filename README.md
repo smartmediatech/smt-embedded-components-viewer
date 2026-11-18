@@ -555,6 +555,14 @@ can provide:
 
   The example app measures its header and sets this for you (see
   `src/components/AppHeader.tsx`).
+- **Scrolling to the focused element, if you use `sizeToContent`.** When the
+  iframe grows to its content, your page scrolls, not the iframe. Safari (on
+  macOS and iOS) never scrolls your page when focus moves inside a frame from
+  another origin, so a keyboard user Tabs onto cards they can't see (2.4.7,
+  2.4.11). Handle `frame.scrollIntoView` and your page scrolls them into view
+  in every browser: see
+  [Bringing focus into view with frame.scrollIntoView](#bringing-focus-into-view-with-framescrollintoview).
+  A fixed-height iframe that scrolls inside itself doesn't need it.
 - **Page language.** Set `<html lang>` to the language you pass as `?lang=`, so
   your page and the component read in the same voice (3.1.1). If the iframe's
   `title` is in another language than the page, put that `lang` on the iframe.
@@ -968,6 +976,79 @@ bridge.addRequestHandler("frame.resize", async ({ payload }) => {
 3. **Performance**: The components send at most one request per animation frame, and only when the height actually changed
 4. **Initial height**: Set a reasonable initial height via CSS to avoid layout shift before the first resize
 5. **Minimum height**: Consider setting a `min-height` on the iframe to prevent it from collapsing completely
+6. **Accessibility**: Also handle `frame.scrollIntoView` (next section), or keyboard users in Safari lose sight of the focused element
+
+### Bringing focus into view with frame.scrollIntoView
+
+An iframe sized with `frame.resize` never scrolls itself: your page does. When
+a keyboard user Tabs to a card below the bottom of the screen, something has to
+scroll **your page** to it:
+
+- **Chrome, Edge and Firefox** do it themselves.
+- **Safari** (every browser on iOS) doesn't, for a frame from another origin.
+  The component can't do it either: a cross-origin frame isn't allowed to
+  scroll its parent. Only your page can.
+
+So the component asks. On every focus change it sends `frame.scrollIntoView`
+with the focused element's position in the frame:
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `top`, `bottom` | number | The focused card (or control), in CSS px from the top of the frame's document |
+| `focusedAt` | number | `Date.now()` in the frame when focus moved |
+
+Your page scrolls so that band is on screen. The component sends it only after
+your page has answered `frame.resize`, and stops after the first error
+(`NOT_SUPPORTED` included), so a page without the handler sees nothing new.
+
+#### Implementation
+
+Copy [`src/components/scrollFrameIntoView.ts`](src/components/scrollFrameIntoView.ts)
+into your app. It has no dependencies. It waits until the page stops scrolling,
+keeps the browser's own focus scroll when there was one (so Chrome doesn't move
+twice), otherwise centres the band below any sticky header it finds, and
+ignores requests that focus has already moved past.
+
+Register the handler next to `frame.resize`, before the iframe's `src` is set,
+and call `trackScrolls()` there too, so the browser's first focus scroll is
+recorded:
+
+```typescript
+import { scrollFrameIntoView, trackScrolls } from "./scrollFrameIntoView";
+
+trackScrolls();
+bridge.addRequestHandler("frame.scrollIntoView", async ({ payload }) => {
+  const { top, bottom, focusedAt } = payload as {
+    top: number;
+    bottom: number;
+    focusedAt?: number;
+  };
+  if (typeof top !== "number" || typeof bottom !== "number" || bottom < top) {
+    return new BridgeError(
+      "INVALID_PARAMETER",
+      "top and bottom must be numbers, bottom >= top",
+    ).toJson();
+  }
+  await scrollFrameIntoView(iframe, top, bottom, focusedAt);
+  return {};
+});
+```
+
+Remove the handler with the others when the iframe goes away.
+
+**Optional, recommended:** let focus scrolling glide instead of jump, unless the
+user asked for reduced motion. Chrome's own focus scroll follows this too:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+```
+
+**Check it:** in Safari, turn on "Press Tab to highlight each item on a
+webpage" (Settings › Advanced) or use Option+Tab, open a page whose component
+is taller than the window, and Tab through the cards. The page should follow
+focus down and back up.
 
 ### Component Config Bridge
 
