@@ -985,12 +985,14 @@ a keyboard user Tabs to a card below the bottom of the screen, something has to
 scroll **your page** to it:
 
 - **Chrome, Edge and Firefox** do it themselves.
-- **Safari** (every browser on iOS) doesn't, for a frame from another origin.
+- **Safari** doesn't, for a frame from another origin. Neither does any other
+  browser on iOS, nor an iOS app that shows your site in a WebView (Capacitor,
+  Cordova, React Native WebView): they all use Safari's engine.
   The component can't do it either: a cross-origin frame isn't allowed to
   scroll its parent. Only your page can.
 
-So the component asks. On every focus change it sends `frame.scrollIntoView`
-with the focused element's position in the frame:
+So the component asks. From components **v1.8.2**, on every focus change it
+sends `frame.scrollIntoView` with the focused element's position in the frame:
 
 | Field | Type | Meaning |
 | --- | --- | --- |
@@ -1016,11 +1018,18 @@ recorded:
 ```typescript
 import { scrollFrameIntoView, trackScrolls } from "./scrollFrameIntoView";
 
-trackScrolls();
+if (sizeToContent) trackScrolls();
 bridge.addRequestHandler("frame.scrollIntoView", async ({ payload }) => {
-  const { top, bottom, focusedAt } = payload as {
-    top: number;
-    bottom: number;
+  if (!sizeToContent) {
+    return new BridgeError(
+      "NOT_SUPPORTED",
+      "frame.scrollIntoView is not supported when sizeToContent is disabled",
+    ).toJson();
+  }
+
+  const { top, bottom, focusedAt } = (payload ?? {}) as {
+    top?: number;
+    bottom?: number;
     focusedAt?: number;
   };
   if (typeof top !== "number" || typeof bottom !== "number" || bottom < top) {
@@ -1029,10 +1038,18 @@ bridge.addRequestHandler("frame.scrollIntoView", async ({ payload }) => {
       "top and bottom must be numbers, bottom >= top",
     ).toJson();
   }
-  await scrollFrameIntoView(iframe, top, bottom, focusedAt);
+  await scrollFrameIntoView(
+    iframe,
+    top,
+    bottom,
+    typeof focusedAt === "number" ? focusedAt : undefined,
+  );
   return {};
 });
 ```
+
+You can add the handler before your components are on v1.8.2: until then it
+simply isn't called.
 
 Remove the handler with the others when the iframe goes away.
 
