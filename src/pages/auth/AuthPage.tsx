@@ -217,7 +217,21 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
   if (user) return <Navigate to="/" replace />;
 
   return (
-    <Shell lead={copy.lead}>
+    <Shell
+      lead={copy.lead}
+      footer={
+        <p className="m-0 text-center text-[15px] text-[#B3B3B3]">
+          {isSignup ? "Already have an account? " : "Don't have an account? "}
+          <Link
+            to={isSignup ? "/login" : "/signup"}
+            className="font-bold text-blue-400 underline underline-offset-[3px] hover:text-blue-300 rounded-sm
+              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+          >
+            {isSignup ? "Log In" : "Sign Up"}
+          </Link>
+        </p>
+      }
+    >
       <div className="flex flex-col gap-2.5">
         <h2 className="m-0 font-[Archivo,sans-serif] text-[32px] font-extrabold uppercase leading-tight tracking-[-.005em] text-white">
           {step === "code" ? "Check your email" : copy.title}
@@ -430,19 +444,6 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
         </p>
       )}
 
-      <div className="h-px bg-[#2A2A2A]" />
-
-      <p className="m-0 text-center text-[15px] text-[#B3B3B3]">
-        {isSignup ? "Already have an account? " : "Don't have an account? "}
-        <Link
-          to={isSignup ? "/login" : "/signup"}
-          className="font-bold text-blue-400 underline underline-offset-[3px] hover:text-blue-300 rounded-sm
-            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
-        >
-          {isSignup ? "Log In" : "Sign Up"}
-        </Link>
-      </p>
-
       <TermsDialog
         open={termsOpen}
         onOpenChange={setTermsOpen}
@@ -457,8 +458,12 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
 /** Router state a log-in that found no account passes on to the sign-up page. */
 type RedirectState = { email?: string; notice?: string; google?: boolean };
 
-/** The two-panel frame: brand on the left (hidden on narrow screens), the form on the right. */
-const Shell = ({ lead, children }: { lead: string; children: ReactNode }) => (
+/**
+ * The two-panel frame: brand on the left (hidden on narrow screens), the form
+ * on the right. On a phone, as in the design's mobile boards, the form starts
+ * at the top and the footer (the log-in / sign-up switch) sits at the bottom.
+ */
+const Shell = ({ lead, footer, children }: { lead: string; footer: ReactNode; children: ReactNode }) => (
   <div className="min-h-screen flex flex-wrap bg-[#111] text-[#B3B3B3] font-[Manrope,system-ui,sans-serif]">
     <section className="hidden md:flex flex-[1_1_520px] min-w-0 flex-col justify-between gap-12 border-r border-[#262626] px-[clamp(24px,5vw,72px)] py-12 text-white">
       <SmtLogo className="h-11 w-auto self-start" />
@@ -472,10 +477,16 @@ const Shell = ({ lead, children }: { lead: string; children: ReactNode }) => (
       <p className="m-0 text-[13px] text-[#8C8C8C]">© {new Date().getFullYear()} SmartMedia Technologies Limited. All rights reserved.</p>
     </section>
 
-    <main className="flex flex-[1_1_440px] min-w-0 items-center justify-center px-4 py-12 sm:px-6">
+    <main className="flex min-h-screen flex-[1_1_440px] min-w-0 justify-center px-6 pt-14 pb-8 md:min-h-0 md:items-center md:py-12">
       <div className="flex w-full max-w-[400px] flex-col gap-7">
-        <SmtLogo className="md:hidden h-10 w-auto self-start" />
-        {children}
+        <div className="flex flex-col gap-10 md:gap-7">
+          <SmtLogo className="md:hidden h-10 w-auto self-start" />
+          {children}
+        </div>
+        <div className="mt-auto flex flex-col gap-5 md:mt-0 md:gap-7">
+          <div className="h-px bg-[#2A2A2A]" />
+          {footer}
+        </div>
         {/*
           The tenant has to be picked before signing in: it selects the app id
           the login is signed with, which must match the publisher config the
