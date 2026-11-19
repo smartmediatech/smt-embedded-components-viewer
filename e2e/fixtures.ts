@@ -8,14 +8,19 @@ import { currentTenant, TENANT_KEY } from "./tenants";
 export const COMPONENT_PAGES = ["discover", "rewards", "challenges", "giveaways"] as const;
 export type ComponentPage = (typeof COMPONENT_PAGES)[number];
 
-/** An element that only exists once the component has loaded its data. */
+/**
+ * A card's open button: it only exists once the component has loaded its data,
+ * and the modal tests focus and press it. Since components v1.8.2 the button
+ * sits in the card's heading (`*__open`); the whole-card buttons before it are
+ * kept so the suite also runs against older builds.
+ */
 const READY: Record<ComponentPage, string> = {
-  discover: "button.challenge-card",
-  rewards: "button.feed-card",
-  challenges: "button.feed-card",
+  discover: "button.challenge-card__open, button.challenge-card",
+  rewards: "button.feed-card__open, button.feed-card",
+  challenges: "button.feed-card__open, button.feed-card",
   // `giveaways.card` in the publisher config: "catalogue" renders the shared
   // feed card, "classic" its own giveaway card.
-  giveaways: "button.feed-card, button.giveaway-card",
+  giveaways: "button.feed-card__open, button.feed-card, button.giveaway-card",
 };
 
 type StorageState = {
