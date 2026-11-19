@@ -8,14 +8,19 @@ import { currentTenant, TENANT_KEY } from "./tenants";
 export const COMPONENT_PAGES = ["discover", "rewards", "challenges", "giveaways"] as const;
 export type ComponentPage = (typeof COMPONENT_PAGES)[number];
 
-/** An element that only exists once the component has loaded its data. */
+/**
+ * An element that only exists once the component has loaded its data, and the
+ * card's keyboard target (the modal tests focus it). Since components 1.8.2 a
+ * catalogue or Discover card is a box whose title holds the button
+ * (`*__open`); before, the whole card was the button. Both are matched.
+ */
 const READY: Record<ComponentPage, string> = {
-  discover: "button.challenge-card",
-  rewards: "button.feed-card",
-  challenges: "button.feed-card",
+  discover: "button.challenge-card__open, button.challenge-card",
+  rewards: "button.feed-card__open, button.feed-card",
+  challenges: "button.feed-card__open, button.feed-card",
   // `giveaways.card` in the publisher config: "catalogue" renders the shared
   // feed card, "classic" its own giveaway card.
-  giveaways: "button.feed-card, button.giveaway-card",
+  giveaways: "button.feed-card__open, button.feed-card, button.giveaway-card",
 };
 
 type StorageState = {
