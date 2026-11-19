@@ -8,6 +8,7 @@ import {
 } from "react";
 import type { BridgedIframeHandle } from "../components/BridgedIframe";
 import {
+  getActiveTenantKey,
   getViewerConfig,
   setActiveTenant,
   type MapComponentConfig,
@@ -68,6 +69,16 @@ interface AppContextType {
   setBootMode: (mode: BootMode) => void;
   suppressReferrer: boolean;
   setSuppressReferrer: (suppress: boolean) => void;
+  /**
+   * Dev-only stand-in for the chain address ("sender") that resale listing,
+   * cancel and marketplace purchase calls need. No real wallet is wired up in
+   * this example container, so a component asks for it over the bridge
+   * (`wallet.address.get`) and this is what answers that request.
+   */
+  senderAddress: string;
+  setSenderAddress: (address: string) => void;
+  senderAccountIndex: number;
+  setSenderAccountIndex: (index: number) => void;
   /** Labelled component hosts from config; empty when the config declares none. */
   componentHosts: Record<string, string>;
   /** Active override key, or null to use the tenant's own host. */
@@ -111,9 +122,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [theme, setThemeState] = useState<Theme>("dark");
   // loadViewerConfig() already seeded the active tenant, so this initializer is
   // pure — no side effect during render, and no dependence on provider order.
-  const [tenant, setTenantState] = useState<Tenant>(
-    () => getViewerConfig().defaultTenant,
-  );
+  // Usually the default; after a Google or SMT sign-in redirect, the tenant
+  // the sign-in started on (restored before the app rendered).
+  const [tenant, setTenantState] = useState<Tenant>(() => getActiveTenantKey());
 
   /**
    * Switching tenant switches the app id the viewer authenticates with, so any
@@ -167,6 +178,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   const [bootMode, setBootMode] = useState<BootMode>("access-token");
   const [suppressReferrer, setSuppressReferrer] = useState(false);
+  const [senderAddress, setSenderAddress] = useState("");
+  const [senderAccountIndex, setSenderAccountIndex] = useState(0);
   const [explicitLang, setExplicitLang] = useState<string | null>(null);
   const [explicitTheme, setExplicitTheme] = useState<Theme | null>(null);
   const [mapQueryParams, setMapQueryParams] = useState<MapQueryParams>({});
@@ -230,6 +243,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     setBootMode,
     suppressReferrer,
     setSuppressReferrer,
+    senderAddress,
+    setSenderAddress,
+    senderAccountIndex,
+    setSenderAccountIndex,
     componentHosts,
     componentHostKey,
     setComponentHostKey,

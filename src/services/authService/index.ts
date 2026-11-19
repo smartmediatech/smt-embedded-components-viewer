@@ -1,11 +1,12 @@
 import {
-  LoginCredentials,
-  AuthResponse,
   User,
+  ApiGetUserResponse,
   ApiLoginPayload,
   ApiLoginResponse,
-  ApiGetUserResponse,
+  ApiGetAssetProvidersResponse,
+  AssetProvider,
 } from "../../types/auth.types";
+import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
 import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
 
@@ -24,71 +25,66 @@ class AuthService {
   private ACCESS_TOKEN: string | null = null;
   private readonly REFRESH_TOKEN_KEY = "refresh_token";
   private readonly USER_KEY = "auth_user";
+  /** An access token with no refresh token behind it (SMT login). */
+  private readonly ACCESS_TOKEN_KEY = "access_token";
   private refreshPromise: Promise<string> | null = null;
+  private assetProvidersPromise: Promise<AssetProvider[]> | null = null;
 
-  async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const payload: ApiLoginPayload = {
-      token: credentials.email,
-      token_type: "email",
-      auth_data: {
-        password: credentials.password,
-      },
-    };
+  /**
+   * Starts a session from a finished sign-in: a platform refresh token (email
+   * code, Google), or an access token (SMT login as a public client, which
+   * gets no refresh token, so the session ends when the access token does).
+   * Then loads the user.
+   */
+  async startSession(session: FinishedSession, email = ""): Promise<User> {
+    this.storeSession(session, email);
+    return this.fetchCurrentUser();
+  }
 
+  /**
+   * Email and password against the platform (`/v1/user/login`), signed with
+   * the tenant's app id. Needs no tenant config, unlike the other methods.
+   */
+  async loginWithPassword(email: string, password: string): Promise<FinishedSession> {
+    const payload: ApiLoginPayload = { token: email, token_type: "email", auth_data: { password } };
+    let response: Response;
     try {
-      const response = await fetch(`${apiBaseUrl()}/v1/user/login`, {
+      response = await fetch(`${apiBaseUrl()}/v1/user/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "App-Id": appId(),
-        },
+        headers: { "Content-Type": "application/json", "App-Id": appId() },
         body: JSON.stringify(payload),
       });
-
-      if (!response.ok) {
-        try {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Authentication failed");
-        } catch (parseError) {
-          if (
-            parseError instanceof Error &&
-            parseError.message !== "Authentication failed"
-          ) {
-            throw new Error("Invalid email or password");
-          }
-          throw parseError;
-        }
-      }
-
-      const data: ApiLoginResponse = await response.json();
-
-      // Transform API response to our User type
-      const user: User = {
-        id: data.payload.user.id,
-        email: credentials.email,
-        name:
-          `${data.payload.user.properties.first_name || ""} ${data.payload.user.properties.last_name || ""}`.trim() ||
-          "User",
-        firstName: data.payload.user.properties.first_name,
-        lastName: data.payload.user.properties.last_name,
-        avatarUri: data.payload.user.properties.avatar_uri,
-      };
-
-      const token = data.payload.access_token.token;
-      const refreshToken = data.payload.refresh_token.token;
-
-      // Store refresh token and user in localStorage; keep access token in memory
-      this.ACCESS_TOKEN = token;
-      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
-      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-
-      return { user, token, refreshToken };
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Login failed. Please try again.");
+    } catch {
+      throw new Error("Couldn't reach the sign-in service. Check your connection and try again.");
     }
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as { message?: unknown };
+      throw new Error(typeof data.message === "string" && data.message ? data.message : "Invalid email or password.");
+    }
+    const data: ApiLoginResponse = await response.json();
+    return {
+      kind: "access",
+      accessToken: data.payload.access_token.token,
+      expiresIn: data.payload.access_token.expires_in,
+      refreshToken: data.payload.refresh_token.token,
+    };
+  }
+
+  /** Keeps the tokens without loading the user (AuthProvider loads it on mount). */
+  storeSession(session: FinishedSession, email = ""): void {
+    this.clearSession();
+    if (session.kind === "refresh") {
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
+    } else {
+      this.ACCESS_TOKEN = session.accessToken;
+      if (session.refreshToken) {
+        localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
+      } else {
+        // Kept for this tab only, so a reload doesn't sign the user out.
+        sessionStorage.setItem(this.ACCESS_TOKEN_KEY, session.accessToken);
+      }
+    }
+    localStorage.setItem(this.USER_KEY, JSON.stringify({ email }));
   }
 
   async logout(): Promise<void> {
@@ -109,8 +105,10 @@ class AuthService {
   clearSession(): void {
     // Clear local storage and tokens
     this.ACCESS_TOKEN = null;
+    this.assetProvidersPromise = null;
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
+    sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
   getCurrentUser(): User | null {
@@ -125,18 +123,23 @@ class AuthService {
   }
 
   getToken(): string | null {
-    return this.ACCESS_TOKEN;
+    return this.ACCESS_TOKEN ?? sessionStorage.getItem(this.ACCESS_TOKEN_KEY);
   }
 
   getRefreshToken(): string | null {
+    // A tab signed in with SMT (access token only) stays that session even if
+    // another tab later signs in someone else and writes a refresh token:
+    // mixing the two would show one user and hand components the other.
+    if (sessionStorage.getItem(this.ACCESS_TOKEN_KEY)) return null;
     return localStorage.getItem(this.REFRESH_TOKEN_KEY);
   }
 
   isAuthenticated(): boolean {
     const refresh = this.getRefreshToken();
     // Make sure remaining user session is at least 5 min
-    const isValid = checkJwtToken(refresh, 5 * 60 * 1000);
-    return isValid;
+    if (refresh) return checkJwtToken(refresh, 5 * 60 * 1000);
+    // An access-token-only session (SMT login) lasts as long as its token.
+    return checkJwtToken(this.getToken(), 60 * 1000);
   }
 
   async refreshAccessToken(): Promise<string> {
@@ -207,6 +210,9 @@ class AuthService {
 
     // Check if access token is valid
     if (!accessToken || !checkJwtToken(accessToken)) {
+      if (!this.getRefreshToken()) {
+        throw new Error("The session has ended. Please login again.");
+      }
       // Access token is invalid or expired, refresh it
       try {
         accessToken = await this.refreshAccessToken();
@@ -268,7 +274,7 @@ class AuthService {
           "User",
         firstName: data.payload.properties.first_name,
         lastName: data.payload.properties.last_name,
-        avatarUri: data.payload.properties.avatar_uri,
+        avatarUri: await this.signAssetUrl(data.payload.properties.avatar_uri),
       };
 
       // Update stored user
@@ -281,6 +287,65 @@ class AuthService {
       }
       throw new Error("Failed to fetch current user");
     }
+  }
+
+  /**
+   * The CDNs that need signed requests, read once per session. A failure
+   * isn't cached, so the next call tries again.
+   */
+  private getAssetProviders(): Promise<AssetProvider[]> {
+    if (!this.assetProvidersPromise) {
+      this.assetProvidersPromise = this.smtFetch(`${apiBaseUrl()}/v1/user/asset_providers`)
+        .then(async (response) => {
+          if (!response.ok) throw new Error("Failed to fetch asset providers");
+          const data: ApiGetAssetProvidersResponse = await response.json();
+          return data.payload.asset_provider ?? [];
+        })
+        .catch((error) => {
+          this.assetProvidersPromise = null;
+          throw error;
+        });
+    }
+    return this.assetProvidersPromise;
+  }
+
+  /**
+   * Adds the CDN signature to an asset URL (e.g. the avatar), the way the
+   * components' asset provider does. Without it the CDN answers 403
+   * MissingKey. URLs on other hosts, or when providers can't be read, are
+   * returned unchanged.
+   */
+  async signAssetUrl(url: string | undefined): Promise<string | undefined> {
+    if (!url) return url;
+
+    let providers: AssetProvider[];
+    try {
+      providers = await this.getAssetProviders();
+    } catch (error) {
+      console.error("Failed to fetch asset providers:", error);
+      return url;
+    }
+
+    let hostname: string;
+    try {
+      hostname = new URL(url).hostname;
+    } catch {
+      return url;
+    }
+
+    const provider = providers.find((p) => {
+      try {
+        return new URL(p.uri).hostname === hostname;
+      } catch {
+        return false;
+      }
+    });
+    if (!provider) return url;
+
+    const query = Object.entries(provider.descriptor)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+      .join("&");
+    return `${url}${url.includes("?") ? "&" : "?"}${query}`;
   }
 }
 

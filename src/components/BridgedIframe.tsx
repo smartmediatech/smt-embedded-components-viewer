@@ -11,6 +11,7 @@ import { useApp } from "../context/AppContext";
 import { getViewerConfig } from "../config/viewerConfig";
 import { authService } from "../services/authService";
 import { componentKeyOf, useA11yLabels } from "../i18n/a11yLabels";
+import { useAuth } from "../context/AuthContext";
 import ParentBridge from "@/types/smt-base-bridge/parent-bridge";
 import Swal from "sweetalert2";
 import { scrollFrameIntoView, trackScrolls } from "./scrollFrameIntoView";
@@ -94,6 +95,8 @@ export const BridgedIframe = forwardRef<
     setMapQueryParams,
     mapIframeHandle,
     setPendingMapCommand,
+    senderAddress,
+    senderAccountIndex,
   } = useApp();
   const { lang, labels } = useA11yLabels();
   const componentKey = componentKeyOf(src);
@@ -111,6 +114,10 @@ export const BridgedIframe = forwardRef<
   const onInteractionRef = useRef(onInteraction);
   const useRefreshTokenRef = useRef(useRefreshToken);
   const componentConfigRef = useRef(componentConfig);
+  const senderAddressRef = useRef(senderAddress);
+  const senderAccountIndexRef = useRef(senderAccountIndex);
+  const { refreshUser } = useAuth();
+  const refreshUserRef = useRef(refreshUser);
   // Keep the latest props available to bridge handlers without tearing down the bridge.
   useEffect(() => {
     onNavigationRef.current = onNavigation;
@@ -124,6 +131,15 @@ export const BridgedIframe = forwardRef<
   useEffect(() => {
     componentConfigRef.current = componentConfig;
   }, [componentConfig]);
+  useEffect(() => {
+    senderAddressRef.current = senderAddress;
+  }, [senderAddress]);
+  useEffect(() => {
+    senderAccountIndexRef.current = senderAccountIndex;
+  }, [senderAccountIndex]);
+  useEffect(() => {
+    refreshUserRef.current = refreshUser;
+  }, [refreshUser]);
 
  const getCookie = (name: string): string | null => {
   const match = document.cookie.match(
@@ -284,7 +300,9 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
     // Child components ask the host for auth instead of owning tokens directly.
     bridge.addRequestHandler("session.get", async () => {
       // Access token or refresh token is supported
-      if (useRefreshTokenRef.current) {
+      // An SMT (OIDC) sign-in as a public client has no refresh token, so it
+      // can only hand over its access token.
+      if (useRefreshTokenRef.current && authService.getRefreshToken()) {
         const refreshToken = authService.getRefreshToken();
         console.log(
           "[ComponentBridge] 'session.get' called, returning refreshToken:",
@@ -308,6 +326,26 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       await authService.logout();
       navigate("/login");
       return {};
+    });
+
+    // A component changed the user (e.g. the profile's name or avatar), so the
+    // host's copy — shown in the sidebar and top bar — is re-read.
+    bridge.addRequestHandler("user.changed", async () => {
+      console.log("[ComponentBridge] 'user.changed' called");
+      await refreshUserRef.current();
+      return {};
+    });
+
+    // Resale/marketplace components need a chain address to sign listing,
+    // cancel and purchase requests with. This example container has no real
+    // wallet, so it answers with the dev-configurable value from the Dev menu.
+    bridge.addRequestHandler("wallet.address.get", async () => {
+      const address = senderAddressRef.current;
+      console.log(
+        "[ComponentBridge] 'wallet.address.get' called, returning:",
+        address ? "present" : "empty",
+      );
+      return { address: address || null, index: senderAccountIndexRef.current };
     });
 
     bridge.addRequestHandler("navigation.go", async ({ payload }) => {
@@ -465,16 +503,38 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
       return new BridgeError("NOT_SUPPORTED", "alert.inform is not supported").toJson();
     });
 
-    // The child can ask the host to present a full-page loading state.
+    // The child can ask the host to present a full-page loading state. It
+    // covers the whole app, menu included, so nothing navigates away mid-way
+    // (a purchase uses it for each step). `detail` is an optional second line.
     bridge.addRequestHandler("loader.show", async ({ payload }) => {
-      const { label } = payload as { label: string };
+      const { label, detail } = payload as { label?: string; detail?: string };
+      const title = label || "Loading...";
+
+      // A loader that's already up just changes its text, so a multi-step
+      // process doesn't re-animate the popup at every step.
+      if (Swal.isVisible() && Swal.isLoading()) {
+        Swal.update({ title, text: detail ?? "" });
+        // update() re-renders the actions area, which drops the spinner.
+        Swal.showLoading();
+        return {};
+      }
 
       Swal.fire({
-        title: label || "Loading...",
+        title,
+        text: detail,
         allowOutsideClick: false,
         allowEscapeKey: false,
         allowEnterKey: false,
         showConfirmButton: false,
+        background: "var(--color-ink)",
+        color: "#fff",
+        backdrop: "rgba(0, 0, 0, 0.7)",
+        customClass: {
+          popup: "rounded-2xl! border border-white/10 w-[min(360px,calc(100vw-32px))]!",
+          title: "font-display font-normal! text-[26px]! leading-tight! pt-2!",
+          htmlContainer: "text-[13px]! text-white/60! mt-1!",
+          loader: "border-brand! border-r-transparent! border-l-transparent!",
+        },
         didOpen: () => {
           Swal.showLoading();
         },
@@ -560,6 +620,8 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         bridge.removeRequestHandler("component.config.get");
         bridge.removeRequestHandler("session.get");
         bridge.removeRequestHandler("session.clear");
+        bridge.removeRequestHandler("user.changed");
+        bridge.removeRequestHandler("wallet.address.get");
         bridge.removeRequestHandler("navigation.go");
         bridge.removeRequestHandler("navigation.open");
         bridge.removeRequestHandler("interaction");

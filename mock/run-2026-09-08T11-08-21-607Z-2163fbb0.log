@@ -1,0 +1,684 @@
+{
+  "label": "request#1",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#1",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:22 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599981",
+    "ratelimit-reset": "3098",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167727",
+    "x-ratelimit-remaining-hour": "3599981",
+    "x-ratelimit-remaining-month": "647806671"
+  },
+  "body": {
+    "request_id": "834fa4e5-a7be-446b-b982-301ddf5ae6a4",
+    "payload": {
+      "user": {
+        "id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+        "meta": {
+          "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_created": "2026-09-08T11:04:15Z",
+          "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_modified": "2026-09-08T11:08:22Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "3a308b92-0a08-4849-b4b5-99c4eb159817",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:08:22Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4.1788865455380255272",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21791,
+              "meta": {
+                "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_created": "2026-09-08T11:04:15Z",
+                "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_modified": "2026-09-08T11:04:15Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4",
+              "platform_id": "smt-dev",
+              "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#2",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#2",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "266",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:22 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599980",
+    "ratelimit-reset": "3098",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167726",
+    "x-ratelimit-remaining-hour": "3599980",
+    "x-ratelimit-remaining-month": "647806670",
+    "x-request-id": "93677ae9-f5ad-459d-9afd-258fceafcb7f"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "0",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "0",
+    "available": "0",
+    "confirmed_block": 0,
+    "projection_revision": 0
+  }
+}
+{
+  "label": "request#3",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#3",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:22 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599979",
+    "ratelimit-reset": "3098",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167725",
+    "x-ratelimit-remaining-hour": "3599979",
+    "x-ratelimit-remaining-month": "647806669"
+  },
+  "body": {
+    "request_id": "9ca74a87-0213-4be1-87f1-e26feaa5fda2",
+    "payload": {
+      "user": {
+        "id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+        "meta": {
+          "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_created": "2026-09-08T11:04:17Z",
+          "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_modified": "2026-09-08T11:08:23Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "054ade6c-a6a5-4d43-b3ec-ef9983457c0d",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:08:23Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/55260507-abe6-4bd3-b2b8-b059220e22c3.1788865457250399940",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21792,
+              "meta": {
+                "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_created": "2026-09-08T11:04:17Z",
+                "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_modified": "2026-09-08T11:04:17Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "55260507-abe6-4bd3-b2b8-b059220e22c3",
+              "platform_id": "smt-dev",
+              "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#4",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#4",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "266",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:23 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599978",
+    "ratelimit-reset": "3097",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167724",
+    "x-ratelimit-remaining-hour": "3599978",
+    "x-ratelimit-remaining-month": "647806668",
+    "x-request-id": "c0e7e2d2-bcf8-4be6-80cf-d36b118b11d8"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "0",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "0",
+    "available": "0",
+    "confirmed_block": 0,
+    "projection_revision": 0
+  }
+}
+{
+  "label": "request#5",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/items?fqdn=dev.smt.testrunner&show=active&limit=100&sort_by=created_at&order=asc",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#5",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2381",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:23 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599977",
+    "ratelimit-reset": "3097",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167723",
+    "x-ratelimit-remaining-hour": "3599977",
+    "x-ratelimit-remaining-month": "647806667",
+    "x-request-id": "f7dd82e6-6383-4c85-9ce2-82137fdb56af"
+  },
+  "body": {
+    "request_id": "f7dd82e6-6383-4c85-9ce2-82137fdb56af",
+    "payload": {
+      "next": "7b225f6964223a22366139666532323665393666313464663663356562643336222c22637265617465645f6174223a22323032362d30392d30385431303a32333a33342e3632325a227d",
+      "items": [
+        {
+          "available_date": {
+            "from": "2026-09-08T10:17:26.000Z",
+            "to": "2027-03-08T10:17:26.000Z"
+          },
+          "fqdn": "dev.smt.testrunner",
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "additional_images": [],
+          "category": [
+            "tickets",
+            "tickets-primary"
+          ],
+          "created_at": "2026-09-08T10:23:34.622Z",
+          "description": {
+            "en": "AnotherShowCase development ticket event."
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "geoConstraint": [],
+          "hidden": false,
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            },
+            "_id": "6a9fe2268ddd4763446a1b4d"
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "owner_id": "tickets",
+          "platform": "all",
+          "prices": [
+            {
+              "currency": "usd",
+              "type": "fiat",
+              "value": 25
+            }
+          ],
+          "quantity": -1,
+          "quantity_mode": "external",
+          "total_quantity": -1,
+          "updated_at": "2026-09-08T10:23:34.704Z",
+          "id": "6a9fe226e96f14df6c5ebd36"
+        }
+      ]
+    }
+  }
+}
+{
+  "label": "request#6",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/carts",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#6",
+  "status": 404,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:23 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599976",
+    "ratelimit-reset": "3097",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167722",
+    "x-ratelimit-remaining-hour": "3599976",
+    "x-ratelimit-remaining-month": "647806666",
+    "x-request-id": "4b0bbcdf-0edb-470e-8cf4-b6833825980f"
+  },
+  "body": {
+    "name": "MoleculerError",
+    "message": "cart not found",
+    "error": 404,
+    "type": "BACKEND_ERR",
+    "data": {},
+    "request_id": "4b0bbcdf-0edb-470e-8cf4-b6833825980f",
+    "trace_id": "4b0bbcdf-0edb-470e-8cf4-b6833825980f"
+  }
+}
+{
+  "label": "request#7",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/carts/add",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "item_id": "6a9fe226e96f14df6c5ebd36",
+    "quantity": 1,
+    "currency": "usd"
+  }
+}
+{
+  "label": "request#7",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "2006",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:23 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599975",
+    "ratelimit-reset": "3097",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167721",
+    "x-ratelimit-remaining-hour": "3599975",
+    "x-ratelimit-remaining-month": "647806665",
+    "x-request-id": "d0b8a953-ef2e-4da6-8978-4ee5c4e8252a"
+  },
+  "body": {
+    "request_id": "d0b8a953-ef2e-4da6-8978-4ee5c4e8252a",
+    "payload": {
+      "status": "active",
+      "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "created_at": "2026-09-08T11:08:23.587Z",
+      "items": [
+        {
+          "item_id": "6a9fe226e96f14df6c5ebd36",
+          "quantity": 1,
+          "fqdn": "dev.smt.testrunner",
+          "price": {
+            "value": 25,
+            "currency": "usd"
+          },
+          "image": {
+            "url": {
+              "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+            },
+            "details": {
+              "alt": "AnotherShowCase"
+            }
+          },
+          "label": {
+            "en": "AnotherShowCase"
+          },
+          "details": {
+            "sale_type": "dual_primary_ticket",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+          },
+          "revert": false,
+          "purchase_strategy": {
+            "id": "dual_primary_ticket",
+            "version": 1
+          },
+          "external": {
+            "provider": "dual",
+            "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "chain_id": 6301,
+            "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+            "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+            "kind": "primary"
+          },
+          "quantity_mode": "external"
+        }
+      ],
+      "platform": "smt-dev",
+      "updated_at": "2026-09-08T11:08:23.596Z",
+      "id": "6a9feca7e96f14df6c5ebd38"
+    }
+  }
+}
+{
+  "label": "request#8",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/carts/checkout",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "checkout_request_id": "anothershowcase-chain-v1:primary",
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "account_index": 0,
+    "sponsored": true
+  }
+}
+{
+  "label": "request#8",
+  "status": 401,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:08:23 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599974",
+    "ratelimit-reset": "3097",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167720",
+    "x-ratelimit-remaining-hour": "3599974",
+    "x-ratelimit-remaining-month": "647806664",
+    "x-request-id": "930b911e-cc53-4d0f-bebb-cd659e6c6505"
+  },
+  "body": {
+    "name": "MoleculerError",
+    "message": "Invalid API Key provided: TODO_STR***********_KEY",
+    "error": 401,
+    "type": "BACKEND_ERR",
+    "data": {},
+    "request_id": "930b911e-cc53-4d0f-bebb-cd659e6c6505",
+    "trace_id": "930b911e-cc53-4d0f-bebb-cd659e6c6505"
+  }
+}
