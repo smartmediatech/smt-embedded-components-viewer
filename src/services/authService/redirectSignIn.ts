@@ -208,12 +208,13 @@ async function exchangeSmtCode(
     throw new Error(data.error_description || data.error || "The SMT login didn't return a session.");
   }
 
-  // The id_token came straight from the token endpoint over TLS, so its
-  // signature needn't be checked here (OIDC Core 3.1.3.7), but its nonce must
-  // be the one this sign-in sent.
-  if (data.id_token) {
-    const { nonce } = jwtDecode<{ nonce?: string }>(data.id_token);
-    if (nonce !== pending.nonce) throw new Error("The SMT login answer didn't match this sign-in.");
+  const scope = oidc.scope ?? "openid profile email";
+  if (scope.split(" ").includes("openid")) {
+    checkIdToken(data.id_token, {
+      issuer: oidc.issuer,
+      clientId: oidc.clientId ?? getActiveAppId(),
+      nonce: pending.nonce,
+    });
   }
 
   return {
@@ -222,4 +223,38 @@ async function exchangeSmtCode(
     expiresIn: data.expires_in ?? 3600,
     refreshToken: data.refresh_token,
   };
+}
+
+type IdTokenClaims = { iss?: string; aud?: string | string[]; azp?: string; exp?: number; nonce?: string };
+
+/**
+ * Checks the ID token of an SMT sign-in (OIDC Core 3.1.3.7). It came straight
+ * from the token endpoint over TLS, so its signature needn't be checked here,
+ * but every claim that ties it to this sign-in must be.
+ */
+function checkIdToken(
+  idToken: string | undefined,
+  expected: { issuer: string; clientId: string; nonce: string },
+): void {
+  const mismatch = new Error("The SMT login answer didn't match this sign-in.");
+  if (!idToken) throw new Error("The SMT login didn't return an ID token.");
+  let claims: IdTokenClaims;
+  try {
+    claims = jwtDecode<IdTokenClaims>(idToken);
+  } catch {
+    throw mismatch;
+  }
+  const trim = (url: string) => url.replace(/\/$/, "");
+  const audience = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
+  const ok =
+    typeof claims.iss === "string" &&
+    trim(claims.iss) === trim(expected.issuer) &&
+    audience.includes(expected.clientId) &&
+    // With several audiences, azp must name the client the token was issued to.
+    (claims.azp === undefined ? audience.length === 1 : claims.azp === expected.clientId) &&
+    claims.nonce === expected.nonce;
+  if (!ok) throw mismatch;
+  if (typeof claims.exp !== "number" || claims.exp * 1000 <= Date.now()) {
+    throw new Error("The SMT login answer has expired. Please try again.");
+  }
 }
