@@ -1,6 +1,7 @@
 import { User, ApiGetUserResponse, ApiLoginPayload, ApiLoginResponse } from "../../types/auth.types";
 import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
+import { SessionEndedError } from "./errors";
 import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
 
 /**
@@ -21,6 +22,22 @@ class AuthService {
   /** An access token with no refresh token behind it (SMT login). */
   private readonly ACCESS_TOKEN_KEY = "access_token";
   private refreshPromise: Promise<string> | null = null;
+  private sessionEndListeners = new Set<() => void>();
+
+  /**
+   * Called when the session ends outside AuthContext's own logout: it expired,
+   * or a component asked to clear it. AuthProvider drops its user then, so the
+   * routes don't go on treating the user as signed in. Returns an unsubscribe.
+   */
+  onSessionEnd(listener: () => void): () => void {
+    this.sessionEndListeners.add(listener);
+    return () => this.sessionEndListeners.delete(listener);
+  }
+
+  private endSession(): void {
+    this.clearSession();
+    this.sessionEndListeners.forEach((listener) => listener());
+  }
 
   /**
    * Starts a session from a finished sign-in: a platform refresh token (email
@@ -89,8 +106,7 @@ class AuthService {
       // Continue with local logout even if API call fails
       console.error("Logout API call failed:", error);
     } finally {
-      // Clear local storage and tokens
-      this.clearSession();
+      this.endSession();
     }
   }
 
@@ -156,7 +172,7 @@ class AuthService {
 
     // Check if refresh token has expired before making network request
     if (!checkJwtToken(refreshToken)) {
-      throw new Error("Refresh token has expired");
+      throw new SessionEndedError("Refresh token has expired");
     }
 
     try {
@@ -171,7 +187,7 @@ class AuthService {
 
       if (response.status === 401) {
         // Unauthorized (invalid refresh token or app id mismatch)
-        throw new Error(
+        throw new SessionEndedError(
           "Unauthorized: Invalid refresh token or app ID mismatch",
         );
       }
@@ -202,12 +218,16 @@ class AuthService {
     // Check if access token is valid
     if (!accessToken || !checkJwtToken(accessToken)) {
       if (!this.getRefreshToken()) {
-        throw new Error("The session has ended. Please login again.");
+        // An access-token-only session (SMT login) can't be renewed.
+        this.endSession();
+        throw new SessionEndedError();
       }
       // Access token is invalid or expired, refresh it
       try {
         accessToken = await this.refreshAccessToken();
-      } catch {
+      } catch (error) {
+        // A network error may pass; an expired or rejected refresh token won't.
+        if (error instanceof SessionEndedError) this.endSession();
         throw new Error("Failed to refresh access token. Please login again.");
       }
     }

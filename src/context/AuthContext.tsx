@@ -8,7 +8,8 @@ import {
 import { User } from "../types/auth.types";
 import { authService } from "../services/authService";
 import { confirmCode, requestCode } from "../services/authService/userApi";
-import { fromAnswer, startGoogle, startSmt } from "../services/authService/redirectSignIn";
+import { fromAnswer, startGoogle, startSmt, type FinishedSession } from "../services/authService/redirectSignIn";
+import { getActiveTenantKey } from "../config/viewerConfig";
 
 interface AuthContextType {
   user: User | null;
@@ -66,18 +67,35 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
+  // A session that ends behind our back (expired, or cleared by a component)
+  // signs the user out here too, so the routes send them to /login.
+  useEffect(() => authService.onSessionEnd(() => setUser(null)), []);
+
+  /**
+   * Installs a finished sign-in, unless the publisher changed while it ran:
+   * the session would then be signed for the wrong app id.
+   */
+  const startSessionFor = async (startedOn: string, session: FinishedSession, email: string) => {
+    if (getActiveTenantKey() !== startedOn) {
+      throw new Error("The publisher changed while signing in. Please try again.");
+    }
+    setUser(await authService.startSession(session, email));
+  };
+
   const requestEmailCode = async ({ email, signup }: { email: string; signup: boolean }) => {
     await requestCode(email, signup);
   };
 
   const confirmEmailCode = async ({ email, code }: { email: string; code: string }) => {
+    const startedOn = getActiveTenantKey();
     const session = fromAnswer(await confirmCode(email, code));
-    setUser(await authService.startSession(session, email));
+    await startSessionFor(startedOn, session, email);
   };
 
   const signInWithPassword = async ({ email, password }: { email: string; password: string }) => {
+    const startedOn = getActiveTenantKey();
     const session = await authService.loginWithPassword(email, password);
-    setUser(await authService.startSession(session, email));
+    await startSessionFor(startedOn, session, email);
   };
 
   const signInWithGoogle = async ({ signup }: { signup: boolean }) => {

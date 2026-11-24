@@ -33,7 +33,8 @@ base("save a signed-in session", async ({ browser, baseURL }) => {
   const page = await context.newPage();
   await page.goto(`${baseURL}#/login`);
   if (email) {
-    await page.getByRole("button", { name: "Continue with Email" }).click();
+    // Exact: "Continue with Email and Password" also contains the words.
+    await page.getByRole("button", { name: "Email me a code", exact: true }).click();
     await page.getByLabel("Email").fill(email);
     await page.getByRole("button", { name: "Continue", exact: true }).click();
     console.log(`Type the code sent to ${email} in the browser window.`);

@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { OTPField } from "@base-ui/react/otp-field";
 import { useAuth } from "../../context/AuthContext";
@@ -149,15 +149,37 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
   const smtAvailable = !isSignup && !!tenantConfig?.oidc;
   const passwordAvailable = !isSignup;
 
-  const run = async (fn: () => Promise<void>, fallback: string) => {
+  // Changing the publisher starts over: a code, consent or error belongs to
+  // the previous one (its user API and app id). Requests still running for it
+  // see that their flow is stale and leave the form alone.
+  const flowRef = useRef(0);
+  const tenantRef = useRef(tenant);
+  useEffect(() => {
+    if (tenantRef.current === tenant) return;
+    tenantRef.current = tenant;
+    flowRef.current += 1;
+    setStep("choose");
+    setCode("");
+    setPassword("");
+    setConsent(false);
+    setConsentError("");
+    setTermsOpen(false);
+    setError("");
+    setNotice("");
+    setBusy(false);
+  }, [tenant]);
+
+  const run = async (fn: (stale: () => boolean) => Promise<void>, fallback: string) => {
+    const flow = flowRef.current;
+    const stale = () => flowRef.current !== flow;
     setError("");
     setBusy(true);
     try {
-      await fn();
+      await fn(stale);
     } catch (err) {
-      setError(errorMessage(err, fallback));
+      if (!stale()) setError(errorMessage(err, fallback));
     } finally {
-      setBusy(false);
+      if (!stale()) setBusy(false);
     }
   };
 
@@ -170,19 +192,20 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
     }
     setConsentError("");
     const address = email.trim();
-    void run(async () => {
+    void run(async (stale) => {
       await requestEmailCode({ email: address, signup: isSignup });
+      if (stale()) return;
       setCode("");
       setStep("code");
     }, "Could not send the code. Please try again.");
   };
 
   const verifyCode = (value: string) => {
-    void run(async () => {
+    void run(async (stale) => {
       try {
         await confirmEmailCode({ email: email.trim(), code: value });
       } catch (err) {
-        setCode("");
+        if (!stale()) setCode("");
         throw err;
       }
       navigate("/");
@@ -415,9 +438,9 @@ export const AuthPage = ({ mode }: { mode: AuthMode }) => {
               className={linkBtnCls}
               disabled={busy}
               onClick={() =>
-                void run(async () => {
+                void run(async (stale) => {
                   await requestEmailCode({ email: email.trim(), signup: isSignup });
-                  setNotice("We sent a new code.");
+                  if (!stale()) setNotice("We sent a new code.");
                 }, "Could not resend the code.")
               }
             >
