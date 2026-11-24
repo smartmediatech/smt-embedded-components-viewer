@@ -487,7 +487,9 @@ type RedirectState = { email?: string; notice?: string; google?: boolean };
  * at the top and the footer (the log-in / sign-up switch) sits at the bottom.
  */
 const Shell = ({ lead, footer, children }: { lead: string; footer: ReactNode; children: ReactNode }) => (
-  <div className="min-h-screen flex flex-wrap bg-[#111] text-[#B3B3B3] font-[Manrope,system-ui,sans-serif]">
+  // Always dark, whatever the viewer theme: `dark` keeps the publisher picker
+  // and other themed controls in their dark style on this background.
+  <div className="dark min-h-screen flex flex-wrap bg-[#111] text-[#B3B3B3] font-[Manrope,system-ui,sans-serif]">
     <section className="hidden md:flex flex-[1_1_520px] min-w-0 flex-col justify-between gap-12 border-r border-[#262626] px-[clamp(24px,5vw,72px)] py-12 text-white">
       <SmtLogo className="h-11 w-auto self-start" />
       <div className="flex max-w-[560px] flex-col gap-6">
