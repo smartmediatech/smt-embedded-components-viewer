@@ -1,0 +1,720 @@
+{
+  "label": "request#1",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#1",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:06 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599973",
+    "ratelimit-reset": "2514",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167719",
+    "x-ratelimit-remaining-hour": "3599973",
+    "x-ratelimit-remaining-month": "647806663"
+  },
+  "body": {
+    "request_id": "c030e889-5186-4006-889f-6681cd3cdfa0",
+    "payload": {
+      "user": {
+        "id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+        "meta": {
+          "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_created": "2026-09-08T11:04:15Z",
+          "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "when_modified": "2026-09-08T11:18:07Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "3a308b92-0a08-4849-b4b5-99c4eb159817",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:18:07Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4.1788865455380255272",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21791,
+              "meta": {
+                "created_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_created": "2026-09-08T11:04:15Z",
+                "modified_by": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+                "when_modified": "2026-09-08T11:04:15Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "c96ab51c-4fc3-44f4-8af6-4eeb134bbbb4",
+              "platform_id": "smt-dev",
+              "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#2",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#2",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "266",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:07 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599972",
+    "ratelimit-reset": "2513",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167718",
+    "x-ratelimit-remaining-hour": "3599972",
+    "x-ratelimit-remaining-month": "647806662",
+    "x-request-id": "040c71e2-3f0a-4b2f-9d78-3de5af9e7393"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "0",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "0",
+    "available": "0",
+    "confirmed_block": 0,
+    "projection_revision": 0
+  }
+}
+{
+  "label": "request#3",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner"
+  },
+  "body": {
+    "token_type": "email",
+    "token": "[REDACTED]",
+    "auth_data": {
+      "password": "[REDACTED]"
+    }
+  }
+}
+{
+  "label": "request#3",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:07 GMT",
+    "pragma": "no-cache",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599971",
+    "ratelimit-reset": "2513",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "transfer-encoding": "chunked",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167717",
+    "x-ratelimit-remaining-hour": "3599971",
+    "x-ratelimit-remaining-month": "647806661"
+  },
+  "body": {
+    "request_id": "d061ff10-d4ad-46d0-b864-044d618d2675",
+    "payload": {
+      "user": {
+        "id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+        "meta": {
+          "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_created": "2026-09-08T11:04:17Z",
+          "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+          "when_modified": "2026-09-08T11:18:08Z",
+          "data_type": "blockv::wallet"
+        },
+        "system_properties": {
+          "platform_id": "smt-dev",
+          "net_user_id": "054ade6c-a6a5-4d43-b3ec-ef9983457c0d",
+          "pub_fqdn": "",
+          "is_admin": false,
+          "activated": true,
+          "disabled": false,
+          "last_login": "2026-09-08T11:18:08Z",
+          "is_merchant": false
+        },
+        "properties": {
+          "guest_id": "",
+          "first_name": "",
+          "last_name": "",
+          "name_public": true,
+          "birthday": "",
+          "is_password_set": true,
+          "avatar_uri": "https://cdn.dev.smartmedialabs.io/smt-dev/avatars/55260507-abe6-4bd3-b2b8-b059220e22c3.1788865457250399940",
+          "avatar_public": true,
+          "personal_avatar_set": false,
+          "profile": {
+            "first_name": "",
+            "last_name": "",
+            "name_public": true,
+            "birthday": ""
+          },
+          "language": "en",
+          "nonpush_notification": false,
+          "user_consents": [
+            {
+              "id": 21792,
+              "meta": {
+                "created_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_created": "2026-09-08T11:04:17Z",
+                "modified_by": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+                "when_modified": "2026-09-08T11:04:17Z",
+                "data_type": "blockv::userconsent"
+              },
+              "kind": "fqdn",
+              "fqdn": "dev.smt.testrunner",
+              "profile_id": "55260507-abe6-4bd3-b2b8-b059220e22c3",
+              "platform_id": "smt-dev",
+              "user_id": "6e6d300b-d7e1-4ae4-8c4d-99e53822b21b",
+              "version": 2,
+              "address": "10.200.5.45"
+            }
+          ],
+          "notification_settings": {
+            "bulk_notifications": {
+              "allow_notifications": true
+            }
+          },
+          "system_notifications": {
+            "email_sms_enabled": false,
+            "push_enabled": false
+          },
+          "unsubscribe_key": "[REDACTED]"
+        }
+      },
+      "asset_provider": [
+        {
+          "name": "smt-dev",
+          "type": "Cloudfront",
+          "uri": "https://cdn.dev.smartmedialabs.io",
+          "descriptor": {
+            "Policy": "[REDACTED]",
+            "Signature": "[REDACTED]",
+            "Key-Pair-Id": "[REDACTED]"
+          }
+        }
+      ],
+      "access_token": "[REDACTED]",
+      "refresh_token": "[REDACTED]",
+      "profile_created": false
+    }
+  }
+}
+{
+  "label": "request#4",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/settlement-balance",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#4",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "266",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:07 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599970",
+    "ratelimit-reset": "2513",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167716",
+    "x-ratelimit-remaining-hour": "3599970",
+    "x-ratelimit-remaining-month": "647806660",
+    "x-request-id": "03bb612b-68ae-4bdf-ad57-46b08a05fc56"
+  },
+  "body": {
+    "chain_id": 6301,
+    "account": "0x013e80cfad3d60857bf138ae24226c2bce1c60d3",
+    "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+    "confirmed_total": "0",
+    "withdrawal_frozen": "0",
+    "reserved_purchase": "0",
+    "available": "0",
+    "confirmed_block": 0,
+    "projection_revision": 0
+  }
+}
+{
+  "label": "request#5",
+  "method": "POST",
+  "url": "https://api.dev.smartmedialabs.io/test/marketplace/carts/checkout",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": {
+    "checkout_request_id": "anothershowcase-chain-v1:primary",
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "account_index": 0,
+    "sponsored": true
+  }
+}
+{
+  "label": "request#5",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "4540",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:08 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599969",
+    "ratelimit-reset": "2513",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167715",
+    "x-ratelimit-remaining-hour": "3599969",
+    "x-ratelimit-remaining-month": "647806659",
+    "x-request-id": "7beb95f1-906b-44bd-b5fe-265e5127bc4e"
+  },
+  "body": {
+    "request_id": "7beb95f1-906b-44bd-b5fe-265e5127bc4e",
+    "payload": {
+      "order": {
+        "payment_result": {
+          "id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+          "status": "awaiting_funding",
+          "update_at": "2026-09-08T11:08:23.903Z"
+        },
+        "items": [
+          {
+            "item_id": "6a9fe226e96f14df6c5ebd36",
+            "quantity": 1,
+            "fqdn": "dev.smt.testrunner",
+            "price": {
+              "value": 25,
+              "currency": "usd"
+            },
+            "image": {
+              "url": {
+                "en": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NjAiIGhlaWdodD0iNTQwIiB2aWV3Qm94PSIwIDAgOTYwIDU0MCI+PHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI1NDAiIGZpbGw9IiMxMDE4MjciLz48cmVjdCB4PSI2NCIgeT0iNjQiIHdpZHRoPSI4MzIiIGhlaWdodD0iNDEyIiByeD0iMjgiIGZpbGw9IiMyNTM1NGQiLz48cGF0aCBkPSJNNzMwIDY0djQxMiIgc3Ryb2tlPSIjODJlNWNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEyIDEyIi8+PHRleHQgeD0iMTA1IiB5PSIyMjAiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iYm9sZCI+QW5vdGhlclNob3dDYXNlPC90ZXh0Pjx0ZXh0IHg9IjEwNSIgeT0iMzEwIiBmaWxsPSIjODJlNWNkIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCI+RGV2ZWxvcG1lbnQgdGlja2V0IGV2ZW50PC90ZXh0Pjx0ZXh0IHg9Ijc2NiIgeT0iMjg3IiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlRLVDwvdGV4dD48L3N2Zz4="
+              },
+              "details": {
+                "alt": "AnotherShowCase"
+              }
+            },
+            "label": {
+              "en": "AnotherShowCase"
+            },
+            "details": {
+              "sale_type": "dual_primary_ticket",
+              "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6"
+            },
+            "revert": false,
+            "purchase_strategy": {
+              "id": "dual_primary_ticket",
+              "version": 1
+            },
+            "external": {
+              "provider": "dual",
+              "product_ref": "dual:6301:event:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+              "item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+              "chain_id": 6301,
+              "event_subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+              "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+              "kind": "primary"
+            },
+            "quantity_mode": "external"
+          }
+        ],
+        "payment_method": "dual",
+        "user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+        "platform": "smt-dev",
+        "is_paid": false,
+        "cart_id": "6a9feca7e96f14df6c5ebd38",
+        "status": "processing",
+        "checkout_request_id": "anothershowcase-chain-v1:primary",
+        "checkout_fingerprint": "35e86f28fb431cbd235d5435204296e37dde4cb8999b01512e829e55508ec8f0",
+        "purchase_strategy": {
+          "id": "dual_primary_ticket",
+          "version": 1
+        },
+        "external_item_ref": "dual:6301:primary:0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+        "purchase_state": "processing",
+        "purchase_identity": {
+          "request_id": "6a9feca78ddd4763446a1b5e",
+          "chain_id": 6301,
+          "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+          "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+          "collection_address": "0xab99e6a9ab915434f53ef63cbc8686c4f981dbc9",
+          "quantity": 1
+        },
+        "provider_state": {
+          "settlement_status": "awaiting_funding",
+          "chain_action_status": "awaiting_funding",
+          "fulfillment_status": "pending",
+          "correlation_status": "pending",
+          "when_updated": "2026-09-08T11:08:23.903Z"
+        },
+        "created_at": "2026-09-08T11:08:23.773Z",
+        "updated_at": "2026-09-08T11:08:24.617Z",
+        "funding": {
+          "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+          "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+          "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+          "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+          "kind": "primary",
+          "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+          "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+          "purchase_identity": "6a9feca78ddd4763446a1b5e",
+          "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+          "quantity": 1,
+          "chain_id": 6301,
+          "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+          "purchase_total": "25000000000000000000",
+          "confirmed_balance": "0",
+          "other_active_holds": "0",
+          "available_balance": "0",
+          "existing_balance_used": "0",
+          "required_topup": "25000000000000000000",
+          "actual_token_mint_amount": "25000000000000000000",
+          "confirmed_topup": "0",
+          "fiat_amount_minor": 2500,
+          "fiat_currency": "usd",
+          "minor_per_token": "100",
+          "token_decimals": 18,
+          "rate_version": "dual-usd-fixed-v1",
+          "payment_provider": "stripe",
+          "payment_reference": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+          "state": "token_pending"
+        },
+        "provider_reference": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+        "purchase_state_revision": 2,
+        "purchase_event_id": "dual-ticket-purchase:8412bcaa-d904-4c14-90f5-c45d46b5e1b8:2",
+        "id": "6a9feca78ddd4763446a1b5e"
+      },
+      "next_action": {
+        "type": "confirm_payment",
+        "provider": "stripe",
+        "client_secret": "[REDACTED]",
+        "payment_intent_id": "pi_3UDN2SLHTWoT7j8f2BaukBFE",
+        "amount_minor": 2500,
+        "currency": "usd"
+      }
+    }
+  }
+}
+{
+  "label": "request#6",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#6",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "1648",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:08 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599968",
+    "ratelimit-reset": "2512",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167714",
+    "x-ratelimit-remaining-hour": "3599968",
+    "x-ratelimit-remaining-month": "647806658",
+    "x-request-id": "81f80ff3-9a3f-4759-9bbb-3ea6cfb847ec"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 2,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "quantity": 1,
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "funding_required",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "0",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "state": "funding_required"
+    },
+    "chain_action_status": "awaiting_funding",
+    "settlement_status": "awaiting_funding",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:08:23.903Z"
+  }
+}
+{
+  "label": "request#7",
+  "method": "GET",
+  "url": "https://api.dev.smartmedialabs.io/v1/purchase-executions/8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+  "headers": {
+    "Content-Type": "application/json",
+    "App-Id": "e48399bb-e949-44df-81e8-3daba1f83568",
+    "BLOCKv-Platform": "smt-dev",
+    "X-Blockv-Fqdn": "dev.smt.testrunner",
+    "Authorization": "[REDACTED]"
+  },
+  "body": null
+}
+{
+  "label": "request#7",
+  "status": 200,
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "X-RateLimit-Limit-hour,X-RateLimit-Limit-minute,X-RateLimit-Limit-second,X-RateLimit-Remaining-hour,X-RateLimit-Remaining-minute,X-RateLimit-Remaining-second",
+    "cache-control": "no-store",
+    "connection": "keep-alive",
+    "content-length": "1648",
+    "content-security-policy": "frame-ancestors 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Tue, 08 Sep 2026 11:18:08 GMT",
+    "ratelimit-limit": "3600000",
+    "ratelimit-remaining": "3599967",
+    "ratelimit-reset": "2512",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-ratelimit-limit-day": "43200000",
+    "x-ratelimit-limit-hour": "3600000",
+    "x-ratelimit-limit-month": "648000000",
+    "x-ratelimit-remaining-day": "43167713",
+    "x-ratelimit-remaining-hour": "3599967",
+    "x-ratelimit-remaining-month": "647806657",
+    "x-request-id": "b0022620-0d65-4985-83ec-aca675ca7e04"
+  },
+  "body": {
+    "execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+    "state_revision": 2,
+    "request_id": "6a9feca78ddd4763446a1b5e",
+    "chain_id": 6301,
+    "sender": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+    "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+    "quantity": 1,
+    "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+    "funding_state": "funding_required",
+    "funding": {
+      "funding_execution_id": "6652b6ab-f1f2-441f-983a-180a5821e574",
+      "purchase_execution_id": "8412bcaa-d904-4c14-90f5-c45d46b5e1b8",
+      "hold_id": "0a24cba0-cf19-4bf2-b61a-a4c506759767",
+      "top_up_action_id": "0cdfe471-f479-4325-873a-e229a8f76db4",
+      "kind": "primary",
+      "buyer_user_id": "8e346a40-b0df-4d46-8d02-bf440976caa8",
+      "wallet_address": "0x80d4d00dfecfdc6cfce18a798aaf548607e18eb7",
+      "purchase_identity": "6a9feca78ddd4763446a1b5e",
+      "subject": "0xbc437718f928a7870963e1a5923d8a121a5713b1a6d95cdca35c03ef663cbfa6",
+      "quantity": 1,
+      "chain_id": 6301,
+      "settlement_token": "0x57701ea3865f8ac6c3ef4c831c5b13da577b6bdb",
+      "purchase_total": "25000000000000000000",
+      "confirmed_balance": "0",
+      "other_active_holds": "0",
+      "available_balance": "0",
+      "existing_balance_used": "0",
+      "required_topup": "25000000000000000000",
+      "actual_token_mint_amount": "25000000000000000000",
+      "confirmed_topup": "0",
+      "fiat_amount_minor": 2500,
+      "fiat_currency": "usd",
+      "minor_per_token": "100",
+      "token_decimals": 18,
+      "rate_version": "dual-usd-fixed-v1",
+      "state": "funding_required"
+    },
+    "chain_action_status": "awaiting_funding",
+    "settlement_status": "awaiting_funding",
+    "fulfillment_status": "pending",
+    "correlation_status": "pending",
+    "confirmed_tickets": [],
+    "completed_tickets": [],
+    "when_created": "2026-09-08T11:08:23.866Z",
+    "when_updated": "2026-09-08T11:08:23.903Z"
+  }
+}

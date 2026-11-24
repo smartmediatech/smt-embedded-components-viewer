@@ -57,36 +57,43 @@ for (const name of COMPONENT_PAGES) {
       expect(stuckAt(forward), `focus stuck in the iframe: ${trail(forward)}`).toBeNull();
       expect(crossesComponent(forward), `Tab did not cross the iframe: ${trail(forward)}`).toBe(true);
 
-      // Shift+Tab from past the iframe, back through it to the header.
+      // Shift+Tab from past the iframe, back through it to the sidebar.
       const backward = await walk(page, "Shift+Tab", MAX_TABS, crossesComponent);
       expect(stuckAt(backward), `focus stuck in the iframe: ${trail(backward)}`).toBeNull();
       expect(crossesComponent(backward), `Shift+Tab did not cross the iframe: ${trail(backward)}`).toBe(true);
     });
 
-    test("2.4.11: focus in the iframe is not hidden by a sticky header", async ({ page }) => {
+    test("2.4.11: focus in the iframe is not hidden by the phone bars", async ({ page }) => {
+      // On desktop the sidebar sits beside the component, so nothing can cover
+      // it. Below md the top bar and the fixed tab bar frame the scroll area,
+      // and the tab bar sits over its bottom edge.
+      await page.setViewportSize({ width: 390, height: 844 });
       await openComponent(page, name);
-      // The demo header scrolls away; a publisher's site usually sticks it.
-      await page.addStyleTag({ content: "header { position: sticky !important; top: 0 !important; }" });
-      const header = (await page.locator("header").first().boundingBox())!;
-      const headerBottom = header.y + header.height;
+      const bars = await Promise.all(
+        [page.locator("header"), page.getByRole("navigation", { name: "Sections" })].map(async (bar) => {
+          const box = await bar.boundingBox();
+          expect(box, "the phone layout has no top bar or tab bar").not.toBeNull();
+          return box!;
+        }),
+      );
       const viewportHeight = page.viewportSize()!.height;
 
       const hidden = new Set<string>();
       for (const key of ["Tab", "Shift+Tab"] as const) {
         const stops = await walk(page, key, MAX_TABS, crossesComponent);
         for (const stop of stops) {
-          // Everything of it that is on screen is behind the header: that is
-          // what 2.4.11 (AA) forbids.
+          // Everything of it that is on screen is behind a bar: that is what
+          // 2.4.11 (AA) forbids. The bars span the full width.
           if (!stop.frame || !stop.rect) continue;
           const top = Math.max(stop.rect.top, 0);
           const bottom = Math.min(stop.rect.bottom, viewportHeight);
-          if (bottom > top && top >= header.y && bottom <= headerBottom) {
+          if (bottom > top && bars.some((bar) => top >= bar.y && bottom <= bar.y + bar.height)) {
             hidden.add(`${key}: ${stop.label}`);
           }
         }
       }
-      expectKnownCheckFindings(name, ["focus-hidden-by-sticky-header"], new Set(hidden.size ? ["focus-hidden-by-sticky-header"] : []), {
-        "focus-hidden-by-sticky-header": [...hidden].join("; "),
+      expectKnownCheckFindings(name, ["focus-hidden-by-host-bar"], new Set(hidden.size ? ["focus-hidden-by-host-bar"] : []), {
+        "focus-hidden-by-host-bar": [...hidden].join("; "),
       });
     });
 

@@ -162,6 +162,10 @@ export async function mockBackend(context: BrowserContext, options: MockBackendO
     if (live(url) || url.protocol === "data:") return route.fallback();
     if (url.hostname === IMAGE_HOST) return route.fulfill({ contentType: "image/png", body: IMAGE });
     if (url.hostname === FACE_HOST) return route.fulfill({ contentType: "text/html", body: FACE_HTML });
+    // The theme's web fonts (index.html): static assets, not backend data. An
+    // empty stylesheet leaves the fallback fonts; contrast and focus don't
+    // depend on the face, and the run stays off the network.
+    if (url.hostname === "fonts.googleapis.com") return route.fulfill({ contentType: "text/css", body: "" });
 
     const p = url.pathname;
     if (method === "POST" && p.endsWith("/v1/access_token")) {

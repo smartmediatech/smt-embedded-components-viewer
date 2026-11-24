@@ -1,4 +1,11 @@
-import { User, ApiGetUserResponse, ApiLoginPayload, ApiLoginResponse } from "../../types/auth.types";
+import {
+  User,
+  ApiGetUserResponse,
+  ApiLoginPayload,
+  ApiLoginResponse,
+  ApiGetAssetProvidersResponse,
+  AssetProvider,
+} from "../../types/auth.types";
 import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
 import { SessionEndedError, StaleSessionError } from "./errors";
@@ -27,6 +34,7 @@ class AuthService {
   private generation = 0;
   private refreshPromise: Promise<string> | null = null;
   private sessionEndListeners = new Set<() => void>();
+  private assetProvidersPromise: Promise<AssetProvider[]> | null = null;
 
   /**
    * Called when the session ends outside AuthContext's own logout: it expired,
@@ -157,6 +165,7 @@ class AuthService {
 
   private clearTabSession(): void {
     this.ACCESS_TOKEN = null;
+    this.assetProvidersPromise = null;
     sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
     sessionStorage.removeItem(this.USER_KEY);
     sessionStorage.removeItem(this.TENANT_KEY);
@@ -343,8 +352,10 @@ class AuthService {
           "User",
         firstName: data.payload.properties.first_name,
         lastName: data.payload.properties.last_name,
-        avatarUri: data.payload.properties.avatar_uri,
+        avatarUri: await this.signAssetUrl(data.payload.properties.avatar_uri),
       };
+      // Signing the avatar is another request: the session may have changed.
+      this.assertCurrent(generation);
 
       // Update stored user
       store.setItem(this.USER_KEY, JSON.stringify(user));
@@ -356,6 +367,65 @@ class AuthService {
       }
       throw new Error("Failed to fetch current user");
     }
+  }
+
+  /**
+   * The CDNs that need signed requests, read once per session. A failure
+   * isn't cached, so the next call tries again.
+   */
+  private getAssetProviders(): Promise<AssetProvider[]> {
+    if (!this.assetProvidersPromise) {
+      this.assetProvidersPromise = this.smtFetch(`${apiBaseUrl()}/v1/user/asset_providers`)
+        .then(async (response) => {
+          if (!response.ok) throw new Error("Failed to fetch asset providers");
+          const data: ApiGetAssetProvidersResponse = await response.json();
+          return data.payload.asset_provider ?? [];
+        })
+        .catch((error) => {
+          this.assetProvidersPromise = null;
+          throw error;
+        });
+    }
+    return this.assetProvidersPromise;
+  }
+
+  /**
+   * Adds the CDN signature to an asset URL (e.g. the avatar), the way the
+   * components' asset provider does. Without it the CDN answers 403
+   * MissingKey. URLs on other hosts, or when providers can't be read, are
+   * returned unchanged.
+   */
+  async signAssetUrl(url: string | undefined): Promise<string | undefined> {
+    if (!url) return url;
+
+    let providers: AssetProvider[];
+    try {
+      providers = await this.getAssetProviders();
+    } catch (error) {
+      console.error("Failed to fetch asset providers:", error);
+      return url;
+    }
+
+    let hostname: string;
+    try {
+      hostname = new URL(url).hostname;
+    } catch {
+      return url;
+    }
+
+    const provider = providers.find((p) => {
+      try {
+        return new URL(p.uri).hostname === hostname;
+      } catch {
+        return false;
+      }
+    });
+    if (!provider) return url;
+
+    const query = Object.entries(provider.descriptor)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+      .join("&");
+    return `${url}${url.includes("?") ? "&" : "?"}${query}`;
   }
 }
 

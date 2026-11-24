@@ -8,6 +8,9 @@ import { Challenges } from "./pages/Challenges";
 import { Discover } from "./pages/Discover";
 import { Rewards } from "./pages/Rewards";
 import { Giveaways } from "./pages/Giveaways";
+import { Marketplace } from "./pages/Marketplace";
+import { Collection } from "./pages/Collection";
+import { Profile } from "./pages/Profile";
 import { Map } from "./pages/Map";
 
 function App() {
@@ -29,11 +32,14 @@ function App() {
             <Route path="/login" element={<AuthPage key="login" mode="login" />} />
             <Route path="/signup" element={<AuthPage key="signup" mode="signup" />} />
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Navigate to="/rewards" replace />} />
+              <Route path="/" element={<Navigate to="/discover" replace />} />
               <Route path="/discover" element={<Discover />} />
               <Route path="/rewards" element={<Rewards />} />
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/challenges" element={<Challenges />} />
+              <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/collection" element={<Collection />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/map" element={<Map />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
