@@ -28,3 +28,15 @@ export class UserApiError extends Error {
     this.name = "UserApiError";
   }
 }
+
+/**
+ * The session was replaced or cleared while a call for it ran (a newer
+ * sign-in, a logout, a publisher change): its answer must be dropped, and the
+ * newer session left alone.
+ */
+export class StaleSessionError extends Error {
+  constructor(message = "The sign-in was interrupted. Please try again.") {
+    super(message);
+    this.name = "StaleSessionError";
+  }
+}

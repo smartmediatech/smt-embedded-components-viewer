@@ -1,8 +1,8 @@
 import { User, ApiGetUserResponse, ApiLoginPayload, ApiLoginResponse } from "../../types/auth.types";
 import type { FinishedSession } from "./redirectSignIn";
 import checkJwtToken from "./checkJwtExpiration";
-import { SessionEndedError } from "./errors";
-import { getActiveAppId, getViewerConfig } from "../../config/viewerConfig";
+import { SessionEndedError, StaleSessionError } from "./errors";
+import { getActiveAppId, getActiveTenantKey, getViewerConfig, setActiveTenant } from "../../config/viewerConfig";
 
 /**
  * Backend and app id come from the runtime config so no customer identifier
@@ -21,6 +21,10 @@ class AuthService {
   private readonly USER_KEY = "auth_user";
   /** An access token with no refresh token behind it (SMT login). */
   private readonly ACCESS_TOKEN_KEY = "access_token";
+  /** The tenant the session was signed in on: its app id signs every call. */
+  private readonly TENANT_KEY = "auth_tenant";
+  /** Bumped whenever the session is replaced or cleared, so stale work can tell. */
+  private generation = 0;
   private refreshPromise: Promise<string> | null = null;
   private sessionEndListeners = new Set<() => void>();
 
@@ -32,6 +36,29 @@ class AuthService {
   onSessionEnd(listener: () => void): () => void {
     this.sessionEndListeners.add(listener);
     return () => this.sessionEndListeners.delete(listener);
+  }
+
+  /**
+   * An SMT session (access token, no refresh token) belongs to this tab only:
+   * it lives in sessionStorage, while a refresh-token session lives in
+   * localStorage and is shared by every tab.
+   */
+  private isTabSession(): boolean {
+    return sessionStorage.getItem(this.ACCESS_TOKEN_KEY) !== null;
+  }
+
+  /** Where this tab's session keeps its user and tenant. */
+  private sessionStore(): Storage {
+    return this.isTabSession() ? sessionStorage : localStorage;
+  }
+
+  /**
+   * Selects the tenant of a saved session, so a reload signs its calls with
+   * the right app id. Must run before the app renders.
+   */
+  restoreSessionTenant(): void {
+    const tenant = this.sessionStore().getItem(this.TENANT_KEY);
+    if (tenant && tenant in getViewerConfig().tenants) setActiveTenant(tenant);
   }
 
   private endSession(): void {
@@ -48,6 +75,11 @@ class AuthService {
   async startSession(session: FinishedSession, email = ""): Promise<User> {
     this.storeSession(session, email);
     return this.fetchCurrentUser();
+  }
+
+  /** Throws if the session was replaced or cleared since `generation`. */
+  private assertCurrent(generation: number): void {
+    if (generation !== this.generation) throw new StaleSessionError();
   }
 
   /**
@@ -81,19 +113,21 @@ class AuthService {
 
   /** Keeps the tokens without loading the user (AuthProvider loads it on mount). */
   storeSession(session: FinishedSession, email = ""): void {
-    this.clearSession();
-    if (session.kind === "refresh") {
+    this.clearTabSession();
+    if (session.refreshToken) {
+      // Replaces the session shared by all tabs.
+      this.clearSharedSession();
       localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
-    } else {
-      this.ACCESS_TOKEN = session.accessToken;
-      if (session.refreshToken) {
-        localStorage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
-      } else {
-        // Kept for this tab only, so a reload doesn't sign the user out.
-        sessionStorage.setItem(this.ACCESS_TOKEN_KEY, session.accessToken);
-      }
+    } else if (session.kind === "access") {
+      // SMT: this tab only, so other tabs keep their sessions. Kept in
+      // sessionStorage so a reload doesn't sign the user out.
+      sessionStorage.setItem(this.ACCESS_TOKEN_KEY, session.accessToken);
     }
-    localStorage.setItem(this.USER_KEY, JSON.stringify({ email }));
+    if (session.kind === "access") this.ACCESS_TOKEN = session.accessToken;
+    this.generation += 1;
+    const store = this.sessionStore();
+    store.setItem(this.USER_KEY, JSON.stringify({ email }));
+    store.setItem(this.TENANT_KEY, getActiveTenantKey());
   }
 
   async logout(): Promise<void> {
@@ -110,16 +144,32 @@ class AuthService {
     }
   }
 
+  /**
+   * Ends this tab's session. An SMT session is cleared from this tab only, so
+   * it can't remove the session another tab signed in with email or Google.
+   */
   clearSession(): void {
-    // Clear local storage and tokens
+    const tabOnly = this.isTabSession();
+    this.clearTabSession();
+    if (!tabOnly) this.clearSharedSession();
+    this.generation += 1;
+  }
+
+  private clearTabSession(): void {
     this.ACCESS_TOKEN = null;
+    sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    sessionStorage.removeItem(this.USER_KEY);
+    sessionStorage.removeItem(this.TENANT_KEY);
+  }
+
+  private clearSharedSession(): void {
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
-    sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    localStorage.removeItem(this.TENANT_KEY);
   }
 
   getCurrentUser(): User | null {
-    const userStr = localStorage.getItem(this.USER_KEY);
+    const userStr = this.sessionStore().getItem(this.USER_KEY);
     if (!userStr) return null;
 
     try {
@@ -254,18 +304,26 @@ class AuthService {
     return response;
   }
 
+  /**
+   * Loads the signed-in user. Throws {@link StaleSessionError}, and stores
+   * nothing, if the session was replaced or cleared while the call ran.
+   */
   async fetchCurrentUser(): Promise<User> {
+    const generation = this.generation;
     try {
       const response = await this.smtFetch(`${apiBaseUrl()}/v1/user`);
+      this.assertCurrent(generation);
 
       if (!response.ok) {
         throw new Error("Failed to fetch user");
       }
 
       const data: ApiGetUserResponse = await response.json();
+      this.assertCurrent(generation);
 
       // Get email from stored user or use empty string as fallback
-      const storedUserStr = localStorage.getItem(this.USER_KEY);
+      const store = this.sessionStore();
+      const storedUserStr = store.getItem(this.USER_KEY);
       let email = "";
       if (storedUserStr) {
         try {
@@ -289,7 +347,7 @@ class AuthService {
       };
 
       // Update stored user
-      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+      store.setItem(this.USER_KEY, JSON.stringify(user));
 
       return user;
     } catch (error) {

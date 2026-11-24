@@ -9,6 +9,7 @@ import { User } from "../types/auth.types";
 import { authService } from "../services/authService";
 import { confirmCode, requestCode } from "../services/authService/userApi";
 import { fromAnswer, startGoogle, startSmt, type FinishedSession } from "../services/authService/redirectSignIn";
+import { StaleSessionError } from "../services/authService/errors";
 import { getActiveTenantKey } from "../config/viewerConfig";
 
 interface AuthContextType {
@@ -51,6 +52,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const currentUser = await authService.fetchCurrentUser();
         setUser(currentUser);
       } catch (error) {
+        // A newer sign-in replaced the session meanwhile: leave it alone.
+        if (error instanceof StaleSessionError) return;
         // If fetch fails, logout the user
         console.error("Failed to fetch current user, logging out:", error);
         authService.clearSession();
@@ -73,13 +76,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   /**
    * Installs a finished sign-in, unless the publisher changed while it ran:
-   * the session would then be signed for the wrong app id.
+   * the session would then be signed for the wrong app id. Checked again once
+   * the user has loaded, since the picker stays usable while it loads.
    */
   const startSessionFor = async (startedOn: string, session: FinishedSession, email: string) => {
-    if (getActiveTenantKey() !== startedOn) {
-      throw new Error("The publisher changed while signing in. Please try again.");
+    const publisherChanged = () => getActiveTenantKey() !== startedOn;
+    const changedError = () => new Error("The publisher changed while signing in. Please try again.");
+    if (publisherChanged()) throw changedError();
+    let signedIn: User;
+    try {
+      signedIn = await authService.startSession(session, email);
+    } catch (error) {
+      // Logging out on a publisher change ends the session we were loading.
+      if (error instanceof StaleSessionError && publisherChanged()) throw changedError();
+      throw error;
     }
-    setUser(await authService.startSession(session, email));
+    if (publisherChanged()) {
+      // Still this sign-in's session (startSession would have thrown otherwise).
+      authService.clearSession();
+      throw changedError();
+    }
+    setUser(signedIn);
   };
 
   const requestEmailCode = async ({ email, signup }: { email: string; signup: boolean }) => {

@@ -19,12 +19,16 @@ const root = createRoot(container);
  */
 loadViewerConfig()
   .then(async () => {
+    // A saved session is signed for its own publisher: select it before
+    // AppContext reads the tenant and AuthProvider checks the session.
+    const { authService } = await import('./services/authService');
+    authService.restoreSessionTenant();
+
     // Back from Google or the SMT login: finish signing in before the app
     // (and AuthProvider's session check) renders.
     const { finishRedirectSignIn } = await import('./services/authService/redirectSignIn');
     const session = await finishRedirectSignIn();
     if (session) {
-      const { authService } = await import('./services/authService');
       authService.storeSession(session);
       window.history.replaceState(null, '', window.location.pathname + '#/');
     }
