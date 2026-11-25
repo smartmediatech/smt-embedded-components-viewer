@@ -335,7 +335,10 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
         const wantsUserLocation =
           params?.userLocation === true || params?.userLocation === "true";
 
-        if (locationRef.current.pathname === "/map") {
+        // Both map tabs (legacy and map-v2) take the same map.* commands.
+        const onMapPage =
+          locationRef.current.pathname === "/map" || locationRef.current.pathname === "/map-new";
+        if (onMapPage) {
           if (wantsUserLocation) {
             if (mapIframeHandle) {
               try {
@@ -376,7 +379,7 @@ const isBridgeErrorCode = (error: unknown, code: string): error is { code: strin
             return {};
           }
 
-          navigate("/map");
+          // Already on a map tab: stay there rather than switching maps.
           return {};
         }
 

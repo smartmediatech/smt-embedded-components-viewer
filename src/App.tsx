@@ -35,6 +35,7 @@ function App() {
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/challenges" element={<Challenges />} />
               <Route path="/map" element={<Map />} />
+              <Route path="/map-new" element={<Map variant="new" />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
