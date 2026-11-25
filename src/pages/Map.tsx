@@ -88,10 +88,6 @@ export const Map = ({ variant = "legacy" }: { variant?: "legacy" | "new" }) => {
   }, [src, setCurrentIframeUrl]);
 
   useEffect(() => {
-    return () => setMapIframeHandle(null);
-  }, [setMapIframeHandle]);
-
-  useEffect(() => {
     if (!pendingMapCommand || !mapIframeHandle) {
       return;
     }
