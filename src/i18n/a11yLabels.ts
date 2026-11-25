@@ -180,7 +180,11 @@ export function componentKeyOf(src: string): ComponentKey | null {
   } catch {
     return null;
   }
-  const key = segments.reverse().find((s) => (COMPONENT_KEYS as readonly string[]).includes(s));
+  // map-v2 is the same component to a screen reader as the legacy map.
+  const key = segments
+    .reverse()
+    .map((s) => (s === "map-v2" ? "map" : s))
+    .find((s) => (COMPONENT_KEYS as readonly string[]).includes(s));
   return (key as ComponentKey | undefined) ?? null;
 }
 
