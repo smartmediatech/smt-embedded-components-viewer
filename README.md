@@ -19,6 +19,24 @@ A hosted build of this app runs at
 **https://demo.smartmedialabs.io/embedded-smtembed/** against a neutral SMT demo
 tenant (Challenges, Rewards, Giveaways, Discover). Ask SMT for a demo login.
 
+## Deploying
+
+Actions → **deploy** → Run workflow with a **client** (folder and subdomain label, e.g. `smtembed`,
+`fanfair`), an **env** (`alpha`, `beta`, `live`) and a **ref** (branch, tag or sha; custom clients
+build from their branch, e.g. `eagles` for fanfair). The build goes to
+`s3://embedded-viewer-<env>/<client>/` and is served at `https://<client>.<env>.ev.smtwallet.app/`
+(live: `https://<client>.ev.smtwallet.app/`) and on the client's custom domain, if it has one
+(e.g. `fanfair.live`).
+
+- The upload uses `--delete`, so the previous build goes. Hashed bundles are cached for a year;
+  `index.html`, the bridge and `version.json` (client, ref, sha, run) are uploaded `no-cache`, so
+  every host picks up a deploy at once.
+- **`config.json` is never uploaded or deleted.** Each client folder needs one (shape:
+  `public/config.example.json`), managed by hand in the bucket for now, with
+  `--cache-control no-cache --content-type application/json`. The workflow warns if it's missing.
+- A new client on the generic host needs nothing but a deploy and a `config.json`. A custom domain
+  or a live client embedded on its own site needs infra changes (terraform-live `web3`).
+
 ## Prerequisites
 
 The **`smt-base-bridge.min.js`** library must be loaded in your HTML to enable communication between the container app and the embedded components.

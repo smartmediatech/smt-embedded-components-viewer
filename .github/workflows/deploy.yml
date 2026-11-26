@@ -1,0 +1,122 @@
+name: deploy
+
+# Builds <ref> and uploads it to s3://embedded-viewer-<env>/<client>/, served at
+# https://<client>.<env>.ev.smtwallet.app (live: https://<client>.ev.smtwallet.app) and on the
+# client's custom domain, if any (e.g. fanfair.live). See "Deploying" in README.md.
+#
+# Like web-viewer, the deploy ships the build only: config.json in the client's folder is managed
+# separately and never touched here.
+
+on:
+  workflow_dispatch:
+    inputs:
+      client:
+        description: Client (folder / subdomain label, e.g. smt, fanfair)
+        required: true
+        type: string
+      env:
+        description: Environment
+        required: true
+        default: alpha
+        type: choice
+        options: [alpha, beta, live]
+      ref:
+        description: Branch, tag or sha to build
+        required: true
+        default: main
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-${{ inputs.env }}-${{ inputs.client }}
+  cancel-in-progress: false
+
+env:
+  CLIENT: ${{ inputs.client }}
+  TARGET_ENV: ${{ inputs.env }}
+  REF: ${{ inputs.ref }}
+  DEST: s3://embedded-viewer-${{ inputs.env }}/${{ inputs.client }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check client
+        run: |
+          [[ "$CLIENT" =~ ^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$ ]] \
+            || { echo "::error::client must be a DNS label (lowercase a-z, 0-9, -): '$CLIENT'"; exit 1; }
+
+      - name: Checkout ${{ inputs.ref }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          path: app
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build app
+        working-directory: app
+        run: |
+          set -euo pipefail
+          corepack enable
+          yarn install --immutable
+          yarn build
+          test -f dist/index.html
+          test -f dist/smt-base-bridge.min.js
+          # config.json lives in the bucket; never ship the template or a local one.
+          rm -f dist/config.json dist/config.example.json
+          jq -n --arg client "$CLIENT" --arg ref "$REF" --arg sha "$(git rev-parse HEAD)" \
+            --arg run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --arg at "$(date -u +%FT%TZ)" \
+            '{client: $client, ref: $ref, sha: $sha, run: $run, deployed_at: $at}' > dist/version.json
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::697635178503:role/GitHubActionsRole
+          role-session-name: GHActions
+          aws-region: us-east-1
+
+      # Hashed bundles first (cached forever), then the unhashed files (no-cache), so nobody gets an
+      # index.html pointing at a bundle that isn't there yet. --delete removes the previous build;
+      # config.json is excluded, so it's neither uploaded nor deleted. smt-base-bridge.min.js is
+      # copied from public/ without a hash, so it must not be marked immutable.
+      - name: Upload to S3
+        working-directory: app/dist
+        run: |
+          set -euo pipefail
+          aws s3 sync . "$DEST/" --delete --no-progress \
+            --exclude config.json --exclude index.html --exclude version.json \
+            --exclude 'smt-base-bridge.min.js*' \
+            --cache-control "public,max-age=31536000,immutable"
+          for f in smt-base-bridge.min.js smt-base-bridge.min.js.map; do
+            if [ -f "$f" ]; then aws s3 cp "$f" "$DEST/$f" --cache-control no-cache --no-progress; fi
+          done
+          aws s3 cp index.html "$DEST/index.html" --cache-control no-cache --content-type "text/html; charset=utf-8"
+          aws s3 cp version.json "$DEST/version.json" --cache-control no-cache --content-type application/json
+          if ! aws s3 ls "$DEST/config.json" >/dev/null; then
+            echo "::warning::$DEST/config.json is missing: the viewer won't load until it's added"
+          fi
+
+      # Not needed for freshness (unhashed files are no-cache, bundles are hashed), so custom-domain
+      # distributions that serve the same folder (fanfair.live) are skipped. This only drops stale
+      # copies of removed files from the generic distribution (terraform-live web3/cloudfront_*evsmtwalletapp).
+      - name: Invalidate cloudfront
+        run: |
+          case "$TARGET_ENV" in
+            alpha) id=E1IFO6WUEWG8NV ;; # *.alpha.ev.smtwallet.app
+            beta) id=E3NZS0CHG27KM6 ;;  # *.beta.ev.smtwallet.app
+            live) id=E1FOMVM4FAPQEK ;;  # *.ev.smtwallet.app
+          esac
+          aws cloudfront create-invalidation --distribution-id "$id" --paths "/*" --query Invalidation.Id --output text
+
+      - name: Summary
+        run: |
+          host="$CLIENT.$TARGET_ENV.ev.smtwallet.app"
+          [ "$TARGET_ENV" = "live" ] && host="$CLIENT.ev.smtwallet.app"
+          echo "### $CLIENT ← \`$REF\` on $TARGET_ENV: https://$host/" >> "$GITHUB_STEP_SUMMARY"
