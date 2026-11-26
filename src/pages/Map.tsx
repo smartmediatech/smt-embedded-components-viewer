@@ -18,7 +18,8 @@ const MODAL_TYPES: Record<string, ModalType> = {
   "ar-face-filter": "wearable",
 };
 
-export const Map = () => {
+/** "legacy" loads the old map; "new" loads map-v2 from the components host. */
+export const Map = ({ variant = "legacy" }: { variant?: "legacy" | "new" }) => {
   const {
     legacyComponentsHost,
     tenant,
@@ -73,8 +74,10 @@ export const Map = () => {
   // A bare file name, not "./…": the map does not URL-decode the value, and
   // URLSearchParams would send the slash as %2F.
   const fqdn = TENANTS[tenant]?.fqdn;
-  const src = appendUrlParams(`${legacyComponentsHost}/map/`, {
-    config_url: fqdn ? `map-config.${fqdn}.json` : undefined,
+  // The new map reads its tenant from ?fqdn= like the other components.
+  const isNew = variant === "new";
+  const src = appendUrlParams(isNew ? `${smartComponentsHost}/map-v2/` : `${legacyComponentsHost}/map/`, {
+    ...(isNew ? { fqdn } : { config_url: fqdn ? `map-config.${fqdn}.json` : undefined }),
     lat: mapQueryParams.lat != null ? String(mapQueryParams.lat) : undefined,
     lon: mapQueryParams.lon != null ? String(mapQueryParams.lon) : undefined,
     zoom: mapQueryParams.zoom != null ? String(mapQueryParams.zoom) : undefined,
@@ -83,10 +86,6 @@ export const Map = () => {
     setCurrentIframeUrl(src);
     return () => setCurrentIframeUrl(null);
   }, [src, setCurrentIframeUrl]);
-
-  useEffect(() => {
-    return () => setMapIframeHandle(null);
-  }, [setMapIframeHandle]);
 
   useEffect(() => {
     if (!pendingMapCommand || !mapIframeHandle) {

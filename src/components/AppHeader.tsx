@@ -20,6 +20,8 @@ const COMPONENT_TABS: { path: string; label: string; Settings: ComponentType | n
   { path: "/rewards", label: "Rewards", Settings: ComponentSettings },
   { path: "/giveaways", label: "Giveaways", Settings: ComponentSettings },
   { path: "/map", label: "Map", Settings: MapSettings },
+  // Side by side with the legacy map until hosts switch.
+  { path: "/map-new", label: "Map (new)", Settings: MapSettings },
 ];
 
 export const AppHeader = () => {

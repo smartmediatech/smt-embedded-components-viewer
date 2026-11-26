@@ -34,7 +34,9 @@ function App() {
               <Route path="/rewards" element={<Rewards />} />
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/challenges" element={<Challenges />} />
-              <Route path="/map" element={<Map />} />
+              {/* key: switching maps starts fresh, without the other map's open dialog */}
+              <Route path="/map" element={<Map key="legacy" />} />
+              <Route path="/map-new" element={<Map key="new" variant="new" />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

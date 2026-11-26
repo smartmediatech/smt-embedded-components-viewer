@@ -4,9 +4,9 @@ import { test, expect } from "./fixtures";
  * The component nav: its order and labels. "Earn" is the product's name for
  * challenges; the route and the component keep "challenges".
  */
-test("nav lists Discover, Earn, Rewards, Giveaways, Map", async ({ page }) => {
+test("nav lists Discover, Earn, Rewards, Giveaways, Map, Map (new)", async ({ page }) => {
   await page.goto("#/discover");
-  await expect(page.getByRole("tab")).toHaveText(["Discover", "Earn", "Rewards", "Giveaways", "Map"]);
+  await expect(page.getByRole("tab")).toHaveText(["Discover", "Earn", "Rewards", "Giveaways", "Map", "Map (new)"]);
 });
 
 test("Earn opens the challenges component and shows as the active tab", async ({ page }) => {
